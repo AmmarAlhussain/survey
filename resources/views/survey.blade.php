@@ -89,7 +89,7 @@
         .star-rating {
             display: flex;
             justify-content: center;
-            font-size: 3.5rem;
+            font-size: 2rem;
             color: #ccc;
             margin: 10px 0;
             position: relative;
@@ -153,29 +153,6 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-        }
-
-        .alert {
-            padding: 15px;
-            border-radius: 4px;
-            text-align: right;
-        }
-
-        .alert ul {
-            list-style-type: none;
-            padding-right: 20px;
-        }
-
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
         }
 
         .rating-effect-container {
@@ -255,22 +232,7 @@
 </head>
 
 <body>
-    <div id="alerts">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $e)
-                        <li>{{ $e }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-    </div>
+
 
     <header>
         <h1>استبيان رأي الموظفين</h1>
@@ -287,14 +249,17 @@
             </div>
 
             <div class="step" data-step="2">
-                <h3>2. هل تجد القنوات المستخدمة للتواصل داخل الشركة فعالة ومناسبة؟ ( الواتس اب - الشاشات - ايميل عائلة سير )</h3>
+                <h3>2. هل تجد القنوات المستخدمة للتواصل داخل الشركة فعالة ومناسبة؟ ( الواتس اب - الشاشات - ايميل عائلة
+                    سير )</h3>
                 <select name="effective_comm" required>
                     <option value="">-- اختر --</option>
                     <option value="yes">نعم</option>
                     <option value="no">لا</option>
                 </select>
                 <div class="form-error" id="effective_comm-error">الرجاء اختيار إجابة</div>
+            </div>
 
+            <div class="step" data-step="3">
                 <h3>3. أكثر قنوات التواصل فعالية:</h3>
                 <select name="best_comm" required>
                     <option value="">-- اختر --</option>
@@ -304,7 +269,9 @@
                     <option value="other">غير ذلك</option>
                 </select>
                 <div class="form-error" id="best_comm-error">الرجاء اختيار إجابة</div>
+            </div>
 
+            <div class="step" data-step="4">
                 <h3>4. كيف تقيّم جودة التواصل؟</h3>
                 <select name="rate_comm_quality" required>
                     <option value="">-- اختر --</option>
@@ -316,7 +283,7 @@
                 <div class="form-error" id="rate_comm_quality-error">الرجاء اختيار تقييم</div>
             </div>
 
-            <div class="step" data-step="3">
+            <div class="step" data-step="5">
                 <h3>5. كيف تقيّم الفعاليات؟</h3>
                 <select name="rate_events" required>
                     <option value="">-- اختر --</option>
@@ -326,7 +293,9 @@
                     <option value="poor">ضعيف</option>
                 </select>
                 <div class="form-error" id="rate_events-error">الرجاء اختيار تقييم</div>
+            </div>
 
+            <div class="step" data-step="6">
                 <h3>6. هل تساهم الفعاليات في تعزيز الروح المعنوية؟</h3>
                 <select name="events_morale" required>
                     <option value="">-- اختر --</option>
@@ -334,7 +303,9 @@
                     <option value="no">لا</option>
                 </select>
                 <div class="form-error" id="events_morale-error">الرجاء اختيار إجابة</div>
+            </div>
 
+            <div class="step" data-step="7">
                 <h3>7. هل تعكس الفعاليات ثقافة الشركة؟</h3>
                 <select name="events_culture" required>
                     <option value="">-- اختر --</option>
@@ -342,7 +313,9 @@
                     <option value="no">لا</option>
                 </select>
                 <div class="form-error" id="events_culture-error">الرجاء اختيار إجابة</div>
+            </div>
 
+            <div class="step" data-step="8">
                 <h3>8. هل محتوى الفعاليات ممتع ومفيد؟</h3>
                 <select name="events_content" required>
                     <option value="">-- اختر --</option>
@@ -350,7 +323,9 @@
                     <option value="no">لا</option>
                 </select>
                 <div class="form-error" id="events_content-error">الرجاء اختيار إجابة</div>
+            </div>
 
+            <div class="step" data-step="9">
                 <h3>9. هل تلبي الفعاليات احتياجات الموظفين؟</h3>
                 <select name="events_interest" required>
                     <option value="">-- اختر --</option>
@@ -358,7 +333,9 @@
                     <option value="no">لا</option>
                 </select>
                 <div class="form-error" id="events_interest-error">الرجاء اختيار إجابة</div>
+            </div>
 
+            <div class="step" data-step="10">
                 <h3>10. كيف تقيّم تنظيم الفعاليات؟</h3>
                 <select name="events_organize" required>
                     <option value="">-- اختر --</option>
@@ -370,7 +347,7 @@
                 <div class="form-error" id="events_organize-error">الرجاء اختيار تقييم</div>
             </div>
 
-            <div class="step" data-step="4">
+            <div class="step" data-step="11">
                 <h3>11. هل بيئة العمل إيجابية ومحفزة؟</h3>
                 <select name="culture_env" required>
                     <option value="">-- اختر --</option>
@@ -378,7 +355,9 @@
                     <option value="no">لا</option>
                 </select>
                 <div class="form-error" id="culture_env-error">الرجاء اختيار إجابة</div>
+            </div>
 
+            <div class="step" data-step="12">
                 <h3>12. هل مساحة العمل مريحة؟</h3>
                 <select name="env_comfort" required>
                     <option value="">-- اختر --</option>
@@ -386,7 +365,8 @@
                     <option value="no">لا</option>
                 </select>
                 <div class="form-error" id="env_comfort-error">الرجاء اختيار إجابة</div>
-
+            </div>
+            <div class="step" data-step="13">
                 <h3>13. هل الموارد متوفرة؟</h3>
                 <select name="env_resources" required>
                     <option value="">-- اختر --</option>
@@ -396,7 +376,7 @@
                 <div class="form-error" id="env_resources-error">الرجاء اختيار إجابة</div>
             </div>
 
-            <div class="step" data-step="5">
+            <div class="step" data-step="14">
                 <h3>14. كيف تقيم مستوى رضاك عن الاستبيان؟ (1–5 نجوم)</h3>
                 <div class="star-rating">
                     <input type="radio" id="star1" name="stars" value="1" required>
@@ -447,18 +427,18 @@
             const fieldToStep = {
                 "email": 0,
                 "effective_comm": 1,
-                "best_comm": 1,
-                "rate_comm_quality": 1,
-                "rate_events": 2,
-                "events_morale": 2,
-                "events_culture": 2,
-                "events_content": 2,
-                "events_interest": 2,
-                "events_organize": 2,
-                "culture_env": 3,
-                "env_comfort": 3,
-                "env_resources": 3,
-                "stars": 4
+                "best_comm": 2,
+                "rate_comm_quality": 3,
+                "rate_events": 4,
+                "events_morale": 5,
+                "events_culture": 6,
+                "events_content": 7,
+                "events_interest": 8,
+                "events_organize": 9,
+                "culture_env": 10,
+                "env_comfort": 11,
+                "env_resources": 12,
+                "stars": 13
             };
 
             const steps = [...document.querySelectorAll(".step")],
@@ -804,7 +784,6 @@
                             form.submit();
                         } catch (error) {
                             console.error("Form submission error:", error);
-
                             const submitButton = document.createElement('input');
                             submitButton.type = 'submit';
                             submitButton.style.display = 'none';
