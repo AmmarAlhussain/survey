@@ -20,6 +20,7 @@
             min-height: 100vh;
             color: #333;
             direction: rtl;
+            overflow-x: hidden;
         }
 
         header {
@@ -30,30 +31,216 @@
             font-size: 1.5rem;
         }
 
+        .progress-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto 5px;
+            background: rgba(74, 144, 226, 0.2);
+
+            border-radius: 10px;
+            height: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #4A90E2;
+            box-shadow: 0 0 10px rgba(0, 82, 153, 0.4);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.8s ease;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1;
+        }
+
+        .progress-steps {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 2;
+        }
+
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #4A90E2;
+            z-index: 2;
+            transition: all 0.4s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4A90E2;
+            font-size: 0.9rem;
+            font-weight: bold;
+            position: relative;
+            top: 5px;
+        }
+
+        /* Active step: your brand blue with a soft glow */
+        .progress-step.active {
+            background: #4A90E2;
+            border-color: #fff;
+            /* white border keeps it crisp */
+            box-shadow: 0 0 15px rgba(74, 144, 226, 0.6);
+            /* blue glow */
+            transform: scale(1.2);
+            color: #fff;
+            /* white text for legibility */
+        }
+
+        /* Completed step: lightened blue with gold border for a subtle nod */
+        .progress-step.complete {
+            background: rgba(74, 144, 226, 0.2);
+            /* pale blue fill */
+            border-color: #4A90E2;
+            /* solid blue border */
+            color: #4A90E2;
+            /* blue text to match */
+        }
+
         .form-container {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            perspective: 1200px;
         }
 
         form {
             background: #fff;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             padding: 30px;
             width: 100%;
             max-width: 600px;
             margin-bottom: 60px;
+            position: relative;
+            transform-style: preserve-3d;
         }
 
         .step {
-            display: none
+            display: none;
+            opacity: 0;
+            transform-origin: top right;
+            transform: rotate3d(-1, 1, 0, 90deg);
+            backface-visibility: hidden;
+            transition: transform 0s, opacity 0s;
+            position: relative;
+            padding: 10px;
         }
 
         .step.active {
-            display: block
+            display: block;
+            opacity: 1;
+            transform: rotate3d(1, 1, 0, 0deg);
+            transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+            animation: rtlPageFlipIn 0.8s ease-out forwards;
+        }
+
+        .step.exit {
+            display: block;
+            opacity: 0;
+            transform: rotate3d(1, -1, 0, 90deg);
+            transition: transform 0.8s ease-in, opacity 0.8s ease-in;
+            animation: rtlPageFlipOut 0.8s ease-in forwards;
+        }
+
+        @keyframes rtlPageFlipIn {
+            from {
+                transform: rotate3d(-1, 1, 0, 90deg);
+                opacity: 0;
+                box-shadow: -15px 15px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            to {
+                transform: rotate3d(1, 1, 0, 0deg);
+                opacity: 1;
+                box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+            }
+        }
+
+        @keyframes rtlPageFlipOut {
+            from {
+                transform: rotate3d(1, 1, 0, 0deg);
+                opacity: 1;
+                box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+            }
+
+            to {
+                transform: rotate3d(1, -1, 0, 90deg);
+                opacity: 0;
+                box-shadow: 15px -15px 20px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        .page-corner {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+
+        .page-corner-tl {
+            top: 0;
+            right: 0;
+            border-width: 20px 20px 0 0;
+            border-color: rgba(74, 144, 226, 0.5) transparent transparent transparent;
+            transform: rotate(0deg);
+        }
+
+        .page-corner-br {
+            bottom: 0;
+            left: 0;
+            border-width: 0 0 20px 20px;
+            border-color: transparent transparent rgba(74, 144, 226, 0.5) transparent;
+            transform: rotate(0deg);
+        }
+
+        .page-shadow {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+            opacity: 0;
+            pointer-events: none;
+            border-radius: 8px;
+            transition: opacity 0.6s ease;
+        }
+
+        .page-fold {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            top: 0;
+            right: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 100%);
+            border-bottom-left-radius: 60px;
+            transform-origin: top right;
+            transition: all 0.8s ease;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        .step.exit .page-fold {
+            opacity: 1;
+            transform: rotate(-15deg);
         }
 
         h1 {
@@ -232,23 +419,35 @@
 </head>
 
 <body>
-
-
     <header>
         <h1>استبيان رأي الموظفين</h1>
     </header>
+    <div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+            <div class="progress-steps" id="progressSteps">
+            </div>
+        </div>
+    </div>
     <div class="form-container">
         <form id="surveyForm" action="{{ route('store') }}" method="POST">
             @csrf
 
-
             <div class="step active" data-step="1">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>1. البريد الإلكتروني:</h3>
                 <input type="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
                 <div class="form-error" id="email-error">الرجاء إدخال بريد إلكتروني صحيح</div>
             </div>
 
             <div class="step" data-step="2">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>2. هل تجد القنوات المستخدمة للتواصل داخل الشركة فعالة ومناسبة؟ ( الواتس اب - الشاشات - ايميل عائلة
                     سير )</h3>
                 <select name="effective_comm" required>
@@ -260,6 +459,10 @@
             </div>
 
             <div class="step" data-step="3">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>3. أكثر قنوات التواصل فعالية:</h3>
                 <select name="best_comm" required>
                     <option value="">-- اختر --</option>
@@ -272,6 +475,10 @@
             </div>
 
             <div class="step" data-step="4">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>4. كيف تقيّم جودة التواصل؟</h3>
                 <select name="rate_comm_quality" required>
                     <option value="">-- اختر --</option>
@@ -284,6 +491,10 @@
             </div>
 
             <div class="step" data-step="5">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>5. كيف تقيّم الفعاليات؟</h3>
                 <select name="rate_events" required>
                     <option value="">-- اختر --</option>
@@ -296,6 +507,10 @@
             </div>
 
             <div class="step" data-step="6">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>6. هل تساهم الفعاليات في تعزيز الروح المعنوية؟</h3>
                 <select name="events_morale" required>
                     <option value="">-- اختر --</option>
@@ -306,6 +521,10 @@
             </div>
 
             <div class="step" data-step="7">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>7. هل تعكس الفعاليات ثقافة الشركة؟</h3>
                 <select name="events_culture" required>
                     <option value="">-- اختر --</option>
@@ -316,6 +535,10 @@
             </div>
 
             <div class="step" data-step="8">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>8. هل محتوى الفعاليات ممتع ومفيد؟</h3>
                 <select name="events_content" required>
                     <option value="">-- اختر --</option>
@@ -326,6 +549,10 @@
             </div>
 
             <div class="step" data-step="9">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>9. هل تلبي الفعاليات احتياجات الموظفين؟</h3>
                 <select name="events_interest" required>
                     <option value="">-- اختر --</option>
@@ -336,6 +563,10 @@
             </div>
 
             <div class="step" data-step="10">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>10. كيف تقيّم تنظيم الفعاليات؟</h3>
                 <select name="events_organize" required>
                     <option value="">-- اختر --</option>
@@ -348,6 +579,10 @@
             </div>
 
             <div class="step" data-step="11">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>11. هل بيئة العمل إيجابية ومحفزة؟</h3>
                 <select name="culture_env" required>
                     <option value="">-- اختر --</option>
@@ -358,6 +593,10 @@
             </div>
 
             <div class="step" data-step="12">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>12. هل مساحة العمل مريحة؟</h3>
                 <select name="env_comfort" required>
                     <option value="">-- اختر --</option>
@@ -367,6 +606,10 @@
                 <div class="form-error" id="env_comfort-error">الرجاء اختيار إجابة</div>
             </div>
             <div class="step" data-step="13">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>13. هل الموارد متوفرة؟</h3>
                 <select name="env_resources" required>
                     <option value="">-- اختر --</option>
@@ -377,6 +620,10 @@
             </div>
 
             <div class="step" data-step="14">
+                <div class="page-corner page-corner-tl"></div>
+                <div class="page-corner page-corner-br"></div>
+                <div class="page-shadow"></div>
+                <div class="page-fold"></div>
                 <h3>14. كيف تقيم مستوى رضاك عن الاستبيان؟ (1–5 نجوم)</h3>
                 <div class="star-rating">
                     <input type="radio" id="star1" name="stars" value="1" required>
@@ -424,6 +671,7 @@
                 "5": "5"
             };
 
+            // Map fields to step indices
             const fieldToStep = {
                 "email": 0,
                 "effective_comm": 1,
@@ -444,9 +692,39 @@
             const steps = [...document.querySelectorAll(".step")],
                 prevBtn = document.getElementById("prevBtn"),
                 nextBtn = document.getElementById("nextBtn"),
-                form = document.getElementById("surveyForm");
+                form = document.getElementById("surveyForm"),
+                progressBar = document.getElementById("progressBar"),
+                progressSteps = document.getElementById("progressSteps");
 
             let current = 0;
+            const totalSteps = steps.length;
+
+            // Initialize progress journey dots - UPDATED to place numbers inside progress bar
+            function initProgressJourney() {
+                // Clear existing steps (if any)
+                progressSteps.innerHTML = '';
+
+                // Create step dots inside the progress bar
+                for (let i = 0; i < totalSteps; i++) {
+                    const stepDot = document.createElement('div');
+                    stepDot.className = `progress-step ${i === 0 ? 'active' : ''}`;
+                    stepDot.dataset.step = i;
+                    stepDot.innerHTML = i + 1;
+                    progressSteps.appendChild(stepDot);
+                }
+            }
+
+            // Update progress bar and journey
+            function updateProgress(index) {
+                const progressPercentage = ((index + 1) / totalSteps) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+
+                const dots = document.querySelectorAll('.progress-step');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                    dot.classList.toggle('complete', i < index);
+                });
+            }
 
             function showError(field, show = true) {
                 const errorEl = document.getElementById(`${field}-error`);
@@ -644,12 +922,168 @@
                 }
             }
 
-            function showStep(i) {
-                steps.forEach((s, idx) => s.classList.toggle("active", idx === i));
-                prevBtn.disabled = i === 0;
-                nextBtn.textContent = i === steps.length - 1 ? "إرسال" : "التالي";
-            }
+            // UPDATED: Page flip animation from top-right to bottom-left
+            // UPDATED: Enhanced page flip animation with 3D perspective and container effects
+            function animatePageFlip(fromStep, toStep) {
+                const formContainer = document.querySelector('.form-container');
+                const currentStep = steps[fromStep];
+                currentStep.classList.add('exit');
 
+                // Add perspective to form container for enhanced 3D effect
+                if (typeof gsap !== 'undefined') {
+                    // Enhance the form container perspective during transition
+                    gsap.to(formContainer, {
+                        perspective: "1500px",
+                        duration: 0.1
+                    });
+
+                    // Tilt the form slightly during page flip
+                    gsap.to(form, {
+                        rotateY: fromStep < toStep ? "-5deg" : "5deg",
+                        duration: 0.3,
+                        ease: "power1.out"
+                    });
+
+                    // Create a temporary page fold element for more realistic effect
+                    const pageFold = currentStep.querySelector('.page-fold');
+                    if (pageFold) {
+                        gsap.to(pageFold, {
+                            opacity: 1,
+                            rotation: -25,
+                            duration: 0.3
+                        });
+                    }
+
+                    // Enhanced shadow during flip
+                    const shadow = currentStep.querySelector('.page-shadow');
+                    if (shadow) {
+                        gsap.to(shadow, {
+                            opacity: 0.6,
+                            duration: 0.3
+                        });
+                    }
+
+                    // Corner effect
+                    const corners = currentStep.querySelectorAll('.page-corner');
+                    corners.forEach(corner => {
+                        gsap.to(corner, {
+                            opacity: 0.8,
+                            duration: 0.3
+                        });
+                    });
+                } else {
+                    // Fallback if GSAP is not available
+                    formContainer.style.perspective = "1500px";
+                    form.style.transform = `rotateY(${fromStep < toStep ? "-5deg" : "5deg"})`;
+                    form.style.transition = "transform 0.3s ease-out";
+
+                    const corners = currentStep.querySelectorAll('.page-corner');
+                    const shadow = currentStep.querySelector('.page-shadow');
+                    const pageFold = currentStep.querySelector('.page-fold');
+
+                    corners.forEach(corner => {
+                        corner.style.opacity = '0.8';
+                    });
+
+                    if (shadow) shadow.style.opacity = '0.6';
+                    if (pageFold) {
+                        pageFold.style.opacity = '1';
+                        pageFold.style.transform = 'rotate(-25deg)';
+                    }
+                }
+
+                setTimeout(() => {
+                    currentStep.classList.remove('active', 'exit');
+
+                    const newStep = steps[toStep];
+                    newStep.classList.add('active');
+
+                    // Reset the form's rotation back to normal
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(form, {
+                            rotateY: "0deg",
+                            duration: 0.5,
+                            ease: "power2.out",
+                            delay: 0.1
+                        });
+
+                        // Add a subtle bounce effect to the new page
+                        gsap.fromTo(newStep, {
+                            scale: 0.95,
+                            opacity: 0.9
+                        }, {
+                            scale: 1,
+                            opacity: 1,
+                            duration: 0.5,
+                            ease: "back.out(1.5)",
+                            delay: 0.2
+                        });
+                    } else {
+                        form.style.transform = "rotateY(0deg)";
+                        newStep.style.transform = "scale(1)";
+                        newStep.style.opacity = "1";
+                        newStep.style.transition = "transform 0.5s ease, opacity 0.5s ease";
+                    }
+
+                    setTimeout(() => {
+                        const newCorners = newStep.querySelectorAll('.page-corner');
+                        const newShadow = newStep.querySelector('.page-shadow');
+                        const newPageFold = newStep.querySelector('.page-fold');
+
+                        if (typeof gsap !== 'undefined') {
+                            gsap.to(newCorners, {
+                                opacity: 0,
+                                duration: 0.6
+                            });
+
+                            if (newShadow) {
+                                gsap.to(newShadow, {
+                                    opacity: 0,
+                                    duration: 0.6
+                                });
+                            }
+
+                            if (newPageFold) {
+                                gsap.to(newPageFold, {
+                                    opacity: 0,
+                                    duration: 0.3
+                                });
+                            }
+
+                            // Reset form container perspective
+                            gsap.to(formContainer, {
+                                perspective: "1200px",
+                                duration: 0.8,
+                                delay: 0.3
+                            });
+                        } else {
+                            newCorners.forEach(corner => {
+                                corner.style.opacity = '0';
+                                corner.style.transition = 'opacity 0.6s';
+                            });
+
+                            if (newShadow) {
+                                newShadow.style.opacity = '0';
+                                newShadow.style.transition = 'opacity 0.6s';
+                            }
+
+                            if (newPageFold) {
+                                newPageFold.style.opacity = '0';
+                                newPageFold.style.transition = 'opacity 0.3s';
+                            }
+
+                            formContainer.style.perspective = "1200px";
+                            formContainer.style.transition = "perspective 0.8s";
+                        }
+                    }, 600);
+
+                    prevBtn.disabled = toStep === 0;
+                    nextBtn.textContent = toStep === steps.length - 1 ? "إرسال" : "التالي";
+
+                    updateProgress(toStep);
+
+                }, 350); // Slightly extended for better page flip effect
+            }
 
             function validateCurrentStep() {
                 const reqs = steps[current].querySelectorAll("select[required], input[required]");
@@ -676,7 +1110,11 @@
             }
 
             prevBtn.addEventListener("click", () => {
-                if (current > 0) showStep(--current);
+                if (current > 0) {
+                    const oldStep = current;
+                    current--;
+                    animatePageFlip(oldStep, current);
+                }
             });
 
             nextBtn.addEventListener("click", (e) => {
@@ -685,7 +1123,9 @@
                 }
 
                 if (current < steps.length - 1) {
-                    showStep(++current);
+                    const oldStep = current;
+                    current++;
+                    animatePageFlip(oldStep, current);
                 } else {
                     e.preventDefault();
 
@@ -902,7 +1342,23 @@
                 console.warn("Star rating elements not found");
             }
 
-            showStep(current);
+            // Initialize each step with hidden corners and shadows
+            steps.forEach(step => {
+                const corners = step.querySelectorAll('.page-corner');
+                const shadow = step.querySelector('.page-shadow');
+                const pageFold = step.querySelector('.page-fold');
+
+                corners.forEach(corner => {
+                    corner.style.opacity = '0';
+                });
+
+                if (shadow) shadow.style.opacity = '0';
+                if (pageFold) pageFold.style.opacity = '0';
+            });
+
+            // Initialize progress journey with numbers inside the bar
+            initProgressJourney();
+            updateProgress(current);
         });
     </script>
 </body>
