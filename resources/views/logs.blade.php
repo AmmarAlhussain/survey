@@ -111,13 +111,11 @@
             box-shadow: 0 0 6px rgba(74, 144, 226, 0.4);
         }
 
-        /* Optional: Add placeholder style (for floating label effect if JS used later) */
         div.dataTables_filter input::placeholder {
             color: #aaa;
             font-size: 0.95rem;
         }
 
-        /* Improve DataTables Buttons */
         .dt-button {
             background-color: #4A90E2 !important;
             color: white !important;
@@ -133,7 +131,6 @@
             background-color: #357ABD !important;
         }
 
-        /* Paginate buttons */
         .dataTables_wrapper .dataTables_paginate .paginate_button {
             padding: 6px 10px !important;
             margin: 0 2px;

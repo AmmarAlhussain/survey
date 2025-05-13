@@ -1,4 +1,3 @@
-{{-- resources/views/chart.blade.php --}}
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
@@ -151,7 +150,6 @@
                 '5': '5 نجوم'
             };
 
-            // Define the correct order for specific fields
             const fieldOrders = {
                 'yes_no': ['yes', 'no'],
                 'rating': ['poor', 'average', 'good', 'excellent']
@@ -206,7 +204,7 @@
                     return {
                         type: 'pie',
                         colors: ['#E67E22', '#FFC300', '#4A90E2',
-                        '#50E3C2'], // Reordered colors to match poor-excellent
+                        '#50E3C2'],
                         options: {
                             plugins: {
                                 legend: {
