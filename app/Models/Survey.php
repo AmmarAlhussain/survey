@@ -13,12 +13,22 @@ class Survey extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'email', 
-        'age_range', 
-        'gender', 
-        'satisfaction', 
-        'usage_frequency', 
-        'stars', 
+        'email',
+        'age_range',
+        'gender',
+        'effective_comm',
+        'best_comm',
+        'rate_comm_quality',
+        'rate_events',
+        'events_morale',
+        'events_culture',
+        'events_content',
+        'events_interest',
+        'events_organize',
+        'culture_env',
+        'env_comfort',
+        'env_resources',
+        'stars',
     ];
 
 }

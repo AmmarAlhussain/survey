@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Survey Form</title>
+    <title>استبيان رأي الموظفين</title>
     <style>
         * {
             margin: 0;
@@ -19,18 +19,19 @@
             flex-direction: column;
             min-height: 100vh;
             color: #333;
+            direction: rtl;
         }
 
         header {
             background: #4A90E2;
-            color: white;
+            color: #fff;
             text-align: center;
             padding: 15px;
             font-size: 1.5rem;
         }
 
         .form-container {
-            flex-grow: 1;
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -44,24 +45,32 @@
             padding: 30px;
             width: 100%;
             max-width: 600px;
+            margin-bottom: 60px;
+        }
+
+        .step {
+            display: none
+        }
+
+        .step.active {
+            display: block
         }
 
         h1 {
             text-align: center;
-            color: #4A90E2;
             margin-bottom: 20px;
-            font-size: 2rem;
+            font-size: 2rem
         }
 
         h3 {
             color: #4A90E2;
             margin: 15px 0 5px;
             font-size: 1.2rem;
+            text-align: right
         }
 
         select,
-        input[type=email],
-        textarea {
+        input[type=email] {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -69,78 +78,12 @@
             border-radius: 4px;
             background: #f9f9f9;
             font-size: 1rem;
+            text-align: right;
         }
 
-        select:focus,
-        input:focus,
-        textarea:focus {
-            border-color: #4A90E2;
-            outline: none;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        label {
-            font-size: 1rem;
-            margin-right: 10px;
-        }
-
-        input[type=checkbox] {
-            margin-right: 8px;
-        }
-
-        button {
-            background: #4A90E2;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 4px;
-            width: 100%;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #357ABD;
-        }
-
-        footer {
-            background: #4A90E2;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        .alert {
-            padding: 15px;
-            border-radius: 4px;
-            margin: 10px;
-        }
-
-        .alert-danger {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert ul {
-            list-style: none;
-        }
-
-        .alert ul li {
-            margin-bottom: 5px;
+        select.error,
+        input.error {
+            border: 2px solid #dc3545;
         }
 
         .star-rating {
@@ -149,176 +92,926 @@
             font-size: 3.5rem;
             color: #ccc;
             margin: 10px 0;
+            position: relative;
+            overflow: visible;
+            height: 100px;
         }
 
         .star-rating input {
-            display: none;
+            display: none
         }
 
         .star-rating label.star {
             cursor: pointer;
             padding: 0 8px;
-            transition: transform 0.2s, color 0.2s, opacity 0.3s;
-            opacity: 1;
+            transition: transform .2s, color .2s, opacity .3s;
+            will-change: transform, color, opacity, text-shadow;
         }
 
-        .star-rating label.star.hovered,
-        .star-rating label.star.selected {
+        .star-rating label.star.hovered {
             color: #ffcc00;
-            transform: scale(2);
+            transform: scale(1.5);
+        }
+
+        .star-rating label.star.selected {
+            color: #FFD700;
+            transform: scale(1.5);
+            text-shadow: 0 0 15px #FFD700, 0 0 10px #FFD700;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            background: #4A90E2;
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover:not(:disabled) {
+            background: #3A80D2;
+        }
+
+        button:disabled {
+            background: #aaa;
+            cursor: not-allowed
+        }
+
+        footer {
+            background: #4A90E2;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #review {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            max-height: 40vh;
+            overflow-y: auto;
+            text-align: right;
+        }
+
+        #review ul {
+            list-style: none;
+            padding-left: 0
+        }
+
+        #review li {
+            margin-bottom: 8px
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            text-align: right;
+        }
+
+        .alert ul {
+            list-style-type: none;
+            padding-right: 20px;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .rating-effect-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: visible;
+            z-index: 100;
+        }
+
+        .star-ray {
+            position: absolute;
+            background: linear-gradient(to right, #FFD700, transparent);
+            transform-origin: left center;
+            height: 2px;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .star-pulse {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+            background-color: #FFD700;
+            box-shadow: 0 0 6px 1px #FFD700;
+        }
+
+        .editable {
+            cursor: pointer;
+            text-decoration: underline;
+            color: #4A90E2;
+        }
+
+        .form-error {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .form-error.active {
+            display: block;
+        }
+
+        .celebration-msg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 215, 0, 0.2);
+            color: #4A90E2;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 1000;
+            border: 2px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            opacity: 0;
         }
     </style>
 </head>
 
 <body>
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $e)
-                    <li>{{ $e }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    <header>
-        <h1>Customer Feedback Survey</h1>
-    </header>
-    <div class="form-container">
-        <form action="{{ route('store') }}" method="POST">
-            @csrf
-
-            <h3>1. What is your email address?</h3>
-            <input type="email" name="email" required placeholder="Enter your email">
-
-            <h3>2. What is your age range?</h3>
-            <select name="age_range" required>
-                <option value="">-- Select --</option>
-                <option value="under_18">Under 18</option>
-                <option value="18_24">18–24</option>
-                <option value="25_34">25–34</option>
-                <option value="35_44">35–44</option>
-                <option value="45_plus">45+</option>
-            </select>
-
-            <h3>3. What is your gender?</h3>
-            <select name="gender" required>
-                <option value="">-- Select --</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-            </select>
-
-            <h3>4. How satisfied are you with our product/service?</h3>
-            <select name="satisfaction" required>
-                <option value="">-- Select --</option>
-                <option value="very_satisfied">Very satisfied</option>
-                <option value="satisfied">Satisfied</option>
-                <option value="neutral">Neutral</option>
-                <option value="dissatisfied">Dissatisfied</option>
-                <option value="very_dissatisfied">Very dissatisfied</option>
-            </select>
-
-            <h3>5. How often do you use our product/service?</h3>
-            <select name="usage_frequency" required>
-                <option value="">-- Select --</option>
-                <option value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-                <option value="rarely">Rarely</option>
-                <option value="never">Never</option>
-            </select>
-
-            <h3>6. How likely are you to recommend us? (1–5 stars)</h3>
-            <div class="star-rating">
-                <input type="radio" id="star1" name="stars" value="1-star" required>
-                <label for="star1" class="star">&#9733;</label>
-                <input type="radio" id="star2" name="stars" value="2-star">
-                <label for="star2" class="star">&#9733;</label>
-                <input type="radio" id="star3" name="stars" value="3-star">
-                <label for="star3" class="star">&#9733;</label>
-                <input type="radio" id="star4" name="stars" value="4-star">
-                <label for="star4" class="star">&#9733;</label>
-                <input type="radio" id="star5" name="stars" value="5-star">
-                <label for="star5" class="star">&#9733;</label>
+    <div id="alerts">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $e)
+                        <li>{{ $e }}</li>
+                    @endforeach
+                </ul>
             </div>
-
-            <button type="submit">Submit Survey</button>
-        </form>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
     </div>
 
-    <footer>&copy;2025 All Rights Reserved.</footer>
+    <header>
+        <h1>استبيان رأي الموظفين</h1>
+    </header>
+    <div class="form-container">
+        <form id="surveyForm" action="{{ route('store') }}" method="POST">
+            @csrf
+
+
+            <div class="step active" data-step="1">
+                <h3>1. البريد الإلكتروني:</h3>
+                <input type="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
+                <div class="form-error" id="email-error">الرجاء إدخال بريد إلكتروني صحيح</div>
+            </div>
+
+            <div class="step" data-step="2">
+                <h3>2. هل تجد القنوات المستخدمة للتواصل داخل الشركة فعالة ومناسبة؟ ( الواتس اب - الشاشات - ايميل عائلة سير )</h3>
+                <select name="effective_comm" required>
+                    <option value="">-- اختر --</option>
+                    <option value="yes">نعم</option>
+                    <option value="no">لا</option>
+                </select>
+                <div class="form-error" id="effective_comm-error">الرجاء اختيار إجابة</div>
+
+                <h3>3. أكثر قنوات التواصل فعالية:</h3>
+                <select name="best_comm" required>
+                    <option value="">-- اختر --</option>
+                    <option value="email">البريد الإلكتروني</option>
+                    <option value="whatsapp">واتس أب</option>
+                    <option value="screens">الشاشات</option>
+                    <option value="other">غير ذلك</option>
+                </select>
+                <div class="form-error" id="best_comm-error">الرجاء اختيار إجابة</div>
+
+                <h3>4. كيف تقيّم جودة التواصل؟</h3>
+                <select name="rate_comm_quality" required>
+                    <option value="">-- اختر --</option>
+                    <option value="excellent">ممتاز</option>
+                    <option value="good">جيد</option>
+                    <option value="average">متوسط</option>
+                    <option value="poor">ضعيف</option>
+                </select>
+                <div class="form-error" id="rate_comm_quality-error">الرجاء اختيار تقييم</div>
+            </div>
+
+            <div class="step" data-step="3">
+                <h3>5. كيف تقيّم الفعاليات؟</h3>
+                <select name="rate_events" required>
+                    <option value="">-- اختر --</option>
+                    <option value="excellent">ممتاز</option>
+                    <option value="good">جيد</option>
+                    <option value="average">متوسط</option>
+                    <option value="poor">ضعيف</option>
+                </select>
+                <div class="form-error" id="rate_events-error">الرجاء اختيار تقييم</div>
+
+                <h3>6. هل تساهم الفعاليات في تعزيز الروح المعنوية؟</h3>
+                <select name="events_morale" required>
+                    <option value="">-- اختر --</option>
+                    <option value="yes">نعم</option>
+                    <option value="no">لا</option>
+                </select>
+                <div class="form-error" id="events_morale-error">الرجاء اختيار إجابة</div>
+
+                <h3>7. هل تعكس الفعاليات ثقافة الشركة؟</h3>
+                <select name="events_culture" required>
+                    <option value="">-- اختر --</option>
+                    <option value="yes">نعم</option>
+                    <option value="no">لا</option>
+                </select>
+                <div class="form-error" id="events_culture-error">الرجاء اختيار إجابة</div>
+
+                <h3>8. هل محتوى الفعاليات ممتع ومفيد؟</h3>
+                <select name="events_content" required>
+                    <option value="">-- اختر --</option>
+                    <option value="yes">نعم</option>
+                    <option value="no">لا</option>
+                </select>
+                <div class="form-error" id="events_content-error">الرجاء اختيار إجابة</div>
+
+                <h3>9. هل تلبي الفعاليات احتياجات الموظفين؟</h3>
+                <select name="events_interest" required>
+                    <option value="">-- اختر --</option>
+                    <option value="yes">نعم</option>
+                    <option value="no">لا</option>
+                </select>
+                <div class="form-error" id="events_interest-error">الرجاء اختيار إجابة</div>
+
+                <h3>10. كيف تقيّم تنظيم الفعاليات؟</h3>
+                <select name="events_organize" required>
+                    <option value="">-- اختر --</option>
+                    <option value="excellent">ممتاز</option>
+                    <option value="good">جيد</option>
+                    <option value="average">متوسط</option>
+                    <option value="poor">ضعيف</option>
+                </select>
+                <div class="form-error" id="events_organize-error">الرجاء اختيار تقييم</div>
+            </div>
+
+            <div class="step" data-step="4">
+                <h3>11. هل بيئة العمل إيجابية ومحفزة؟</h3>
+                <select name="culture_env" required>
+                    <option value="">-- اختر --</option>
+                    <option value="yes">نعم</option>
+                    <option value="no">لا</option>
+                </select>
+                <div class="form-error" id="culture_env-error">الرجاء اختيار إجابة</div>
+
+                <h3>12. هل مساحة العمل مريحة؟</h3>
+                <select name="env_comfort" required>
+                    <option value="">-- اختر --</option>
+                    <option value="yes">نعم</option>
+                    <option value="no">لا</option>
+                </select>
+                <div class="form-error" id="env_comfort-error">الرجاء اختيار إجابة</div>
+
+                <h3>13. هل الموارد متوفرة؟</h3>
+                <select name="env_resources" required>
+                    <option value="">-- اختر --</option>
+                    <option value="yes">نعم</option>
+                    <option value="no">لا</option>
+                </select>
+                <div class="form-error" id="env_resources-error">الرجاء اختيار إجابة</div>
+            </div>
+
+            <div class="step" data-step="5">
+                <h3>14. كيف تقيم مستوى رضاك عن الاستبيان؟ (1–5 نجوم)</h3>
+                <div class="star-rating">
+                    <input type="radio" id="star1" name="stars" value="1" required>
+                    <label for="star1" class="star">&#9733;</label>
+                    <input type="radio" id="star2" name="stars" value="2">
+                    <label for="star2" class="star">&#9733;</label>
+                    <input type="radio" id="star3" name="stars" value="3">
+                    <label for="star3" class="star">&#9733;</label>
+                    <input type="radio" id="star4" name="stars" value="4">
+                    <label for="star4" class="star">&#9733;</label>
+                    <input type="radio" id="star5" name="stars" value="5">
+                    <label for="star5" class="star">&#9733;</label>
+                    <div class="rating-effect-container"></div>
+                </div>
+                <div class="form-error" id="stars-error">الرجاء اختيار تقييم</div>
+            </div>
+
+            <div class="step" data-step="6">
+                <h3>مراجعة الإجابات</h3>
+                <p style="margin-bottom: 10px; color: #4A90E2;">اضغط على أي إجابة لتعديلها</p>
+                <div id="review"></div>
+            </div>
+
+            <div class="nav-buttons">
+                <button type="button" id="prevBtn" disabled>السابق</button>
+                <button type="button" id="nextBtn">التالي</button>
+            </div>
+        </form>
+    </div>
+    <footer>&copy;2025 جميع الحقوق محفوظة</footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <script>
-document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
+            const questions = {
+                email: "1. البريد الإلكتروني",
+                effective_comm: "2. قنوات التواصل فعالة؟",
+                best_comm: "3. أكثر قنوات التواصل فعالية",
+                rate_comm_quality: "4. تقييم جودة التواصل",
+                rate_events: "5. تقييم الفعاليات",
+                events_morale: "6. تعزيز الروح المعنوية؟",
+                events_culture: "7. تعكس ثقافة الشركة؟",
+                events_content: "8. محتوى الفعاليات ممتع؟",
+                events_interest: "9. تلبي احتياجات الموظفين؟",
+                events_organize: "10. تقييم تنظيم الفعاليات",
+                culture_env: "11. بيئة عمل إيجابية؟",
+                env_comfort: "12. مساحة العمل مريحة؟",
+                env_resources: "13. توفر الموارد؟",
+                stars: "14. كيف تقيم مستوى رضاك عن الاستبيان؟"
+            };
+            const translations = {
+                whatsapp: "واتس أب",
+                screens: "الشاشات",
+                email: "البريد الإلكتروني",
+                other: "غير ذلك",
+                excellent: "ممتاز",
+                good: "جيد",
+                average: "متوسط",
+                poor: "ضعيف",
+                yes: "نعم",
+                no: "لا",
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5"
+            };
 
-    const labels = Array.from(document.querySelectorAll(".star-rating label.star"));
-    const inputs = Array.from(document.querySelectorAll(".star-rating input"));
+            const fieldToStep = {
+                "email": 0,
+                "effective_comm": 1,
+                "best_comm": 1,
+                "rate_comm_quality": 1,
+                "rate_events": 2,
+                "events_morale": 2,
+                "events_culture": 2,
+                "events_content": 2,
+                "events_interest": 2,
+                "events_organize": 2,
+                "culture_env": 3,
+                "env_comfort": 3,
+                "env_resources": 3,
+                "stars": 4
+            };
 
-    labels.forEach((label, index) => {
-        label.addEventListener("mouseover", () => {
-            updateHoveredStars(index);
-        });
+            const steps = [...document.querySelectorAll(".step")],
+                prevBtn = document.getElementById("prevBtn"),
+                nextBtn = document.getElementById("nextBtn"),
+                reviewEl = document.getElementById("review"),
+                form = document.getElementById("surveyForm");
 
-        label.addEventListener("mouseout", () => {
-            resetHoverState();
-            updateSelectedStars();
-        });
-    });
+            let current = 0;
 
-    labels.forEach((label, index) => {
-        label.addEventListener("click", () => {
-            inputs[index].checked = true;
-            resetAllStars();
-            animateStarSelection(index);
-        });
-    });
+            function showError(field, show = true) {
+                const errorEl = document.getElementById(`${field}-error`);
+                if (errorEl) {
+                    errorEl.classList.toggle("active", show);
+                }
 
-    function updateHoveredStars(hoverIndex) {
-        labels.forEach((label, index) => {
-            label.classList.toggle("hovered", index <= hoverIndex);
-        });
-    }
+                const inputEl = document.querySelector(`[name="${field}"]`);
+                if (inputEl) {
+                    if (show) {
+                        inputEl.classList.add("error");
+                    } else {
+                        inputEl.classList.remove("error");
+                    }
+                }
+            }
 
-    function resetHoverState() {
-        labels.forEach(label => {
-            label.classList.remove("hovered");
-        });
-    }
+            document.querySelectorAll("select, input").forEach(element => {
+                element.addEventListener("change", () => {
+                    if (element.name) {
+                        showError(element.name, false);
+                    }
+                });
 
-    function updateSelectedStars() {
-        const selectedIndex = inputs.findIndex(input => input.checked);
-        if (selectedIndex >= 0) {
-            labels.forEach((label, index) => {
-                label.classList.toggle("selected", index <= selectedIndex);
+                if (element.type === "email") {
+                    element.addEventListener("input", () => {
+                        showError(element.name, false);
+                    });
+                }
             });
-        }
-    }
 
-    function resetAllStars() {
-        labels.forEach(label => {
-            label.style.opacity = 0;
-            label.classList.remove("selected");
-        });
-    }
+            function playRatingEffect(intensity = 15) {
+                const effectContainer = document.querySelector(".rating-effect-container");
+                if (!effectContainer) {
+                    console.warn("Effect container not found");
+                    return;
+                }
 
+                effectContainer.innerHTML = '';
 
-    function animateStarSelection(selectedIndex) {
-        setTimeout(() => {
-            labels.forEach((label, index) => {
-                setTimeout(() => {
-                    label.style.opacity = 1;  
-                    if (index <= selectedIndex) label.classList.add("selected");  
-                }, index * 100);  
+                const starColors = [
+                    '#FFD700',
+                    '#FFDF00',
+                    '#FFC125',
+                    '#FFCC00'
+                ];
+
+                const glowPulse = document.createElement("div");
+                glowPulse.className = "star-pulse";
+                effectContainer.appendChild(glowPulse);
+
+                if (typeof gsap !== 'undefined') {
+                    gsap.set(glowPulse, {
+                        width: "80%",
+                        height: "80%",
+                        opacity: 0
+                    });
+
+                    gsap.timeline({
+                            repeat: 1
+                        })
+                        .to(glowPulse, {
+                            width: "180%",
+                            height: "180%",
+                            opacity: 0.7,
+                            duration: 0.5,
+                            ease: "power1.out"
+                        })
+                        .to(glowPulse, {
+                            opacity: 0,
+                            duration: 0.6,
+                            ease: "power2.in"
+                        });
+
+                    const numRays = 12;
+                    for (let i = 0; i < numRays; i++) {
+                        const ray = document.createElement("div");
+                        ray.className = "star-ray";
+                        effectContainer.appendChild(ray);
+
+                        const angle = (i / numRays) * 360;
+                        const delay = i * 0.05;
+
+                        gsap.set(ray, {
+                            width: 0,
+                            left: "50%",
+                            top: "50%",
+                            opacity: 0,
+                            rotate: angle,
+                            transformOrigin: "left center"
+                        });
+
+                        gsap.timeline({
+                                delay: delay
+                            })
+                            .to(ray, {
+                                width: "80px",
+                                opacity: 0.7,
+                                duration: 0.4,
+                                ease: "power1.out"
+                            })
+                            .to(ray, {
+                                opacity: 0,
+                                duration: 0.4,
+                                ease: "power1.in"
+                            }, "-=0.2");
+                    }
+
+                    for (let i = 0; i < intensity * 1.5; i++) {
+                        const sparkle = document.createElement("div");
+                        sparkle.className = "sparkle";
+                        effectContainer.appendChild(sparkle);
+
+                        const angle = Math.random() * Math.PI * 2;
+                        const distance = 20 + Math.random() * 60;
+                        const posX = Math.cos(angle) * distance + 50;
+                        const posY = Math.sin(angle) * distance + 50;
+                        const delay = Math.random() * 0.8;
+                        const duration = 0.7 + Math.random() * 1;
+
+                        gsap.set(sparkle, {
+                            left: `${posX}%`,
+                            top: `${posY}%`,
+                            opacity: 0,
+                            scale: 0
+                        });
+
+                        gsap.timeline({
+                                delay: delay
+                            })
+                            .to(sparkle, {
+                                opacity: 1,
+                                scale: 1 + Math.random() * 0.5,
+                                duration: duration * 0.4,
+                                ease: "power1.out"
+                            })
+                            .to(sparkle, {
+                                opacity: 0,
+                                scale: 0,
+                                duration: duration * 0.6,
+                                ease: "power2.in",
+                                onComplete: () => sparkle.remove()
+                            });
+                    }
+
+                    if (intensity > 15) {
+                        setTimeout(() => {
+                            const burstStars = 8;
+                            for (let i = 0; i < burstStars; i++) {
+                                const starBurst = document.createElement("div");
+                                starBurst.className = "sparkle";
+                                starBurst.style.width = "8px";
+                                starBurst.style.height = "8px";
+                                effectContainer.appendChild(starBurst);
+
+                                const angle = (i / burstStars) * Math.PI * 2;
+
+                                gsap.set(starBurst, {
+                                    left: "50%",
+                                    top: "50%",
+                                    opacity: 0,
+                                    scale: 0
+                                });
+
+                                gsap.timeline()
+                                    .to(starBurst, {
+                                        x: Math.cos(angle) * 70,
+                                        y: Math.sin(angle) * 70,
+                                        opacity: 1,
+                                        scale: 1.5,
+                                        duration: 0.8,
+                                        ease: "power1.out"
+                                    })
+                                    .to(starBurst, {
+                                        opacity: 0,
+                                        scale: 0.5,
+                                        duration: 0.5,
+                                        ease: "power2.in",
+                                        onComplete: () => starBurst.remove()
+                                    }, "-=0.3");
+                            }
+                        }, 500);
+                    }
+                } else {
+                    console.warn("GSAP not found, animations will not work");
+                    glowPulse.style.cssText = `
+                width: 80%;
+                height: 80%;
+                position: absolute;
+                left: 10%;
+                top: 10%;
+                background: radial-gradient(circle, rgba(255,215,0,0.5) 0%, rgba(255,215,0,0) 70%);
+                border-radius: 50%;
+            `;
+                }
+            }
+
+            function showStep(i) {
+                steps.forEach((s, idx) => s.classList.toggle("active", idx === i));
+                prevBtn.disabled = i === 0;
+                nextBtn.textContent = i === steps.length - 1 ? "إرسال" : "التالي";
+                if (i === steps.length - 1) renderReview();
+            }
+
+            function renderReview() {
+                try {
+                    const fd = new FormData(form);
+                    let html = "<ul>";
+
+                    for (let [k, v] of fd.entries()) {
+                        if (k === "_token") continue;
+                        if (!questions[k]) continue;
+
+                        const displayValue = translations[v] || v;
+                        const stepIndex = fieldToStep[k];
+
+                        html += `<li data-key="${k}" class="editable" data-step="${stepIndex}">
+                    <strong>${questions[k]}:</strong> ${displayValue}
+                </li>`;
+                    }
+
+                    html += "</ul>";
+                    reviewEl.innerHTML = html;
+
+                    document.querySelectorAll("#review .editable").forEach(item => {
+                        item.addEventListener("click", () => {
+                            const fieldName = item.dataset.key;
+                            const targetStep = parseInt(item.dataset.step);
+
+                            current = targetStep;
+                            showStep(current);
+
+                            const field = document.querySelector(`[name="${fieldName}"]`);
+                            if (field) {
+                                field.focus();
+                                field.style.border = "2px solid #4A90E2";
+
+                                setTimeout(() => {
+                                    field.style.border = "";
+                                }, 3000);
+                            }
+                        });
+                    });
+                } catch (error) {
+                    console.error("Review rendering error:", error);
+                    reviewEl.innerHTML = "<p>خطأ في عرض الملخص. يرجى مراجعة جميع الحقول.</p>";
+                }
+            }
+
+            function validateCurrentStep() {
+                const reqs = steps[current].querySelectorAll("select[required], input[required]");
+                let isValid = true;
+
+                reqs.forEach(element => {
+                    showError(element.name, false);
+
+                    if (element.required && !element.value) {
+                        showError(element.name, true);
+                        isValid = false;
+                    }
+
+                    if (element.type === "email" && element.value) {
+                        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailPattern.test(element.value)) {
+                            showError(element.name, true);
+                            isValid = false;
+                        }
+                    }
+                });
+
+                return isValid;
+            }
+
+            prevBtn.addEventListener("click", () => {
+                if (current > 0) showStep(--current);
             });
-        }, 500);
-    }
-});
 
+            nextBtn.addEventListener("click", (e) => {
+                if (!validateCurrentStep()) {
+                    return;
+                }
+
+                if (current < steps.length - 1) {
+                    showStep(++current);
+                } else {
+                    e.preventDefault();
+
+                    const starVal = +document.querySelector(".star-rating input:checked")?.value || 0;
+
+                    if (starVal >= 4) {
+                        if (typeof confetti === 'function') {
+                            try {
+                                confetti({
+                                    particleCount: starVal === 5 ? 120 : 80,
+                                    spread: starVal === 5 ? 70 : 50,
+                                    origin: {
+                                        y: 0.6
+                                    },
+                                    colors: ['#FFD700', '#FFC125', '#FFFACD', '#F0E68C', '#FFF8DC'],
+                                    scalar: starVal === 5 ? 1.4 : 1.2,
+                                    shapes: ['star', 'circle'],
+                                    ticks: starVal === 5 ? 300 : 200
+                                });
+                            } catch (error) {
+                                console.warn("Error with confetti:", error);
+                            }
+                        } else {
+                            console.warn("Confetti function not found");
+                        }
+
+                        playRatingEffect(starVal === 5 ? 24 : 15);
+
+                        if (starVal === 5) {
+                            const celebrationMsg = document.createElement('div');
+                            celebrationMsg.textContent = "شكراً جزيلاً على تقييمك الرائع!";
+                            celebrationMsg.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background-color: rgba(255, 215, 0, 0.2);
+                        color: #4A90E2;
+                        padding: 15px 30px;
+                        border-radius: 10px;
+                        font-size: 18px;
+                        font-weight: bold;
+                        text-align: center;
+                        z-index: 1000;
+                        border: 2px solid #FFD700;
+                        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+                        opacity: 0;
+                    `;
+                            document.body.appendChild(celebrationMsg);
+
+                            if (typeof gsap !== 'undefined') {
+                                gsap.to(celebrationMsg, {
+                                    opacity: 1,
+                                    duration: 0.5,
+                                    ease: "power2.out",
+                                    onComplete: () => {
+                                        setTimeout(() => {
+                                            gsap.to(celebrationMsg, {
+                                                opacity: 0,
+                                                duration: 0.5,
+                                                ease: "power2.in",
+                                                onComplete: () => celebrationMsg
+                                                    .remove()
+                                            });
+                                        }, 1500);
+                                    }
+                                });
+                            } else {
+                                celebrationMsg.style.transition = "opacity 0.5s";
+                                setTimeout(() => {
+                                    celebrationMsg.style.opacity = "1";
+                                    setTimeout(() => {
+                                        celebrationMsg.style.opacity = "0";
+                                        setTimeout(() => celebrationMsg.remove(), 500);
+                                    }, 1500);
+                                }, 10);
+                            }
+                        }
+
+                        setTimeout(() => {
+                            console.log("Submitting form...");
+                            try {
+                                form.submit();
+                            } catch (error) {
+                                console.error("Form submission error:", error);
+                                const submitButton = document.createElement('input');
+                                submitButton.type = 'submit';
+                                submitButton.style.display = 'none';
+                                form.appendChild(submitButton);
+                                submitButton.click();
+                            }
+                        }, 2200);
+                    } else {
+                        console.log("Submitting form directly...");
+                        try {
+                            form.submit();
+                        } catch (error) {
+                            console.error("Form submission error:", error);
+
+                            const submitButton = document.createElement('input');
+                            submitButton.type = 'submit';
+                            submitButton.style.display = 'none';
+                            form.appendChild(submitButton);
+                            submitButton.click();
+                        }
+                    }
+                }
+            });
+
+            const starRating = document.querySelector(".star-rating"),
+                labels = [...document.querySelectorAll(".star-rating label.star")],
+                inputsStars = [...document.querySelectorAll(".star-rating input")];
+
+            if (starRating && labels.length && inputsStars.length) {
+                const updateStarHover = index => {
+                    labels.forEach((label, idx) => {
+                        label.classList.toggle("hovered", idx <= index);
+                    });
+                };
+
+                const updateStarSelection = index => {
+                    showError("stars", false);
+
+                    inputsStars[index].checked = true;
+
+                    labels.forEach(label => {
+                        label.style.transform = "scale(1)";
+                        label.style.opacity = 0.5;
+                        label.classList.remove("selected");
+                    });
+
+                    setTimeout(() => {
+                        if (typeof gsap !== 'undefined') {
+                            labels.forEach((label, idx) => {
+                                setTimeout(() => {
+                                    if (idx <= index) {
+                                        gsap.to(label, {
+                                            scale: 1.8,
+                                            duration: 0.3,
+                                            ease: "elastic.out(1.2, 0.4)",
+                                            onComplete: () => {
+                                                gsap.to(label, {
+                                                    scale: 1.5,
+                                                    duration: 0.2
+                                                });
+                                            }
+                                        });
+
+                                        label.style.opacity = 1;
+                                        label.classList.add("selected");
+                                        label.style.textShadow =
+                                            "0 0 15px #FFD700, 0 0 10px #FFD700";
+
+                                        gsap.fromTo(label, {
+                                            color: "#FFD700"
+                                        }, {
+                                            color: "#FFC125",
+                                            duration: 1.5,
+                                            repeat: -1,
+                                            yoyo: true,
+                                            ease: "sine.inOut"
+                                        });
+                                    } else {
+                                        label.style.opacity = 0.5;
+                                        label.style.textShadow = "none";
+                                    }
+                                }, idx * 120);
+                            });
+                        } else {
+                            labels.forEach((label, idx) => {
+                                if (idx <= index) {
+                                    label.style.transform = "scale(1.5)";
+                                    label.style.opacity = "1";
+                                    label.classList.add("selected");
+                                    label.style.textShadow =
+                                        "0 0 15px #FFD700, 0 0 10px #FFD700";
+                                    label.style.color = "#FFD700";
+                                    label.style.transition = "all 0.3s ease";
+                                } else {
+                                    label.style.opacity = "0.5";
+                                    label.style.textShadow = "none";
+                                }
+                            });
+                        }
+
+                        if (index >= 2) {
+                            const intensity = [0, 0, 8, 12, 20, 24][index];
+                            setTimeout(() => playRatingEffect(intensity), 300);
+                        }
+                    }, 100);
+                };
+
+                labels.forEach((label, index) => {
+                    label.addEventListener("mouseover", () => updateStarHover(index));
+
+                    label.addEventListener("mouseout", () => {
+                        labels.forEach(l => l.classList.remove("hovered"));
+                        const selectedIndex = inputsStars.findIndex(input => input.checked);
+
+                        if (selectedIndex >= 0) {
+                            labels.forEach((l, idx) => l.classList.toggle("selected", idx <=
+                                selectedIndex));
+                        }
+                    });
+
+                    label.addEventListener("click", () => {
+                        updateStarSelection(index);
+                    });
+                });
+
+                starRating.addEventListener("mouseleave", () => {
+                    labels.forEach(label => label.classList.remove("hovered"));
+                });
+            } else {
+                console.warn("Star rating elements not found");
+            }
+
+            showStep(current);
+        });
     </script>
 </body>
 
