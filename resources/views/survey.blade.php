@@ -155,24 +155,6 @@
             width: 100%;
         }
 
-        #review {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 4px;
-            max-height: 40vh;
-            overflow-y: auto;
-            text-align: right;
-        }
-
-        #review ul {
-            list-style: none;
-            padding-left: 0
-        }
-
-        #review li {
-            margin-bottom: 8px
-        }
-
         .alert {
             padding: 15px;
             border-radius: 4px;
@@ -431,13 +413,6 @@
                 </div>
                 <div class="form-error" id="stars-error">الرجاء اختيار تقييم</div>
             </div>
-
-            <div class="step" data-step="6">
-                <h3>مراجعة الإجابات</h3>
-                <p style="margin-bottom: 10px; color: #4A90E2;">اضغط على أي إجابة لتعديلها</p>
-                <div id="review"></div>
-            </div>
-
             <div class="nav-buttons">
                 <button type="button" id="prevBtn" disabled>السابق</button>
                 <button type="button" id="nextBtn">التالي</button>
@@ -451,22 +426,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const questions = {
-                email: "1. البريد الإلكتروني",
-                effective_comm: "2. قنوات التواصل فعالة؟",
-                best_comm: "3. أكثر قنوات التواصل فعالية",
-                rate_comm_quality: "4. تقييم جودة التواصل",
-                rate_events: "5. تقييم الفعاليات",
-                events_morale: "6. تعزيز الروح المعنوية؟",
-                events_culture: "7. تعكس ثقافة الشركة؟",
-                events_content: "8. محتوى الفعاليات ممتع؟",
-                events_interest: "9. تلبي احتياجات الموظفين؟",
-                events_organize: "10. تقييم تنظيم الفعاليات",
-                culture_env: "11. بيئة عمل إيجابية؟",
-                env_comfort: "12. مساحة العمل مريحة؟",
-                env_resources: "13. توفر الموارد؟",
-                stars: "14. كيف تقيم مستوى رضاك عن الاستبيان؟"
-            };
             const translations = {
                 whatsapp: "واتس أب",
                 screens: "الشاشات",
@@ -505,7 +464,6 @@
             const steps = [...document.querySelectorAll(".step")],
                 prevBtn = document.getElementById("prevBtn"),
                 nextBtn = document.getElementById("nextBtn"),
-                reviewEl = document.getElementById("review"),
                 form = document.getElementById("surveyForm");
 
             let current = 0;
@@ -710,53 +668,8 @@
                 steps.forEach((s, idx) => s.classList.toggle("active", idx === i));
                 prevBtn.disabled = i === 0;
                 nextBtn.textContent = i === steps.length - 1 ? "إرسال" : "التالي";
-                if (i === steps.length - 1) renderReview();
             }
 
-            function renderReview() {
-                try {
-                    const fd = new FormData(form);
-                    let html = "<ul>";
-
-                    for (let [k, v] of fd.entries()) {
-                        if (k === "_token") continue;
-                        if (!questions[k]) continue;
-
-                        const displayValue = translations[v] || v;
-                        const stepIndex = fieldToStep[k];
-
-                        html += `<li data-key="${k}" class="editable" data-step="${stepIndex}">
-                    <strong>${questions[k]}:</strong> ${displayValue}
-                </li>`;
-                    }
-
-                    html += "</ul>";
-                    reviewEl.innerHTML = html;
-
-                    document.querySelectorAll("#review .editable").forEach(item => {
-                        item.addEventListener("click", () => {
-                            const fieldName = item.dataset.key;
-                            const targetStep = parseInt(item.dataset.step);
-
-                            current = targetStep;
-                            showStep(current);
-
-                            const field = document.querySelector(`[name="${fieldName}"]`);
-                            if (field) {
-                                field.focus();
-                                field.style.border = "2px solid #4A90E2";
-
-                                setTimeout(() => {
-                                    field.style.border = "";
-                                }, 3000);
-                            }
-                        });
-                    });
-                } catch (error) {
-                    console.error("Review rendering error:", error);
-                    reviewEl.innerHTML = "<p>خطأ في عرض الملخص. يرجى مراجعة جميع الحقول.</p>";
-                }
-            }
 
             function validateCurrentStep() {
                 const reqs = steps[current].querySelectorAll("select[required], input[required]");

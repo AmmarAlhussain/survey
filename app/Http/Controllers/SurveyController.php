@@ -17,8 +17,6 @@ class SurveyController extends Controller
     {
         $validated = $request->validate([
             'email' => 'required|email|unique:survey,email',
-            'age_range' => 'required',
-            'gender' => 'required',
             'effective_comm' => 'required',
             'best_comm' => 'required',
             'rate_comm_quality' => 'required',
