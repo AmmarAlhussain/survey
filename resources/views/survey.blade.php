@@ -87,26 +87,18 @@
             top: 5px;
         }
 
-        /* Active step: your brand blue with a soft glow */
         .progress-step.active {
             background: #4A90E2;
             border-color: #fff;
-            /* white border keeps it crisp */
             box-shadow: 0 0 15px rgba(74, 144, 226, 0.6);
-            /* blue glow */
             transform: scale(1.2);
             color: #fff;
-            /* white text for legibility */
         }
 
-        /* Completed step: lightened blue with gold border for a subtle nod */
         .progress-step.complete {
             background: rgba(74, 144, 226, 0.2);
-            /* pale blue fill */
             border-color: #4A90E2;
-            /* solid blue border */
             color: #4A90E2;
-            /* blue text to match */
         }
 
         .form-container {
@@ -671,7 +663,6 @@
                 "5": "5"
             };
 
-            // Map fields to step indices
             const fieldToStep = {
                 "email": 0,
                 "effective_comm": 1,
@@ -699,12 +690,8 @@
             let current = 0;
             const totalSteps = steps.length;
 
-            // Initialize progress journey dots - UPDATED to place numbers inside progress bar
             function initProgressJourney() {
-                // Clear existing steps (if any)
                 progressSteps.innerHTML = '';
-
-                // Create step dots inside the progress bar
                 for (let i = 0; i < totalSteps; i++) {
                     const stepDot = document.createElement('div');
                     stepDot.className = `progress-step ${i === 0 ? 'active' : ''}`;
@@ -713,8 +700,6 @@
                     progressSteps.appendChild(stepDot);
                 }
             }
-
-            // Update progress bar and journey
             function updateProgress(index) {
                 const progressPercentage = ((index + 1) / totalSteps) * 100;
                 progressBar.style.width = `${progressPercentage}%`;
@@ -922,29 +907,23 @@
                 }
             }
 
-            // UPDATED: Page flip animation from top-right to bottom-left
-            // UPDATED: Enhanced page flip animation with 3D perspective and container effects
+
             function animatePageFlip(fromStep, toStep) {
                 const formContainer = document.querySelector('.form-container');
                 const currentStep = steps[fromStep];
                 currentStep.classList.add('exit');
 
-                // Add perspective to form container for enhanced 3D effect
                 if (typeof gsap !== 'undefined') {
-                    // Enhance the form container perspective during transition
                     gsap.to(formContainer, {
                         perspective: "1500px",
                         duration: 0.1
                     });
-
-                    // Tilt the form slightly during page flip
                     gsap.to(form, {
                         rotateY: fromStep < toStep ? "-5deg" : "5deg",
                         duration: 0.3,
                         ease: "power1.out"
                     });
 
-                    // Create a temporary page fold element for more realistic effect
                     const pageFold = currentStep.querySelector('.page-fold');
                     if (pageFold) {
                         gsap.to(pageFold, {
@@ -954,7 +933,6 @@
                         });
                     }
 
-                    // Enhanced shadow during flip
                     const shadow = currentStep.querySelector('.page-shadow');
                     if (shadow) {
                         gsap.to(shadow, {
@@ -963,7 +941,6 @@
                         });
                     }
 
-                    // Corner effect
                     const corners = currentStep.querySelectorAll('.page-corner');
                     corners.forEach(corner => {
                         gsap.to(corner, {
@@ -972,7 +949,6 @@
                         });
                     });
                 } else {
-                    // Fallback if GSAP is not available
                     formContainer.style.perspective = "1500px";
                     form.style.transform = `rotateY(${fromStep < toStep ? "-5deg" : "5deg"})`;
                     form.style.transition = "transform 0.3s ease-out";
@@ -998,7 +974,6 @@
                     const newStep = steps[toStep];
                     newStep.classList.add('active');
 
-                    // Reset the form's rotation back to normal
                     if (typeof gsap !== 'undefined') {
                         gsap.to(form, {
                             rotateY: "0deg",
@@ -1007,7 +982,6 @@
                             delay: 0.1
                         });
 
-                        // Add a subtle bounce effect to the new page
                         gsap.fromTo(newStep, {
                             scale: 0.95,
                             opacity: 0.9
@@ -1050,7 +1024,6 @@
                                 });
                             }
 
-                            // Reset form container perspective
                             gsap.to(formContainer, {
                                 perspective: "1200px",
                                 duration: 0.8,
@@ -1082,7 +1055,7 @@
 
                     updateProgress(toStep);
 
-                }, 350); // Slightly extended for better page flip effect
+                }, 350); 
             }
 
             function validateCurrentStep() {
@@ -1342,7 +1315,6 @@
                 console.warn("Star rating elements not found");
             }
 
-            // Initialize each step with hidden corners and shadows
             steps.forEach(step => {
                 const corners = step.querySelectorAll('.page-corner');
                 const shadow = step.querySelector('.page-shadow');
@@ -1356,7 +1328,6 @@
                 if (pageFold) pageFold.style.opacity = '0';
             });
 
-            // Initialize progress journey with numbers inside the bar
             initProgressJourney();
             updateProgress(current);
         });
