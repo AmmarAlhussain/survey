@@ -12,18 +12,17 @@ return new class extends Migration
             $table->id();
             $table->string('email')->unique();
             $table->enum('effective_comm', ['yes', 'no']);
-            $table->enum('best_comm', ['email', 'whatsapp', 'screens', 'other']);
-            $table->enum('rate_comm_quality', ['excellent', 'good', 'average', 'poor']);
-            $table->enum('rate_events', ['excellent', 'good', 'average', 'poor']);
+            $table->string('best_comm');
+            $table->integer('rate_comm_quality' );
+            $table->integer('rate_events' );
             $table->enum('events_morale', ['yes', 'no']);
             $table->enum('events_culture', ['yes', 'no']);
             $table->enum('events_content', ['yes', 'no']);
             $table->enum('events_interest', ['yes', 'no']);
-            $table->enum('events_organize', ['excellent', 'good', 'average', 'poor']);
+            $table->integer('events_organize');
             $table->enum('culture_env', ['yes', 'no']);
             $table->enum('env_comfort', ['yes', 'no']);
             $table->enum('env_resources', ['yes', 'no']);
-            $table->integer('stars');
         });
     }
 

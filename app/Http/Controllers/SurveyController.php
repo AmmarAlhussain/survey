@@ -9,26 +9,38 @@ class SurveyController extends Controller
 {
     public function create()
     {
-        return view('survey');
+        $surveys = Survey::all();
+        $existingEmails = Survey::pluck('email')->toArray();
+        
+        return view('survey', compact('surveys', 'existingEmails'));
     }
 
     public function store(Request $request)
     {
+        $existingSurvey = Survey::where('email', $request->email)->first();
+        
+        if ($existingSurvey) {
+            return redirect()->route('completed', ['status' => 'already_submitted']);
+        }
+        
+        if ($request->best_comm === 'other' && $request->has('best_comm_custom')) {
+            $request->merge(['best_comm' => $request->best_comm_custom]);
+        }
+        
         $validated = $request->validate([
             'email' => 'required|email|unique:survey,email',
             'effective_comm' => 'required',
             'best_comm' => 'required',
-            'rate_comm_quality' => 'required',
-            'rate_events' => 'required',
+            'rate_comm_quality' => 'required|integer|min:1|max:5',
+            'rate_events' => 'required|integer|min:1|max:5',
             'events_morale' => 'required',
             'events_culture' => 'required',
             'events_content' => 'required',
             'events_interest' => 'required',
-            'events_organize' => 'required',
+            'events_organize' => 'required|integer|min:1|max:5',
             'culture_env' => 'required',
             'env_comfort' => 'required',
             'env_resources' => 'required',
-            'stars' => 'required|integer|min:1|max:5',
         ], [
             'email.unique' => 'البريد الإلكتروني مستخدم بالفعل.',
             'email.required' => 'يرجى إدخال البريد الإلكتروني.',
@@ -37,35 +49,18 @@ class SurveyController extends Controller
 
         Survey::create($validated);
 
-        return redirect()->back()->with('success', 'تم إرسال الاستبيان بنجاح');
+        return redirect()->route('completed', ['status' => 'success']);
+    }
+    
+    public function completed(Request $request)
+    {
+        $status = $request->query('status', 'success');
+        return view('completed', compact('status'));
     }
 
     public function showSurveyCharts()
     {
-        $fields = [
-            'effective_comm',
-            'best_comm',
-            'rate_comm_quality',
-            'rate_events',
-            'events_morale',
-            'events_culture',
-            'events_content',
-            'events_interest',
-            'events_organize',
-            'culture_env',
-            'env_comfort',
-            'env_resources',
-            'stars'
-        ];
-
-        $data = [];
-        foreach ($fields as $col) {
-            $data[$col] = Survey::groupBy($col)
-                ->selectRaw("$col, COUNT(*) as count")
-                ->pluck('count', $col)
-                ->toArray();
-        }
-
+        $surveys = Survey::all();
         $labels = [
             'effective_comm'    => 'هل قنوات التواصل فعالة',
             'best_comm'         => 'أفضل قناة تواصل',
@@ -79,38 +74,32 @@ class SurveyController extends Controller
             'culture_env'       => 'بيئة العمل',
             'env_comfort'       => 'راحة المكان',
             'env_resources'     => 'توفر الموارد',
-            'stars'             => 'تقييم الاستبيان'
         ];
-
-        return view('chart', compact('data', 'labels'));
+        return view('chart', compact('surveys', 'labels'));
     }
 
+    public function logs()
+    {
+        $surveys = Survey::all();
 
+        $labels = [
+            'whatsapp'    => 'واتس أب',
+            'screens'     => 'الشاشات',
+            'email'       => 'البريد الإلكتروني',
+            'other'       => 'غير ذلك',
+            'excellent'   => 'ممتاز',
+            'good'        => 'جيد',
+            'average'     => 'متوسط',
+            'poor'        => 'ضعيف',
+            'yes'         => 'نعم',
+            'no'          => 'لا',
+            '1'           => '1',
+            '2'           => '2',
+            '3'           => '3',
+            '4'           => '4',
+            '5'           => '5',
+        ];
 
-
-public function logs()
-{
-    $surveys = Survey::all();
-
-    $labels = [
-        'whatsapp'    => 'واتس أب',
-        'screens'     => 'الشاشات',
-        'email'       => 'البريد الإلكتروني',
-        'other'       => 'غير ذلك',
-        'excellent'   => 'ممتاز',
-        'good'        => 'جيد',
-        'average'     => 'متوسط',
-        'poor'        => 'ضعيف',
-        'yes'         => 'نعم',
-        'no'          => 'لا',
-        '1'           => '1',
-        '2'           => '2',
-        '3'           => '3',
-        '4'           => '4',
-        '5'           => '5',
-    ];
-
-    return view('logs', compact('surveys','labels'));
-}
-
+        return view('logs', compact('surveys', 'labels'));
+    }
 }

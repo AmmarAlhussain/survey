@@ -67,10 +67,6 @@
             z-index: 10;
         }
 
-        tr td:last-child {
-            width: 80px;
-        }
-
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
@@ -192,7 +188,6 @@
                         <th>هل بيئة العمل إيجابية ومحفزة</th>
                         <th>هل مساحة العمل مريحة</th>
                         <th>هل الموارد متوفرة</th>
-                        <th>تقييم الاستبيان</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -201,24 +196,35 @@
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $survey->email }}</td>
                             <td>{{ $labels[$survey->effective_comm] }}</td>
-                            <td>{{ $labels[$survey->best_comm] }}</td>
-                            <td>{{ $labels[$survey->rate_comm_quality] }}</td>
-                            <td>{{ $labels[$survey->rate_events] }}</td>
+                            <td>{{ $labels[$survey->best_comm] ?? $survey->best_comm }}</td>
+                            <td>
+                                <div class="star-rating-display">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        {!! $i <= $survey->rate_comm_quality ? '★' : '☆' !!}
+                                    @endfor
+                                </div>
+                            </td>
+                            <td>
+                                <div class="star-rating-display">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        {!! $i <= $survey->rate_events ? '★' : '☆' !!}
+                                    @endfor
+                                </div>
+                            </td>
                             <td>{{ $labels[$survey->events_morale] }}</td>
                             <td>{{ $labels[$survey->events_culture] }}</td>
                             <td>{{ $labels[$survey->events_content] }}</td>
                             <td>{{ $labels[$survey->events_interest] }}</td>
-                            <td>{{ $labels[$survey->events_organize] }}</td>
-                            <td>{{ $labels[$survey->culture_env] }}</td>
-                            <td>{{ $labels[$survey->env_comfort] }}</td>
-                            <td>{{ $labels[$survey->env_resources] }}</td>
                             <td>
                                 <div class="star-rating-display">
                                     @for ($i = 1; $i <= 5; $i++)
-                                        {!! $i <= $survey->stars ? '★' : '☆' !!}
+                                        {!! $i <= $survey->events_organize ? '★' : '☆' !!}
                                     @endfor
                                 </div>
                             </td>
+                            <td>{{ $labels[$survey->culture_env] }}</td>
+                            <td>{{ $labels[$survey->env_comfort] }}</td>
+                            <td>{{ $labels[$survey->env_resources] }}</td>
                         </tr>
                     @endforeach
                 </tbody>

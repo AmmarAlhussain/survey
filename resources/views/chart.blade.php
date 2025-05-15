@@ -109,6 +109,38 @@
             font-size: 1.1rem;
             color: #4A90E2;
         }
+
+        .summary-stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 0 auto 30px;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4A90E2;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .label {
+            color: #666;
+            font-size: 1rem;
+        }
     </style>
 </head>
 
@@ -116,230 +148,329 @@
     <header>لوحة نتائج الاستبيان</header>
     <h1>نتائج الاستبيان - الرسوم البيانية</h1>
 
+    <div class="summary-stats">
+        <div class="stat-card">
+            <div class="number" id="total-responses">-</div>
+            <div class="label">إجمالي الردود</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="comm-satisfaction">-</div>
+            <div class="label">الرضا عن التواصل</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="events-rating">-</div>
+            <div class="label">تقييم الفعاليات</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="events-organization">-</div>
+            <div class="label">تنظيم الفعاليات</div>
+        </div>
+    </div>
+
     <div class="charts-wrapper">
-        @foreach ($data as $field => $counts)
-            <div class="chart-container">
-                <h2>{{ $labels[$field] }}</h2>
-                <canvas id="{{ $field }}Chart"></canvas>
-            </div>
-        @endforeach
+        <div class="chart-container">
+            <h2>فعالية التواصل</h2>
+            <canvas id="effective_commChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>أفضل وسيلة للتواصل</h2>
+            <canvas id="best_commChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>تقييم جودة التواصل</h2>
+            <canvas id="rate_comm_qualityChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>تقييم الفعاليات</h2>
+            <canvas id="rate_eventsChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>الفعاليات تعزز الروح المعنوية</h2>
+            <canvas id="events_moraleChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>الفعاليات تعزز الثقافة</h2>
+            <canvas id="events_cultureChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>محتوى الفعاليات مفيد</h2>
+            <canvas id="events_contentChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>الفعاليات تثير الاهتمام</h2>
+            <canvas id="events_interestChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>تنظيم الفعاليات</h2>
+            <canvas id="events_organizeChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>بيئة وثقافة العمل مناسبة</h2>
+            <canvas id="culture_envChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>الراحة في بيئة العمل</h2>
+            <canvas id="env_comfortChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>توفر الموارد في بيئة العمل</h2>
+            <canvas id="env_resourcesChart"></canvas>
+        </div>
     </div>
 
     <footer>&copy; 2025 نظام الاستبيانات</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const allData = @json($data);
-            const translations = {
-                'whatsapp': 'واتساب',
-                'screens': 'الشاشات',
-                'email_seera': 'إيميل عائلة سير',
-                'email': 'البريد الإلكتروني',
-                'other': 'أخرى',
-                'excellent': 'ممتاز',
-                'good': 'جيد',
-                'average': 'متوسط',
-                'poor': 'ضعيف',
+            // Get survey data from Laravel backend
+            const surveyData = @json($surveys);
+            const labels = {
                 'yes': 'نعم',
                 'no': 'لا',
-                '1': 'نجمة',
-                '2': 'نجمتين',
-                '3': '3 نجوم',
-                '4': '4 نجوم',
-                '5': '5 نجوم'
+                'email': 'البريد الإلكتروني',
+                'whatsapp': 'واتساب',
+                'screens': 'الشاشات',
+                'other': 'أخرى',
+                '1': '1',
+                '2': '2',
+                '3': '3',
+                '4': '4',
+                '5': '5'
+            };
+            
+            renderCharts(surveyData, labels);
+        });
+
+        function renderCharts(surveyData, translations) {
+            // Process data to create counts
+            const fields = [
+                'effective_comm', 'best_comm', 'rate_comm_quality', 'rate_events', 
+                'events_morale', 'events_culture', 'events_content', 'events_interest', 
+                'events_organize', 'culture_env', 'env_comfort', 'env_resources'
+            ];
+            
+            // Define field types for proper chart rendering
+            const fieldTypes = {
+                'effective_comm': 'boolean', // yes/no
+                'best_comm': 'categorical', // predefined options
+                'rate_comm_quality': 'rating', // 1-5
+                'rate_events': 'rating', // 1-5
+                'events_morale': 'boolean', // yes/no
+                'events_culture': 'boolean', // yes/no
+                'events_content': 'boolean', // yes/no
+                'events_interest': 'boolean', // yes/no
+                'events_organize': 'rating', // 1-5
+                'culture_env': 'boolean', // yes/no
+                'env_comfort': 'boolean', // yes/no
+                'env_resources': 'boolean' // yes/no
+            };
+            
+            // Define the expected values for best_comm to ensure all 4 categories appear
+            const bestCommCategories = ['email', 'whatsapp', 'screens', 'other'];
+            
+            // Create data object with counts
+            const processedData = {};
+            fields.forEach(field => {
+                processedData[field] = {};
+                
+                // Initialize with zero counts if field is categorical with predefined values
+                if (field === 'best_comm') {
+                    bestCommCategories.forEach(category => {
+                        processedData[field][category] = 0;
+                    });
+                } else if (fieldTypes[field] === 'rating') {
+                    // Initialize rating fields with 0 counts for all ratings 1-5
+                    for (let i = 1; i <= 5; i++) {
+                        processedData[field][i] = 0;
+                    }
+                } else if (fieldTypes[field] === 'boolean') {
+                    // Initialize boolean fields with 0 counts for yes/no
+                    processedData[field]['yes'] = 0;
+                    processedData[field]['no'] = 0;
+                }
+                
+                // Count actual data
+                surveyData.forEach(record => {
+                    let value = record[field];
+                    
+                    // For best_comm, categorize any value not in our predefined list as "other"
+                    if (field === 'best_comm' && !bestCommCategories.includes(value)) {
+                        value = 'other';
+                    }
+                    
+                    if (processedData[field][value] !== undefined) {
+                        processedData[field][value]++;
+                    } else {
+                        processedData[field][value] = 1;
+                    }
+                });
+            });
+
+            // Update summary stats
+            document.getElementById('total-responses').textContent = surveyData.length;
+            
+            // Calculate satisfaction percentages
+            const commYesCount = processedData['effective_comm']['yes'] || 0;
+            const commSatisfaction = ((commYesCount / surveyData.length) * 100).toFixed(1) + '%';
+            document.getElementById('comm-satisfaction').textContent = commSatisfaction;
+            
+            // Calculate average event rating as percentage
+            let totalEventRating = 0;
+            surveyData.forEach(record => {
+                totalEventRating += parseInt(record['rate_events']);
+            });
+            // Convert to percentage (5 stars = 100%)
+            const avgEventRatingPct = ((totalEventRating / (surveyData.length * 5)) * 100).toFixed(1) + '%';
+            document.getElementById('events-rating').textContent = avgEventRatingPct;
+            
+            // Calculate event organization rating as percentage
+            let totalOrgRating = 0;
+            surveyData.forEach(record => {
+                totalOrgRating += parseInt(record['events_organize']);
+            });
+            // Convert to percentage (5 stars = 100%)
+            const avgOrgRatingPct = ((totalOrgRating / (surveyData.length * 5)) * 100).toFixed(1) + '%';
+            document.getElementById('events-organization').textContent = avgOrgRatingPct;
+
+            // Define chart colors
+            const chartColors = {
+                boolean: ['#4A90E2', '#E6E6E6'], // Yes/No colors
+                categorical: ['#4A90E2', '#50E3C2', '#FFC300', '#E67E22'], // For best_comm
+                rating: ['#4A90E2', '#50E3C2', '#FFC300', '#E67E22', '#E74C3C'] // For rating 1-5
             };
 
-            const fieldOrders = {
-                'yes_no': ['yes', 'no'],
-                'rating': ['poor', 'average', 'good', 'excellent']
-            };
-
-            function getChartConfig(field) {
-                if (field === 'effective_comm' ||
-                    (field.startsWith('events_') && !field.endsWith('_organize')) ||
-                    field === 'culture_env' ||
-                    field.startsWith('env_')) {
-                    return {
-                        type: 'doughnut',
-                        colors: ['#4A90E2', '#E6E6E6'],
-                        options: {
-                            cutout: '60%',
-                            plugins: {
-                                legend: {
-                                    position: 'bottom'
-                                }
+            // Render charts
+            fields.forEach(field => {
+                const chartElement = document.getElementById(field + 'Chart');
+                if (!chartElement) return; // Skip if chart element doesn't exist
+                
+                const ctx = chartElement.getContext('2d');
+                const fieldType = fieldTypes[field];
+                const data = processedData[field];
+                
+                let chartType, colors, options;
+                
+                // Determine chart type and options based on field type
+                if (fieldType === 'boolean') {
+                    chartType = 'doughnut';
+                    colors = chartColors.boolean;
+                    options = {
+                        cutout: '60%',
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
                             }
                         }
                     };
-                }
-                if (field === 'stars') {
-                    return {
-                        type: 'bar',
-                        colors: ['#FFD700'],
-                        options: {
-                            indexAxis: 'y',
-                            plugins: {
-                                legend: {
-                                    display: false
-                                }
-                            },
-                            scales: {
-                                x: {
-                                    beginAtZero: true,
-                                    grid: {
-                                        drawBorder: false
-                                    }
-                                },
-                                y: {
-                                    grid: {
-                                        display: false
-                                    }
-                                }
+                } else if (field === 'best_comm') {
+                    chartType = 'pie';
+                    colors = chartColors.categorical;
+                    options = {
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
                             }
                         }
                     };
-                }
-                if (field.startsWith('rate_') || field.endsWith('_organize')) {
-                    return {
-                        type: 'pie',
-                        colors: ['#E67E22', '#FFC300', '#4A90E2',
-                        '#50E3C2'],
-                        options: {
-                            plugins: {
-                                legend: {
-                                    position: 'bottom'
-                                }
-                            }
-                        }
-                    };
-                }
-                if (field.includes('comm')) {
-                    return {
-                        type: 'bar',
-                        colors: ['#4A90E2', '#50E3C2', '#FFC300', '#E67E22'],
-                        options: {
-                            indexAxis: 'y',
-                            plugins: {
-                                legend: {
-                                    display: false
-                                }
-                            },
-                            scales: {
-                                x: {
-                                    beginAtZero: true,
-                                    grid: {
-                                        drawBorder: false
-                                    }
-                                },
-                                y: {
-                                    grid: {
-                                        display: false
-                                    }
-                                }
-                            }
-                        }
-                    };
-                }
-                return {
-                    type: 'bar',
-                    colors: ['#4A90E2'],
-                    options: {
+                } else {
+                    // Rating fields (1-5)
+                    chartType = 'bar';
+                    colors = chartColors.rating;
+                    options = {
+                        indexAxis: 'y',
                         plugins: {
                             legend: {
                                 display: false
                             }
                         },
                         scales: {
+                            x: {
+                                beginAtZero: true,
+                                grid: {
+                                    drawBorder: false
+                                }
+                            },
                             y: {
-                                beginAtZero: true
+                                grid: {
+                                    display: false
+                                }
                             }
                         }
-                    }
-                };
-            }
-
-            Object.entries(allData).forEach(([field, counts]) => {
-                const ctx = document.getElementById(field + 'Chart').getContext('2d');
-                let labels = Object.keys(counts);
-                let values = Object.values(counts);
-
-                if (field.startsWith('rate_') || field.endsWith('_organize')) {
-
-                    const orderedData = fieldOrders.rating.map(key => {
-                        const index = labels.indexOf(key);
-                        return {
-                            label: key,
-                            value: index !== -1 ? values[index] : 0
-                        };
-                    }).filter(item => labels.includes(item.label));
-
-                    labels = orderedData.map(item => item.label);
-                    values = orderedData.map(item => item.value);
-                } else if ((field.startsWith('events_') && !field.endsWith('_organize')) ||
-                    field === 'culture_env' ||
-                    field.startsWith('env_')) {
-                    if (labels.includes('yes') && labels.includes('no')) {
-                        const orderedData = fieldOrders.yes_no.map(key => {
-                            const index = labels.indexOf(key);
-                            return {
-                                label: key,
-                                value: index !== -1 ? values[index] : 0
-                            };
-                        });
-                        labels = orderedData.map(item => item.label);
-                        values = orderedData.map(item => item.value);
-                    }
+                    };
                 }
-
-                const translated = labels.map(l => translations[l] || l);
-                const cfg = getChartConfig(field);
-                const total = values.reduce((s, n) => s + n, 0);
-
+                
+                let chartLabels, chartData;
+                
+                // Handle specific field formatting
+                if (fieldType === 'rating') {
+                    // Ensure ratings are sorted 1-5
+                    chartLabels = ['1', '2', '3', '4', '5'];
+                    chartData = chartLabels.map(rating => data[rating] || 0);
+                } else if (field === 'best_comm') {
+                    // Ensure all 4 categories are shown in the proper order
+                    chartLabels = bestCommCategories;
+                    chartData = chartLabels.map(category => data[category] || 0);
+                } else {
+                    // For boolean fields (yes/no)
+                    chartLabels = Object.keys(data);
+                    chartData = Object.values(data);
+                }
+                
+                // Translate labels
+                const translatedLabels = chartLabels.map(l => translations[l] || l);
+                
+                // Calculate total for percentages
+                const total = chartData.reduce((sum, val) => sum + val, 0);
+                
                 new Chart(ctx, {
-                    type: cfg.type,
+                    type: chartType,
                     data: {
-                        labels: translated,
+                        labels: translatedLabels,
                         datasets: [{
-                            data: values,
-                            backgroundColor: cfg.colors,
-                            borderColor: cfg.type === 'bar' ? 'rgba(0,0,0,0.1)' : '#fff',
+                            data: chartData,
+                            backgroundColor: colors,
+                            borderColor: chartType === 'bar' ? 'rgba(0,0,0,0.1)' : '#fff',
                             borderWidth: 1,
-                            borderRadius: cfg.type === 'bar' ? 4 : 0,
+                            borderRadius: chartType === 'bar' ? 4 : 0,
                             hoverOffset: 10
                         }]
                     },
                     options: {
-                        ...cfg.options,
+                        ...options,
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            ...cfg.options.plugins,
+                            ...options.plugins,
                             tooltip: {
                                 callbacks: {
-                                    label: ctx => {
-                                        const v = ctx.raw;
-                                        return `${v} (${(v/total*100).toFixed(1)}%)`;
+                                    label: function(context) {
+                                        const value = context.raw;
+                                        const percentage = ((value / total) * 100).toFixed(1);
+                                        return `${value} (${percentage}%)`;
                                     }
                                 }
                             }
                         }
                     }
                 });
-
-                if (['doughnut', 'pie'].includes(cfg.type) && labels.includes('yes') && labels.includes(
-                        'no')) {
-                    const yesCount = values[labels.indexOf('yes')];
-                    const yesPct = (yesCount / total * 100).toFixed(1);
-                    const stats = document.createElement('div');
-                    stats.className = 'chart-stats';
-                    stats.innerHTML = `
-            <div class="stat"><div class="value">${yesPct}%</div><div>نعم</div></div>
-            <div class="stat"><div class="value">${total}</div><div>الإجمالي</div></div>`;
-                    ctx.canvas.parentNode.appendChild(stats);
+                
+                // Add yes/no stats below yes/no charts
+                if (fieldType === 'boolean') {
+                    const yesIndex = chartLabels.indexOf('yes');
+                    if (yesIndex !== -1) {
+                        const yesCount = chartData[yesIndex];
+                        const yesPct = ((yesCount / total) * 100).toFixed(1);
+                        
+                        const stats = document.createElement('div');
+                        stats.className = 'chart-stats';
+                        stats.innerHTML = `
+                            <div class="stat"><div class="value">${yesPct}%</div><div>نعم</div></div>
+                            <div class="stat"><div class="value">${total}</div><div>الإجمالي</div></div>`;
+                        ctx.canvas.parentNode.appendChild(stats);
+                    }
                 }
             });
-        });
+        }
     </script>
 </body>
 

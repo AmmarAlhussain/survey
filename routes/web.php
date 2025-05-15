@@ -7,5 +7,5 @@ use App\Http\Controllers\SurveyController;
 Route::get('/', [SurveyController::class, 'create'])->name('create'); 
 Route::post('/', [SurveyController::class, 'store'])->name('store');
 Route::get('/logs', [SurveyController::class, 'logs'])->name('logs');
+Route::get('completed', [SurveyController::class, 'completed'])->name('completed');
 Route::get('/charts', [SurveyController::class, 'showSurveyCharts']);
-
