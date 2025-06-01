@@ -297,7 +297,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Special "other option" check
         if (
             currentStep.getAttribute("data-step") === "3" &&
             otherRadio?.checked &&
@@ -321,7 +320,6 @@ document.addEventListener("DOMContentLoaded", function () {
         ].map((input) => parseInt(input.value) || 0);
         const highestVal = Math.max(...(starValues.length ? starValues : [0]));
 
-        // Show celebration message
         const celebrationMsg =
             document.querySelector(".celebration-msg") ||
             document.body.appendChild(
@@ -349,7 +347,6 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => celebrationMsg.remove(), 500);
         }, 2000);
 
-        // Submit form
         setTimeout(() => {
             const customOption = document.querySelector(
                 'input[name="best_comm_custom"]'
@@ -376,6 +373,5 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
-    // Make validateCurrentStep available globally
     window.validateCurrentStep = validateCurrentStep;
 });
