@@ -16,7 +16,7 @@
             padding: 20px;
             text-align: center;
         }
-        
+
         .message-box {
             background: white;
             padding: 60px 40px;
@@ -26,18 +26,19 @@
             width: 100%;
             animation: fadeInScale 0.5s ease-out;
         }
-        
+
         @keyframes fadeInScale {
             from {
                 opacity: 0;
                 transform: scale(0.9);
             }
+
             to {
                 opacity: 1;
                 transform: scale(1);
             }
         }
-        
+
         .icon-container {
             width: 100px;
             height: 100px;
@@ -49,45 +50,47 @@
             justify-content: center;
             animation: pulse 1.5s infinite;
         }
-        
+
         @keyframes pulse {
             0% {
                 box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.7);
             }
+
             70% {
                 box-shadow: 0 0 0 20px rgba(74, 144, 226, 0);
             }
+
             100% {
                 box-shadow: 0 0 0 0 rgba(74, 144, 226, 0);
             }
         }
-        
+
         .icon-container span {
             color: white;
             font-size: 50px;
             line-height: 1;
         }
-        
+
         .title {
             color: #333;
             margin-bottom: 20px;
             font-size: 32px;
             font-weight: bold;
         }
-        
+
         .message {
             font-size: 20px;
             color: #666;
             margin-bottom: 30px;
             line-height: 1.6;
         }
-        
+
         .sub-message {
             font-size: 16px;
             color: #888;
             margin-bottom: 40px;
         }
-        
+
         .btn-home {
             background: #4A90E2;
             color: white;
@@ -101,7 +104,7 @@
             text-decoration: none;
             display: inline-block;
         }
-        
+
         .btn-home:hover {
             background: #3A80D2;
             transform: translateY(-2px);
@@ -111,17 +114,14 @@
 </head>
 
 <body>
-    <header>
-        <h1>استبيان رأي الموظفين</h1>
-    </header>
-    
+
     <div class="completion-container">
         <div class="message-box">
             <div class="icon-container">
                 <span>✓</span>
             </div>
-            
-            @if($status === 'already_submitted')
+
+            @if ($status === 'already_submitted')
                 <h2 class="title">شكراً لك</h2>
                 <p class="message">لقد قمت بإكمال الاستبيان مسبقاً</p>
                 <p class="sub-message">لا يمكنك إرسال الاستبيان أكثر من مرة باستخدام نفس البريد الإلكتروني</p>
@@ -130,10 +130,9 @@
                 <p class="message">تم إرسال إجاباتك بنجاح</p>
                 <p class="sub-message">نقدر وقتك ومشاركتك في تحسين بيئة العمل</p>
             @endif
-                </div>
+        </div>
     </div>
-    
-    <footer>&copy;2025</footer>
+
 </body>
 
 </html>

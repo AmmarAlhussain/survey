@@ -10,13 +10,19 @@
 </head>
 
 <body>
+    <header style=" overflow: hidden; height: 150px;">
+        <div id="lottie-header" style="width: 100vw; height: auto;">
+        </div>
+    </header>
+
+
     <script>
         window.existingEmails = @json($existingEmails);
     </script>
 
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
-        <div class="progress-steps" id="progressSteps"></div>
+        <div class="progress-star" id="progressStar">⭐</div>
     </div>
 
     <div class="form-container">
@@ -252,6 +258,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     @vite('resources/js/master.js')
+    <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
+    <script>
+        lottie.loadAnimation({
+            container: document.getElementById('lottie-header'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: '/headeranimation.json'
+        });
+    </script>
 
 </body>
 

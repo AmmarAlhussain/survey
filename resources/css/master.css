@@ -23,13 +23,13 @@ body {
     border-radius: 10px;
     height: 12px;
     position: relative;
-    overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: none;
 }
 
 .progress-bar {
     height: 100%;
-    background: #4A90E2;
+    background: linear-gradient(270deg, #4A90E2, #50e3c2, #b76df1);
     box-shadow: 0 0 10px rgba(0, 82, 153, 0.4);
     border-radius: 10px;
     width: 0%;
@@ -37,11 +37,17 @@ body {
     position: absolute;
     top: 0;
     right: 0;
+    left: auto;
     z-index: 1;
 }
 
-.progress-steps {
-    display: none;
+.progress-star {
+    position: absolute;
+    top: -10px;
+    transform: translateX(50%);
+    font-size: 20px;
+    transition: right 0.8s ease;
+    z-index: 2;
 }
 
 .form-container {

@@ -11,11 +11,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const introBox = document.getElementById("introBox");
     const startBtn = document.getElementById("startSurveyBtn");
     const form = document.getElementById("surveyForm");
+    const procontainer =
+        document.getElementsByClassName("progress-container")[0];
 
     if (introBox && startBtn && form) {
         startBtn.addEventListener("click", () => {
             introBox.style.display = "none";
             form.style.display = "block";
+            procontainer.style.display = "block";
         });
     }
 
@@ -72,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Star rating system setup
     document.querySelectorAll(".star-rating").forEach((starBlock) => {
         const labels = [...starBlock.querySelectorAll("label.star")];
         const inputs = [...starBlock.querySelectorAll("input")];
@@ -80,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!labels.length || !inputs.length) return;
 
-        // Setup star rating events
         labels.forEach((label, index) => {
             label.addEventListener("mouseover", () => {
                 labels.forEach((l, i) =>
@@ -126,9 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Form submission handler
     elements.form.addEventListener("submit", () => {
-        // Handle the "other" option for best_comm
         if (otherRadio?.checked && otherText.value.trim()) {
             let hiddenInput = document.querySelector(
                 'input[name="best_comm_custom"]'
@@ -143,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Setup paper pile effect
     if (typeof gsap !== "undefined") {
         setTimeout(() => {
             elements.steps.forEach((step, idx) => {
@@ -180,11 +178,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 100);
     }
 
-    // Core functions
     function updateProgress(index) {
-        elements.progressBar.style.width = `${
-            ((index + 1) / elements.steps.length) * 100
-        }%`;
+        console.log(index);
+        const percentage = (index / elements.steps.length) * 100;
+        elements.progressBar.style.width = `${percentage}%`;
+
+        const container = document.querySelector(".progress-container");
+        const star = document.getElementById("progressStar");
+        const containerWidth = container.offsetWidth;
+        const rightOffset = (percentage / 100) * containerWidth;
+
+        star.style.right = `${rightOffset}px`;
     }
 
     function goToStep(oldIdx, newIdx) {
@@ -315,11 +319,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function handleFormSubmission() {
+        updateProgress(13);
         const starValues = [
             ...document.querySelectorAll(".star-rating input:checked"),
         ].map((input) => parseInt(input.value) || 0);
-        const highestVal = Math.max(...(starValues.length ? starValues : [0]));
-
         const celebrationMsg =
             document.querySelector(".celebration-msg") ||
             document.body.appendChild(
