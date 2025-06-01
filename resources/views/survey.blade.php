@@ -10,32 +10,37 @@
 </head>
 
 <body>
-    <!-- Embed existing emails from PHP -->
     <script>
         window.existingEmails = @json($existingEmails);
     </script>
-    
-    <header>
-        <h1></h1>
-    </header>
-    <div>
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
-            <div class="progress-steps" id="progressSteps">
-            </div>
-        </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-steps" id="progressSteps"></div>
     </div>
+
     <div class="form-container">
-        <form id="surveyForm" action="{{route('store')}}" method="POST">
+
+        <div id="introBox" class="intro-box">
+            <h2>مرحبًا بك في استبيان رأي الموظفين</h2>
+            <p>نقدّر وقتك ومشاركتك في هذا الاستبيان، وسيُستخدم لتحسين بيئة العمل والتواصل داخل الشركة.</p>
+            <button id="startSurveyBtn">بدء الاستبيان</button>
+        </div>
+
+        <form id="surveyForm" action="{{ route('store') }}" method="POST" style="display: none;">
             @csrf
+
             <div class="step active" data-step="1">
                 <h3>1. البريد الإلكتروني:</h3>
                 <input type="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
-                <div class="form-error" id="email-error">الرجاء إدخال بريد إلكتروني بنطاق @almosafer.com أو @lumi.com أو @seera.com</div>
+                <div class="form-error" id="email-error">
+                    الرجاء إدخال بريد إلكتروني بنطاق @almosafer.com أو @lumirental.com أو @seera.sa
+                </div>
             </div>
 
             <div class="step" data-step="2">
-                <h3>2. هل تجد القنوات المستخدمة للتواصل داخل الشركة فعالة ومناسبة؟ ( الواتس اب - الشاشات - ايميل عائلة
+                <h3>2. هل تجد القنوات المستخدمة للتواصل داخل الشركة فعالة ومناسبة؟ ( الواتس اب - الشاشات - ايميل
+                    عائلة
                     سير )</h3>
                 <div class="radio-group">
                     <label class="radio-container">
@@ -71,7 +76,8 @@
                     </label>
                 </div>
                 <div id="best_comm_other_container" style="display: none; margin-top: 10px;">
-                    <input type="text" id="best_comm_other_text" placeholder="يرجى التحديد" class="other-text-input" style="margin-bottom: 25px;">
+                    <input type="text" id="best_comm_other_text" placeholder="يرجى التحديد" class="other-text-input"
+                        style="margin-bottom: 25px;">
                 </div>
                 <div class="form-error" id="best_comm-error">الرجاء اختيار إجابة</div>
             </div>
@@ -220,7 +226,7 @@
                 </div>
                 <div class="form-error" id="env_comfort-error">الرجاء اختيار إجابة</div>
             </div>
-            
+
             <div class="step" data-step="13">
                 <h3>13. هل الموارد متوفرة؟</h3>
                 <div class="radio-group">
@@ -242,7 +248,6 @@
             </div>
         </form>
     </div>
-    <footer>&copy;2025</footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

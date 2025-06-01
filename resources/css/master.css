@@ -15,14 +15,6 @@ body {
     overflow-x: hidden;
 }
 
-header {
-    background: #4A90E2;
-    color: #fff;
-    text-align: center;
-    padding: 15px;
-    font-size: 1.5rem;
-}
-
 .progress-container {
     width: 90%;
     max-width: 800px;
@@ -147,7 +139,7 @@ input.error {
     width: 100%;
     max-width: 400px;
     position: relative;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 
 .improved-options .radio-container {
@@ -179,7 +171,7 @@ input.error {
     transition: all 0.3s ease;
     background: white;
     flex-shrink: 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .radio-container input[type="radio"]:checked {
@@ -202,9 +194,19 @@ input.error {
 }
 
 @keyframes radioFill {
-    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-    50% { transform: translate(-50%, -50%) scale(1.2); }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
 }
 
 .radio-container input[type="radio"]:hover {
@@ -212,7 +214,7 @@ input.error {
     box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
-.radio-container input[type="radio"]:checked + .radio-label {
+.radio-container input[type="radio"]:checked+.radio-label {
     color: #2a6bc7;
     font-weight: bold;
 }
@@ -349,28 +351,6 @@ button:disabled {
     box-shadow: none;
 }
 
-footer {
-    background: #4A90E2;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-.rating-effect-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: visible;
-    z-index: 5;
-    top: 0;
-    left: 0;
-}
-
 .star-ray {
     position: absolute;
     background: linear-gradient(to right, rgba(255, 215, 0, 0.8), transparent);
@@ -413,9 +393,17 @@ footer {
 }
 
 @keyframes errorShake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-5px); }
-    40%, 80% { transform: translateX(5px); }
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    20%, 60% {
+        transform: translateX(-5px);
+    }
+
+    40%, 80% {
+        transform: translateX(5px);
+    }
 }
 
 .celebration-msg {
@@ -448,7 +436,7 @@ footer {
     .radio-group.improved-options {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .star-rating {
         font-size: 2.2rem;
     }
@@ -476,4 +464,43 @@ footer {
 .other-text-input.error {
     border: 2px solid #dc3545;
     background-color: rgba(220, 53, 69, 0.05);
+}
+
+.intro-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 30px auto;
+    max-width: 600px;
+    animation: fadeInIntro 1s ease-out;
+}
+
+@keyframes fadeInIntro {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#startSurveyBtn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    background-color: #4A90E2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#startSurveyBtn:hover {
+    background-color: #3A80D2;
 }
