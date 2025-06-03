@@ -364,7 +364,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    @vite('resources/js/master.js')
     <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
     <script>
         lottie.loadAnimation({
@@ -375,6 +374,7 @@
             path: '/headeranimation.json'
         });
     </script>
+    @vite('resources/js/master.js')
 
 </body>
 
