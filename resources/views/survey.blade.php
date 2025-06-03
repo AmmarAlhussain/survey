@@ -10,58 +10,71 @@
 </head>
 
 <body>
-    <header style="overflow: hidden; height: 150px;">
-        <div id="lottie-header" style="width: 100vw; height: auto;"></div>
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <header style="overflow: hidden;">
+        <div class="language-switcher" id="languageSwitcher">
+            <button class="lang-btn" id="languageBtn">
+                🌐 English
+            </button>
+        </div>
+        <div class="logo-container">
+            <img src="{{ asset('logo.jpg') }}" alt="Company Logo" class="company-logo">
+        </div>
     </header>
 
     <script>
         window.existingEmails = @json($existingEmails);
     </script>
 
-    <div class="progress-container">
+    <div class="progress-container" id="progressContainer">
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
     <div class="form-container">
-        <div class="language-switcher">
-            <button class="lang-btn" id="languageBtn">
-                🌐 English
-            </button>
-        </div>
-
         <div id="introBox" class="intro-box">
-            <h2>مرحبًا بك في استبيان رأي الموظفين</h2>
-            <p>نقدّر وقتك ومشاركتك في هذا الاستبيان، وسيُستخدم لتحسين بيئة العمل والتواصل داخل الشركة.</p>
-            <button id="startSurveyBtn">بدء الاستبيان</button>
+            <div class="intro-content">
+                <h2>مرحبًا بك في استبيان رأي الموظفين</h2>
+                <p>نقدّر وقتك ومشاركتك في هذا الاستبيان، وسيُستخدم لتحسين بيئة العمل والتواصل داخل الشركة.</p>
+
+                <div class="email-section">
+                    <label for="welcomeEmail" class="email-label">البريد الإلكتروني:</label>
+                    <input type="email" id="welcomeEmail" name="email" required placeholder="أدخل بريدك الإلكتروني">
+                    <div class="form-error" id="welcome-email-error">
+                        الرجاء إدخال بريد إلكتروني بنطاق @almosafer.com أو @lumirental.com أو @seera.sa
+                    </div>
+                </div>
+
+                <button id="startSurveyBtn">بدء الاستبيان</button>
+            </div>
         </div>
 
-        <!-- Page transition overlay -->
         <div class="page-transition" id="pageTransition"></div>
 
         <form id="surveyForm" action="{{ route('store') }}" method="POST" style="display: none;">
             @csrf
+            <input type="hidden" name="email" id="hiddenEmail">
 
             <div class="survey-carousel">
-                <!-- Question 1 - Email -->
                 <div class="step current" data-step="1">
                     <div class="card-header">
-                        <h3>1. البريد الإلكتروني:</h3>
-                    </div>
-                    <div class="card-content">
-                        <input type="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
-                        <div class="form-error" id="email-error">
-                            الرجاء إدخال بريد إلكتروني بنطاق @almosafer.com أو @lumirental.com أو @seera.sa
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-navigation"></div>
-                    </div>
-                </div>
-
-                <!-- Question 2 -->
-                <div class="step next" data-step="2">
-                    <div class="card-header">
-                        <h3>2. هل تجد القنوات المستخدمة للتواصل داخل الشركة فعالة ومناسبة؟ (الواتس اب - الشاشات - ايميل
+                        <h3>1. هل تجد القنوات المستخدمة للتواصل داخل الشركة فعالة ومناسبة؟ (الواتس اب - الشاشات - ايميل
                             عائلة سير)</h3>
                     </div>
                     <div class="card-content">
@@ -82,10 +95,9 @@
                     </div>
                 </div>
 
-                <!-- Question 3 -->
-                <div class="step hidden" data-step="3">
+                <div class="step next" data-step="2">
                     <div class="card-header">
-                        <h3>3. أكثر قنوات التواصل فعالية:</h3>
+                        <h3>2. أكثر قنوات التواصل فعالية:</h3>
                     </div>
                     <div class="card-content">
                         <div class="radio-group improved-options">
@@ -117,10 +129,9 @@
                     </div>
                 </div>
 
-                <!-- Question 4 -->
-                <div class="step hidden" data-step="4">
+                <div class="step hidden" data-step="3">
                     <div class="card-header">
-                        <h3>4. كيف تقيّم جودة التواصل؟</h3>
+                        <h3>3. كيف تقيّم جودة التواصل؟</h3>
                     </div>
                     <div class="card-content">
                         <div class="star-rating">
@@ -147,10 +158,9 @@
                     </div>
                 </div>
 
-                <!-- Question 5 -->
-                <div class="step hidden" data-step="5">
+                <div class="step hidden" data-step="4">
                     <div class="card-header">
-                        <h3>5. كيف تقيّم الفعاليات؟</h3>
+                        <h3>4. كيف تقيّم الفعاليات؟</h3>
                     </div>
                     <div class="card-content">
                         <div class="star-rating">
@@ -172,10 +182,9 @@
                     </div>
                 </div>
 
-                <!-- Question 6 -->
-                <div class="step hidden" data-step="6">
+                <div class="step hidden" data-step="5">
                     <div class="card-header">
-                        <h3>6. هل تساهم الفعاليات في تعزيز الروح المعنوية؟</h3>
+                        <h3>5. هل تساهم الفعاليات في تعزيز الروح المعنوية؟</h3>
                     </div>
                     <div class="card-content">
                         <div class="radio-group">
@@ -195,10 +204,9 @@
                     </div>
                 </div>
 
-                <!-- Question 7 -->
-                <div class="step hidden" data-step="7">
+                <div class="step hidden" data-step="6">
                     <div class="card-header">
-                        <h3>7. هل تعكس الفعاليات ثقافة الشركة؟</h3>
+                        <h3>6. هل تعكس الفعاليات ثقافة الشركة؟</h3>
                     </div>
                     <div class="card-content">
                         <div class="radio-group">
@@ -218,10 +226,9 @@
                     </div>
                 </div>
 
-                <!-- Question 8 -->
-                <div class="step hidden" data-step="8">
+                <div class="step hidden" data-step="7">
                     <div class="card-header">
-                        <h3>8. هل محتوى الفعاليات ممتع ومفيد؟</h3>
+                        <h3>7. هل محتوى الفعاليات ممتع ومفيد؟</h3>
                     </div>
                     <div class="card-content">
                         <div class="radio-group">
@@ -241,10 +248,9 @@
                     </div>
                 </div>
 
-                <!-- Question 9 -->
-                <div class="step hidden" data-step="9">
+                <div class="step hidden" data-step="8">
                     <div class="card-header">
-                        <h3>9. هل تلبي الفعاليات احتياجات الموظفين؟</h3>
+                        <h3>8. هل تلبي الفعاليات احتياجات الموظفين؟</h3>
                     </div>
                     <div class="card-content">
                         <div class="radio-group">
@@ -264,10 +270,9 @@
                     </div>
                 </div>
 
-                <!-- Question 10 -->
-                <div class="step hidden" data-step="10">
+                <div class="step hidden" data-step="9">
                     <div class="card-header">
-                        <h3>10. كيف تقيّم تنظيم الفعاليات؟</h3>
+                        <h3>9. كيف تقيّم تنظيم الفعاليات؟</h3>
                     </div>
                     <div class="card-content">
                         <div class="star-rating">
@@ -290,10 +295,9 @@
                     </div>
                 </div>
 
-                <!-- Question 11 -->
-                <div class="step hidden" data-step="11">
+                <div class="step hidden" data-step="10">
                     <div class="card-header">
-                        <h3>11. هل بيئة العمل إيجابية ومحفزة؟</h3>
+                        <h3>10. هل بيئة العمل إيجابية ومحفزة؟</h3>
                     </div>
                     <div class="card-content">
                         <div class="radio-group">
@@ -313,10 +317,9 @@
                     </div>
                 </div>
 
-                <!-- Question 12 -->
-                <div class="step hidden" data-step="12">
+                <div class="step hidden" data-step="11">
                     <div class="card-header">
-                        <h3>12. هل مساحة العمل مريحة؟</h3>
+                        <h3>11. هل مساحة العمل مريحة؟</h3>
                     </div>
                     <div class="card-content">
                         <div class="radio-group">
@@ -336,10 +339,9 @@
                     </div>
                 </div>
 
-                <!-- Question 13 -->
-                <div class="step hidden" data-step="13">
+                <div class="step hidden" data-step="12">
                     <div class="card-header">
-                        <h3>13. هل الموارد متوفرة؟</h3>
+                        <h3>12. هل الموارد متوفرة؟</h3>
                     </div>
                     <div class="card-content">
                         <div class="radio-group">
@@ -364,18 +366,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
-    <script>
-        lottie.loadAnimation({
-            container: document.getElementById('lottie-header'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: '/headeranimation.json'
-        });
-    </script>
     @vite('resources/js/master.js')
-
 </body>
 
 </html>
+
+
+{{-- .form-error border should be left or right depends on which mode --}}
