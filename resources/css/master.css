@@ -20,7 +20,6 @@ body {
     width: 90%;
     max-width: 800px;
     margin: 5px auto 5px;
-    /* Reduced margins */
     background: linear-gradient(135deg, rgba(74, 144, 226, 0.1), rgba(80, 227, 194, 0.1));
     border-radius: 15px;
     height: 18px;
@@ -30,8 +29,24 @@ body {
         inset 0 2px 4px rgba(0, 0, 0, 0.05);
     display: none;
     border: 2px solid rgba(74, 144, 226, 0.2);
-    overflow: hidden;
-    /* No more star overflow needed */
+    overflow: visible;
+    animation: progressContainerPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes progressContainerPulse {
+    0% {
+        box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.1),
+            inset 0 2px 4px rgba(0, 0, 0, 0.05),
+            0 0 0 0 rgba(74, 144, 226, 0);
+    }
+
+    100% {
+        box-shadow:
+            0 4px 15px rgba(0, 0, 0, 0.1),
+            inset 0 2px 4px rgba(0, 0, 0, 0.05),
+            0 0 0 3px rgba(74, 144, 226, 0.1);
+    }
 }
 
 .progress-container::before {
@@ -43,188 +58,225 @@ body {
     bottom: 0;
     background: linear-gradient(90deg,
             transparent,
-            rgba(255, 255, 255, 0.3),
+            rgba(255, 255, 255, 0.4),
             transparent);
-    animation: progressShimmer 3s ease-in-out infinite;
+    animation: progressShimmer 2.5s ease-in-out infinite;
+    border-radius: 13px;
 }
 
 @keyframes progressShimmer {
     0% {
         transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
     }
 
     100% {
         transform: translateX(100%);
+        opacity: 0;
     }
 }
 
 .progress-bar {
     height: 100%;
     background: linear-gradient(135deg, #4A90E2, #50e3c2, #b76df1, #FFD700);
-    background-size: 300% 100%;
+    background-size: 400% 100%;
     box-shadow:
         0 0 20px rgba(74, 144, 226, 0.6),
-        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
     border-radius: 13px;
     width: 0%;
-    transition: width 0.56s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: width 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
     position: absolute;
     top: 0;
     z-index: 2;
-    animation: progressGradientFlow 4s ease-in-out infinite;
+    animation: progressGradientFlow 3s ease-in-out infinite,
+        progressGlow 2s ease-in-out infinite alternate;
+    overflow: hidden;
 }
 
-.progress-bar.completed {
-    animation: progressGradientFlow 4s ease-in-out infinite,
-        progressComplete 1s ease-out;
-    border: 3px solid #FFD700 !important;
-    box-shadow:
-        0 0 30px rgba(255, 215, 0, 0.8),
-        0 0 50px rgba(255, 165, 0, 0.6),
-        0 0 70px rgba(255, 105, 180, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.3) !important;
-}
-
-@keyframes progressComplete {
+@keyframes progressGlow {
     0% {
-        box-shadow: 0 0 20px rgba(74, 144, 226, 0.6);
-        border: 3px solid #4A90E2;
-    }
-
-    50% {
         box-shadow:
-            0 0 40px rgba(255, 215, 0, 0.8),
-            0 0 60px rgba(255, 165, 0, 0.6),
-            0 0 80px rgba(255, 105, 180, 0.4);
-        transform: scaleY(1.2);
-        border: 3px solid #FFD700;
+            0 0 15px rgba(74, 144, 226, 0.4),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.2);
     }
 
     100% {
         box-shadow:
-            0 0 30px rgba(255, 215, 0, 0.8),
-            0 0 50px rgba(255, 165, 0, 0.6),
-            0 0 70px rgba(255, 105, 180, 0.4);
-        transform: scaleY(1);
-        border: 3px solid #FFD700;
+            0 0 30px rgba(74, 144, 226, 0.8),
+            0 0 45px rgba(80, 227, 194, 0.4),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.2);
     }
 }
 
-.progress-star {
+.progress-bar::before {
+    content: '';
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 24px;
-    color: #FFD700;
-    text-shadow:
-        0 0 15px #FFD700,
-        0 0 25px #FFA500,
-        0 2px 4px rgba(255, 215, 0, 0.6);
-    animation: starPulse 2s ease-in-out infinite alternate,
-        starRotate 3s linear infinite;
-    z-index: 3;
-    transition: all 0.56s cubic-bezier(0.4, 0.0, 0.2, 1);
-    pointer-events: none;
-    filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.4));
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent);
+    animation: progressWave 1.5s ease-in-out infinite;
 }
 
-/* Initial star position - starts at the beginning */
-body[dir="rtl"] .progress-star {
-    right: -12px;
-    left: auto;
-}
-
-body[dir="ltr"] .progress-star {
-    left: -12px;
-    right: auto;
-}
-
-@keyframes starPulse {
+@keyframes progressWave {
     0% {
-        transform: translateY(-50%) scale(1);
-        text-shadow: 0 0 15px #FFD700, 0 0 25px #FFA500;
+        transform: translateX(-100%) scaleY(1);
+    }
+
+    50% {
+        transform: translateX(-50%) scaleY(1.1);
     }
 
     100% {
-        transform: translateY(-50%) scale(1.2);
-        text-shadow: 0 0 25px #FFD700, 0 0 35px #FFA500, 0 0 45px #FF69B4;
+        transform: translateX(0%) scaleY(1);
     }
 }
 
-@keyframes starRotate {
-    0% {
-        transform: translateY(-50%) rotate(0deg);
-    }
 
-    100% {
-        transform: translateY(-50%) rotate(360deg);
-    }
-}
 
 .progress-bar.completed {
-    animation: progressGradientFlow 4s ease-in-out infinite,
-        progressComplete 1s ease-out;
-}
-
-.progress-star.completed {
-    animation: starPulse 2s ease-in-out infinite alternate,
-        starRotate 3s linear infinite,
-        starComplete 1.5s ease-out;
+    animation: progressGradientFlow 3s ease-in-out infinite,
+        progressComplete 2s ease-out,
+        progressGlow 1s ease-in-out infinite alternate;
 }
 
 @keyframes progressComplete {
     0% {
-        box-shadow: 0 0 20px rgba(74, 144, 226, 0.6);
-    }
-
-    50% {
-        box-shadow:
-            0 0 40px rgba(255, 215, 0, 0.8),
-            0 0 60px rgba(255, 165, 0, 0.6),
-            0 0 80px rgba(255, 105, 180, 0.4);
-        transform: scaleY(1.2);
-    }
-
-    100% {
-        box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
         transform: scaleY(1);
-    }
-}
-
-@keyframes starComplete {
-    0% {
-        transform: translateY(-50%) scale(1);
+        box-shadow:
+            0 0 20px rgba(74, 144, 226, 0.6),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
     }
 
     25% {
-        transform: translateY(-50%) scale(1.5) rotate(180deg);
-        text-shadow:
-            0 0 30px #FFD700,
-            0 0 50px #FFA500,
-            0 0 70px #FF69B4,
-            0 0 90px #00CED1;
+        transform: scaleY(1.2);
+        box-shadow:
+            0 0 40px rgba(255, 215, 0, 0.9),
+            0 0 60px rgba(255, 165, 0, 0.7),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
     }
 
     50% {
-        transform: translateY(-50%) scale(2) rotate(360deg);
-        text-shadow:
-            0 0 40px #FFD700,
-            0 0 60px #FFA500,
-            0 0 80px #FF69B4,
-            0 0 100px #00CED1,
-            0 0 120px #32CD32;
+        transform: scaleY(1.3);
+        box-shadow:
+            0 0 60px rgba(255, 215, 0, 1),
+            0 0 80px rgba(255, 165, 0, 0.8),
+            0 0 100px rgba(255, 105, 180, 0.6),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
     }
 
     75% {
-        transform: translateY(-50%) scale(1.8) rotate(540deg);
+        transform: scaleY(1.2);
+        box-shadow:
+            0 0 40px rgba(255, 215, 0, 0.9),
+            0 0 60px rgba(255, 165, 0, 0.7),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
     }
 
     100% {
-        transform: translateY(-50%) scale(1.2) rotate(720deg);
-        text-shadow:
-            0 0 25px #FFD700,
-            0 0 35px #FFA500,
-            0 0 45px #FF69B4;
+        transform: scaleY(1);
+        box-shadow:
+            0 0 30px rgba(255, 215, 0, 0.8),
+            0 0 50px rgba(255, 165, 0, 0.6),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    }
+}
+
+
+
+.progress-bar.updating {
+    animation: progressGradientFlow 3s ease-in-out infinite,
+        progressGlow 2s ease-in-out infinite alternate,
+        progressUpdate 0.6s ease-out;
+}
+
+@keyframes progressUpdate {
+    0% {
+        transform: scaleY(1);
+    }
+
+    50% {
+        transform: scaleY(1.15);
+        box-shadow:
+            0 0 25px rgba(74, 144, 226, 0.8),
+            0 0 40px rgba(80, 227, 194, 0.6),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+.progress-bar.completed {
+    animation: progressGradientFlow 4s ease-in-out infinite,
+        progressComplete 1.5s ease-out;
+    box-shadow:
+        0 0 40px rgba(255, 215, 0, 1),
+        0 0 80px rgba(255, 165, 0, 0.8),
+        0 0 120px rgba(255, 105, 180, 0.6),
+        0 0 160px rgba(0, 206, 209, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes progressComplete {
+    0% {
+        box-shadow:
+            0 0 20px rgba(74, 144, 226, 0.6),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        transform: scaleY(1);
+    }
+
+    25% {
+        box-shadow:
+            0 0 60px rgba(255, 215, 0, 0.9),
+            0 0 100px rgba(255, 165, 0, 0.7),
+            0 0 140px rgba(255, 105, 180, 0.5),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        transform: scaleY(1.15);
+    }
+
+    50% {
+        box-shadow:
+            0 0 80px rgba(255, 215, 0, 1),
+            0 0 120px rgba(255, 165, 0, 0.8),
+            0 0 160px rgba(255, 105, 180, 0.6),
+            0 0 200px rgba(0, 206, 209, 0.4),
+            0 0 240px rgba(50, 205, 50, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        transform: scaleY(1.3);
+    }
+
+    75% {
+        box-shadow:
+            0 0 60px rgba(255, 215, 0, 0.9),
+            0 0 100px rgba(255, 165, 0, 0.7),
+            0 0 140px rgba(255, 105, 180, 0.5),
+            0 0 180px rgba(0, 206, 209, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        transform: scaleY(1.15);
+    }
+
+    100% {
+        box-shadow:
+            0 0 40px rgba(255, 215, 0, 1),
+            0 0 80px rgba(255, 165, 0, 0.8),
+            0 0 120px rgba(255, 105, 180, 0.6),
+            0 0 160px rgba(0, 206, 209, 0.4),
+            inset 0 2px 4px rgba(255, 255, 255, 0.3);
+        transform: scaleY(1);
     }
 }
 
@@ -235,9 +287,7 @@ body[dir="ltr"] .progress-star {
     width: 100%;
     height: 100%;
     pointer-events: none !important;
-    /* Ensure it never blocks */
     z-index: 0;
-    /* Keep it in background */
     overflow: hidden;
 }
 
@@ -246,6 +296,51 @@ body[dir="ltr"] .progress-star {
     background: radial-gradient(circle, rgba(74, 144, 226, 0.6), transparent);
     border-radius: 50%;
     animation: floatUp linear infinite;
+    bottom: -200px;
+    opacity: 0;
+}
+
+@keyframes floatUp {
+    0% {
+        bottom: -250px;
+        opacity: 0;
+        transform: translateX(0) rotate(0deg);
+    }
+
+    5% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.3;
+        bottom: -150px;
+    }
+
+    25% {
+        opacity: 0.6;
+        bottom: -50px;
+    }
+
+    35% {
+        opacity: 1;
+        bottom: 50px;
+    }
+
+    85% {
+        opacity: 1;
+        bottom: 90vh;
+    }
+
+    95% {
+        opacity: 0.3;
+        bottom: 110vh;
+    }
+
+    100% {
+        bottom: 130vh;
+        opacity: 0;
+        transform: translateX(50px) rotate(360deg);
+    }
 }
 
 .particle:nth-child(1) {
@@ -253,7 +348,7 @@ body[dir="ltr"] .progress-star {
     height: 6px;
     left: 10%;
     animation-duration: 8s;
-    animation-delay: 0s;
+    animation-delay: 0.5s;
     background: radial-gradient(circle, rgba(74, 144, 226, 0.4), transparent);
 }
 
@@ -271,7 +366,7 @@ body[dir="ltr"] .progress-star {
     height: 8px;
     left: 30%;
     animation-duration: 12s;
-    animation-delay: 2s;
+    animation-delay: 1.5s;
     background: radial-gradient(circle, rgba(183, 109, 241, 0.3), transparent);
 }
 
@@ -280,7 +375,7 @@ body[dir="ltr"] .progress-star {
     height: 5px;
     left: 40%;
     animation-duration: 9s;
-    animation-delay: 3s;
+    animation-delay: 2s;
     background: radial-gradient(circle, rgba(255, 215, 0, 0.4), transparent);
 }
 
@@ -289,7 +384,7 @@ body[dir="ltr"] .progress-star {
     height: 7px;
     left: 50%;
     animation-duration: 11s;
-    animation-delay: 0.5s;
+    animation-delay: 0.8s;
     background: radial-gradient(circle, rgba(74, 144, 226, 0.5), transparent);
 }
 
@@ -298,7 +393,7 @@ body[dir="ltr"] .progress-star {
     height: 4px;
     left: 60%;
     animation-duration: 13s;
-    animation-delay: 4s;
+    animation-delay: 2.5s;
     background: radial-gradient(circle, rgba(80, 227, 194, 0.4), transparent);
 }
 
@@ -307,7 +402,7 @@ body[dir="ltr"] .progress-star {
     height: 6px;
     left: 70%;
     animation-duration: 8s;
-    animation-delay: 2.5s;
+    animation-delay: 1.2s;
     background: radial-gradient(circle, rgba(183, 109, 241, 0.4), transparent);
 }
 
@@ -316,7 +411,7 @@ body[dir="ltr"] .progress-star {
     height: 5px;
     left: 80%;
     animation-duration: 10s;
-    animation-delay: 1.5s;
+    animation-delay: 1.8s;
     background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
 }
 
@@ -325,7 +420,7 @@ body[dir="ltr"] .progress-star {
     height: 7px;
     left: 90%;
     animation-duration: 12s;
-    animation-delay: 3.5s;
+    animation-delay: 2.2s;
     background: radial-gradient(circle, rgba(74, 144, 226, 0.4), transparent);
 }
 
@@ -334,7 +429,7 @@ body[dir="ltr"] .progress-star {
     height: 4px;
     left: 15%;
     animation-duration: 9s;
-    animation-delay: 5s;
+    animation-delay: 2.8s;
     background: radial-gradient(circle, rgba(80, 227, 194, 0.5), transparent);
 }
 
@@ -343,7 +438,7 @@ body[dir="ltr"] .progress-star {
     height: 6px;
     left: 25%;
     animation-duration: 11s;
-    animation-delay: 6s;
+    animation-delay: 3.2s;
     background: radial-gradient(circle, rgba(183, 109, 241, 0.3), transparent);
 }
 
@@ -352,7 +447,7 @@ body[dir="ltr"] .progress-star {
     height: 5px;
     left: 35%;
     animation-duration: 14s;
-    animation-delay: 7s;
+    animation-delay: 3.5s;
     background: radial-gradient(circle, rgba(255, 215, 0, 0.4), transparent);
 }
 
@@ -361,7 +456,7 @@ body[dir="ltr"] .progress-star {
     height: 8px;
     left: 45%;
     animation-duration: 8s;
-    animation-delay: 8s;
+    animation-delay: 4s;
     background: radial-gradient(circle, rgba(74, 144, 226, 0.3), transparent);
 }
 
@@ -370,7 +465,7 @@ body[dir="ltr"] .progress-star {
     height: 4px;
     left: 55%;
     animation-duration: 10s;
-    animation-delay: 9s;
+    animation-delay: 4.5s;
     background: radial-gradient(circle, rgba(80, 227, 194, 0.4), transparent);
 }
 
@@ -379,30 +474,8 @@ body[dir="ltr"] .progress-star {
     height: 7px;
     left: 65%;
     animation-duration: 12s;
-    animation-delay: 10s;
+    animation-delay: 5s;
     background: radial-gradient(circle, rgba(183, 109, 241, 0.5), transparent);
-}
-
-@keyframes floatUp {
-    0% {
-        bottom: -10px;
-        opacity: 0;
-        transform: translateX(0) rotate(0deg);
-    }
-
-    10% {
-        opacity: 1;
-    }
-
-    90% {
-        opacity: 1;
-    }
-
-    100% {
-        bottom: 100vh;
-        opacity: 0;
-        transform: translateX(50px) rotate(360deg);
-    }
 }
 
 .particles-celebration {
@@ -418,18 +491,14 @@ body[dir="rtl"] .progress-bar {
     right: 0;
     left: auto;
     border-radius: 13px 0 0 13px;
-    /* RTL: rounded on the left side */
     transform-origin: right;
-    /* Fill from right to left */
 }
 
 body[dir="ltr"] .progress-bar {
     left: 0;
     right: auto;
     border-radius: 0 13px 13px 0;
-    /* LTR: rounded on the right side */
     transform-origin: left;
-    /* Fill from left to right */
 }
 
 @keyframes progressGradientFlow {
@@ -437,8 +506,16 @@ body[dir="ltr"] .progress-bar {
         background-position: 0% 50%;
     }
 
+    25% {
+        background-position: 50% 25%;
+    }
+
     50% {
         background-position: 100% 50%;
+    }
+
+    75% {
+        background-position: 50% 75%;
     }
 
     100% {
@@ -452,9 +529,7 @@ body[dir="ltr"] .progress-bar {
     justify-content: center;
     align-items: center;
     padding: 10px;
-    /* Reduced from 20px */
     margin-top: 10px;
-    /* Reduced from 20px */
     position: relative;
     z-index: 1;
 }
@@ -464,13 +539,13 @@ form {
     max-width: 1200px;
     position: relative;
     height: 450px;
-    /* Reduced from 500px */
 }
 
 .survey-carousel {
     position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
     perspective: 1200px;
     background: radial-gradient(ellipse at center, rgba(74, 144, 226, 0.03) 0%, transparent 70%);
 }
@@ -481,7 +556,6 @@ form {
     left: 50%;
     width: 550px;
     min-height: 300px;
-    /* Reduced from 350px */
     background: linear-gradient(145deg, #ffffff, #f8f9fa);
     border-radius: 20px;
     box-shadow:
@@ -560,22 +634,6 @@ form {
 
 .step.next:hover {
     transform: translate(50%, -50%) scale(0.78);
-}
-
-@keyframes cardFocusIn {
-    0% {
-        transform: translate(-50%, -50%) scale(0.95);
-        opacity: 0.8;
-    }
-
-    50% {
-        transform: translate(-50%, -50%) scale(1.02);
-    }
-
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
 }
 
 .card-header {
@@ -913,9 +971,7 @@ input.error {
     justify-content: space-between;
     align-items: center;
     direction: ltr !important;
-    /* Force LTR direction for buttons regardless of body direction */
     flex-direction: row !important;
-    /* Ensure left-to-right order always */
 }
 
 .nav-btn {
@@ -995,10 +1051,17 @@ input.error {
     padding: 10px 15px;
     background: linear-gradient(145deg, rgba(220, 53, 69, 0.1), rgba(220, 53, 69, 0.05));
     border-radius: 8px;
-    border-left: 3px solid #dc3545;
     box-shadow: 0 2px 8px rgba(220, 53, 69, 0.1);
     position: relative;
     overflow: hidden;
+}
+
+body[dir="rtl"] .form-error {
+    border-right: 3px solid #dc3545;
+}
+
+body[dir="ltr"] .form-error {
+    border-left: 3px solid #dc3545;
 }
 
 .form-error::before {
@@ -1108,16 +1171,13 @@ input.error {
 .intro-box {
     background: linear-gradient(145deg, #ffffff, #f8fbff);
     padding: 30px 30px;
-    /* Reduced from 50px 40px */
     border-radius: 20px;
-    /* Reduced from 25px */
     box-shadow:
         0 25px 60px rgba(0, 0, 0, 0.12),
         0 10px 30px rgba(74, 144, 226, 0.08),
         0 0 0 1px rgba(255, 255, 255, 0.8);
     text-align: center;
     margin: 20px auto;
-    /* Reduced from 50px auto */
     max-width: 650px;
     position: relative;
     overflow: hidden;
@@ -1156,10 +1216,8 @@ input.error {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-/* Email section styling for intro box */
 .email-section {
     margin: 15px 0;
-    /* Reduced from 25px */
     text-align: right;
 }
 
@@ -1207,8 +1265,15 @@ input.error {
     padding: 8px 12px;
     background: linear-gradient(145deg, rgba(220, 53, 69, 0.1), rgba(220, 53, 69, 0.05));
     border-radius: 8px;
-    border-right: 3px solid #dc3545;
     box-shadow: 0 2px 8px rgba(220, 53, 69, 0.1);
+}
+
+body[dir="rtl"] #welcome-email-error {
+    border-right: 3px solid #dc3545;
+}
+
+body[dir="ltr"] #welcome-email-error {
+    border-left: 3px solid #dc3545;
 }
 
 #welcome-email-error.active {
@@ -1218,13 +1283,10 @@ input.error {
 
 .language-switcher {
     position: fixed;
-    /* Changed from absolute to fixed */
     top: 15px;
     left: 15px;
     z-index: 999999;
-    /* Increased z-index even higher */
     pointer-events: auto;
-    /* Ensure it can receive clicks */
 }
 
 .lang-btn {
@@ -1236,7 +1298,6 @@ input.error {
     font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer !important;
-    /* Force cursor */
     transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow:
         0 3px 10px rgba(74, 144, 226, 0.3),
@@ -1249,9 +1310,64 @@ input.error {
     justify-content: center;
     gap: 5px;
     z-index: 999999;
-    /* Match parent z-index */
     pointer-events: auto !important;
-    /* Force clickable */
+}
+
+.lang-btn.switching {
+    pointer-events: none;
+    transform: scale(0.95);
+    background: linear-gradient(145deg, #6c757d, #495057);
+    animation: languageSwitching 0.8s ease-in-out;
+}
+
+@keyframes languageSwitching {
+    0% {
+        transform: scale(1) rotate(0deg);
+        background: linear-gradient(145deg, #4A90E2, #5da3f5);
+    }
+
+    25% {
+        transform: scale(0.9) rotate(-5deg);
+        background: linear-gradient(145deg, #6c757d, #495057);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    50% {
+        transform: scale(0.85) rotate(0deg);
+        background: linear-gradient(145deg, #495057, #6c757d);
+    }
+
+    75% {
+        transform: scale(0.9) rotate(5deg);
+        background: linear-gradient(145deg, #6c757d, #495057);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+        background: linear-gradient(145deg, #4A90E2, #5da3f5);
+    }
+}
+
+.lang-btn.switched {
+    animation: languageSwitched 0.6s ease-out;
+}
+
+@keyframes languageSwitched {
+    0% {
+        transform: scale(1);
+        background: linear-gradient(145deg, #4A90E2, #5da3f5);
+    }
+
+    50% {
+        transform: scale(1.1);
+        background: linear-gradient(145deg, #28a745, #34ce57);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+    }
+
+    100% {
+        transform: scale(1);
+        background: linear-gradient(145deg, #4A90E2, #5da3f5);
+    }
 }
 
 .lang-btn:hover {
@@ -1271,14 +1387,6 @@ input.error {
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.42s ease;
-}
-
-.lang-btn:hover {
-    background: linear-gradient(145deg, #3A80D2, #4A90E2);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow:
-        0 6px 20px rgba(74, 144, 226, 0.4),
-        0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
 .lang-btn:hover::before {
@@ -1377,13 +1485,10 @@ input.error {
     width: 100%;
     height: 100%;
     z-index: 9999;
-    /* Lower than language button */
     opacity: 0;
     pointer-events: none !important;
-    /* Never block interactions */
     overflow: hidden;
     display: none;
-    /* Hide when not active */
 }
 
 .page-transition::before {
@@ -1411,9 +1516,7 @@ input.error {
 .page-transition.active {
     opacity: 1;
     pointer-events: none !important;
-    /* Still no pointer events even when active */
     display: block;
-    /* Show when active */
 }
 
 .page-transition.active::before {
@@ -1435,7 +1538,7 @@ input.error {
 }
 
 .language-transition {
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .language-transition.fade-out {
@@ -1460,7 +1563,6 @@ body.switching-language * {
     pointer-events: none;
 }
 
-/* Ensure language button remains clickable */
 body.switching-language .lang-btn {
     pointer-events: auto !important;
 }
@@ -1470,7 +1572,6 @@ body.switching-language .lang-btn {
         width: 95%;
         min-width: 340px;
         min-height: 280px;
-        /* Reduced for mobile */
     }
 
     .step.previous {
@@ -1542,17 +1643,13 @@ body.switching-language .lang-btn {
 
     .language-switcher {
         top: 10px;
-        /* Closer to top on mobile */
         left: 10px;
-        /* Closer to edge on mobile */
     }
 
     .lang-btn {
         padding: 8px 12px;
-        /* Smaller padding on mobile */
         font-size: 0.8rem;
         min-width: 80px;
-        /* Smaller on mobile */
     }
 
     .progress-container {
@@ -1569,30 +1666,23 @@ body.switching-language .lang-btn {
         animation-duration: 6s !important;
     }
 
-    /* Mobile logo container adjustments */
     .logo-container {
         margin: 5px 0;
-        /* Further reduced for mobile */
         padding: 5px;
-        /* Further reduced for mobile */
     }
 
     .company-logo {
         width: 80px;
-        /* Smaller on mobile */
         height: 80px;
     }
 
     .form-container {
         padding: 5px;
-        /* Reduced for mobile */
         margin-top: 5px;
-        /* Reduced for mobile */
     }
 
     form {
         height: 400px;
-        /* Reduced for mobile */
     }
 }
 
@@ -1601,24 +1691,19 @@ body.switching-language .lang-btn {
     justify-content: center;
     align-items: center;
     margin: 10px 0;
-    /* Reduced from 20px */
     padding: 10px;
-    /* Reduced from 20px */
     position: relative;
     z-index: 99999;
 }
 
 .company-logo {
     width: 100px;
-    /* Reduced from 120px */
     height: 100px;
-    /* Reduced from 120px */
     object-fit: contain;
     border-radius: 50%;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     background: rgba(255, 255, 255, 0.9);
     padding: 8px;
-    /* Reduced from 10px */
     animation: logoFloat 3s ease-in-out infinite;
     z-index: 99999;
     position: relative;
@@ -1631,25 +1716,19 @@ body.switching-language .lang-btn {
 
     50% {
         transform: translateY(-10px);
-        /* Reduced from -15px */
     }
 }
 
-/* Additional fix for header z-index */
 header {
     position: relative;
     z-index: 99998;
-    /* High z-index for header */
     pointer-events: none;
-    /* Let clicks pass through header */
 }
 
-/* But allow clicks on language switcher */
 header .language-switcher {
     pointer-events: auto !important;
 }
 
-/* Ensure language button is always interactive */
 .language-switcher,
 .language-switcher *,
 .lang-btn,
@@ -1658,7 +1737,6 @@ header .language-switcher {
     cursor: pointer !important;
 }
 
-/* Create a safe zone around the language button */
 .language-switcher::before {
     content: '';
     position: absolute;

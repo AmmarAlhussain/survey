@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
             prevButton: "السابق",
             nextButton: "التالي",
             submitButton: "إرسال",
-            // Removed email question - questions now start from communication channels
             questions: [
                 "1. هل تجد القنوات المستخدمة للتواصل داخل الشركة فعالة ومناسبة؟ (الواتس اب - الشاشات - ايميل عائلة سير)",
                 "2. أكثر قنوات التواصل فعالية:",
@@ -62,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
             prevButton: "Previous",
             nextButton: "Next",
             submitButton: "Submit",
-            // Removed email question - questions now start from communication channels
             questions: [
                 "1. Do you find the communication channels used within the company effective and appropriate? (WhatsApp - Screens - Seera Family Email)",
                 "2. Most effective communication channels:",
@@ -105,33 +103,51 @@ document.addEventListener("DOMContentLoaded", function () {
     const procontainer =
         document.getElementsByClassName("progress-container")[0];
     const languageBtn = document.getElementById("languageBtn");
-    const pageTransition = document.getElementById("pageTransition");
 
-    // Initialize language button text
     if (languageBtn) {
         const t = translations[currentLanguage];
         languageBtn.innerHTML = t.langButton;
     }
 
-    // Language switching event listener
     if (languageBtn) {
         languageBtn.addEventListener("click", function () {
-            // Toggle language
-            currentLanguage = currentLanguage === "ar" ? "en" : "ar";
+            languageBtn.classList.add("switching");
+            languageBtn.style.pointerEvents = "none";
 
-            // Update document direction
-            document.documentElement.dir =
-                currentLanguage === "ar" ? "rtl" : "ltr";
-            document.body.style.direction =
-                currentLanguage === "ar" ? "rtl" : "ltr";
-            document.body.setAttribute(
-                "dir",
-                currentLanguage === "ar" ? "rtl" : "ltr"
-            );
+            const originalText = languageBtn.innerHTML;
 
-            // Update all content
-            updateLanguageContent();
-            updateProgressBarDirection();
+            setTimeout(() => {
+                languageBtn.innerHTML = "🔄 Switching...";
+            }, 100);
+
+            setTimeout(() => {
+                currentLanguage = currentLanguage === "ar" ? "en" : "ar";
+
+                document.documentElement.dir =
+                    currentLanguage === "ar" ? "rtl" : "ltr";
+                document.body.style.direction =
+                    currentLanguage === "ar" ? "rtl" : "ltr";
+                document.body.setAttribute(
+                    "dir",
+                    currentLanguage === "ar" ? "rtl" : "ltr"
+                );
+
+                updateLanguageContent();
+                updateProgressBarDirection();
+            }, 400);
+
+            setTimeout(() => {
+                languageBtn.classList.remove("switching");
+                languageBtn.classList.add("switched");
+                languageBtn.style.pointerEvents = "auto";
+
+                const t = translations[currentLanguage];
+                languageBtn.innerHTML = t.langButton;
+            }, 800);
+
+            setTimeout(() => {
+                languageBtn.classList.remove("switched");
+            }, 1400);
         });
     }
 
@@ -146,112 +162,131 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateLanguageContent() {
         const t = translations[currentLanguage];
 
-        const introTitle = document.querySelector(".intro-box h2");
-        const introText = document.querySelector(".intro-box p");
-        const startButton = document.getElementById("startSurveyBtn");
-        const emailLabel = document.querySelector(".email-label");
-        const emailInput = document.getElementById("welcomeEmail");
-        const emailError = document.getElementById("welcome-email-error");
+        const contentElements = document.querySelectorAll(
+            ".intro-box h2, .intro-box p, .email-label, h3, .radio-label"
+        );
+        contentElements.forEach((el) => {
+            el.classList.add("language-transition", "fade-out");
+        });
 
-        if (introTitle) {
-            introTitle.textContent = t.introTitle;
-            introTitle.style.textAlign = "center";
-        }
-        if (introText) {
-            introText.textContent = t.introText;
-            introText.style.textAlign = "center";
-        }
-        if (startButton) {
-            startButton.textContent = t.startButton;
-        }
-        if (languageBtn) {
-            languageBtn.innerHTML = t.langButton;
-        }
-        if (emailLabel) {
-            emailLabel.textContent =
-                currentLanguage === "ar"
-                    ? "البريد الإلكتروني:"
-                    : "Email Address:";
-        }
-        if (emailInput) {
-            emailInput.placeholder = t.placeholders.email;
-        }
-        if (emailError) {
-            emailError.textContent = t.errors.email;
-        }
+        setTimeout(() => {
+            const introTitle = document.querySelector(".intro-box h2");
+            const introText = document.querySelector(".intro-box p");
+            const startButton = document.getElementById("startSurveyBtn");
+            const emailLabel = document.querySelector(".email-label");
+            const emailInput = document.getElementById("welcomeEmail");
+            const emailError = document.getElementById("welcome-email-error");
 
-        elements.steps.forEach((step, index) => {
-            const questionTitle = step.querySelector("h3");
-            if (questionTitle && t.questions[index]) {
-                questionTitle.textContent = t.questions[index];
+            if (introTitle) {
+                introTitle.textContent = t.introTitle;
+                introTitle.style.textAlign = "center";
+            }
+            if (introText) {
+                introText.textContent = t.introText;
+                introText.style.textAlign = "center";
+            }
+            if (startButton) {
+                startButton.textContent = t.startButton;
+            }
+            if (emailLabel) {
+                emailLabel.textContent =
+                    currentLanguage === "ar"
+                        ? "البريد الإلكتروني:"
+                        : "Email Address:";
+            }
+            if (emailInput) {
+                emailInput.placeholder = t.placeholders.email;
+            }
+            if (emailError) {
+                emailError.textContent = t.errors.email;
             }
 
-            const prevBtn = step.querySelector(".prev-btn");
-            const nextBtn = step.querySelector(".next-btn");
-            if (prevBtn) {
-                prevBtn.textContent = t.prevButton;
-            }
-            if (nextBtn) {
-                nextBtn.textContent =
-                    index === elements.steps.length - 1
-                        ? t.submitButton
-                        : t.nextButton;
-            }
+            elements.steps.forEach((step, index) => {
+                const questionTitle = step.querySelector("h3");
+                if (questionTitle && t.questions[index]) {
+                    questionTitle.textContent = t.questions[index];
+                }
 
-            const radioLabels = step.querySelectorAll(".radio-label");
-            radioLabels.forEach((label) => {
-                const input = label.previousElementSibling;
-                if (input && input.value) {
-                    const value = input.value;
-                    if (t.answers[value]) {
-                        label.textContent = t.answers[value];
+                const prevBtn = step.querySelector(".prev-btn");
+                const nextBtn = step.querySelector(".next-btn");
+                if (prevBtn) {
+                    prevBtn.textContent = t.prevButton;
+                }
+                if (nextBtn) {
+                    nextBtn.textContent =
+                        index === elements.steps.length - 1
+                            ? t.submitButton
+                            : t.nextButton;
+                }
+
+                const radioLabels = step.querySelectorAll(".radio-label");
+                radioLabels.forEach((label) => {
+                    const input = label.previousElementSibling;
+                    if (input && input.value) {
+                        const value = input.value;
+                        if (t.answers[value]) {
+                            label.textContent = t.answers[value];
+                        }
                     }
+                });
+
+                const otherInput = step.querySelector(".other-text-input");
+                if (otherInput) {
+                    otherInput.placeholder = t.placeholders.other;
                 }
+
+                const errorElements = step.querySelectorAll(".form-error");
+                errorElements.forEach((errorEl) => {
+                    const inputName = errorEl.id.replace("-error", "");
+                    if (
+                        inputName.includes("rate") ||
+                        inputName.includes("organize")
+                    ) {
+                        errorEl.textContent = t.errors.rating;
+                    } else if (inputName === "best_comm") {
+                        errorEl.textContent = t.errors.otherText;
+                    } else {
+                        errorEl.textContent = t.errors.required;
+                    }
+                });
             });
 
-            const otherInput = step.querySelector(".other-text-input");
-            if (otherInput) {
-                otherInput.placeholder = t.placeholders.other;
-            }
-
-            const errorElements = step.querySelectorAll(".form-error");
-            errorElements.forEach((errorEl) => {
-                const inputName = errorEl.id.replace("-error", "");
-                if (
-                    inputName.includes("rate") ||
-                    inputName.includes("organize")
-                ) {
-                    errorEl.textContent = t.errors.rating;
-                } else if (inputName === "best_comm") {
-                    errorEl.textContent = t.errors.otherText;
+            const textElements = document.querySelectorAll(
+                "h3, .radio-label, input, .form-error, .email-label"
+            );
+            textElements.forEach((el) => {
+                if (currentLanguage === "ar") {
+                    el.style.textAlign = "right";
                 } else {
-                    errorEl.textContent = t.errors.required;
+                    el.style.textAlign = "left";
                 }
             });
-        });
 
-        const textElements = document.querySelectorAll(
-            "h3, .radio-label, input, .form-error, .email-label"
-        );
-        textElements.forEach((el) => {
-            if (currentLanguage === "ar") {
-                el.style.textAlign = "right";
-            } else {
-                el.style.textAlign = "left";
-            }
-        });
+            const inputs = document.querySelectorAll(
+                'input[type="email"], .other-text-input'
+            );
+            inputs.forEach((input) => {
+                input.style.textAlign =
+                    currentLanguage === "ar" ? "right" : "left";
+            });
 
-        const inputs = document.querySelectorAll(
-            'input[type="email"], .other-text-input'
-        );
-        inputs.forEach((input) => {
-            input.style.textAlign = currentLanguage === "ar" ? "right" : "left";
-        });
+            setTimeout(() => {
+                contentElements.forEach((el) => {
+                    el.classList.remove("fade-out");
+                    el.classList.add("fade-in");
+                });
+
+                setTimeout(() => {
+                    contentElements.forEach((el) => {
+                        el.classList.remove("language-transition", "fade-in");
+                    });
+                }, 500);
+            }, 50);
+        }, 250);
     }
 
     if (introBox && startBtn && form) {
         startBtn.addEventListener("click", () => {
-            // Validate email first
             const emailInput = document.getElementById("welcomeEmail");
             const emailError = document.getElementById("welcome-email-error");
 
@@ -259,17 +294,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Check if email exists
             if (checkEmailExists(emailInput.value.trim())) {
-                window.location.href = "/completed?status=already_submitted";
+                window.location.href = `/completed?status=already_submitted&lang=${currentLanguage}`;
                 return;
             }
 
-            // Set the hidden email input
             const hiddenEmailInput = document.getElementById("hiddenEmail");
             if (hiddenEmailInput) {
                 hiddenEmailInput.value = emailInput.value.trim();
             }
+
+            // Add language as hidden input
+            addLanguageInput();
 
             introBox.style.transform = "translateY(-30px) scale(0.95)";
             introBox.style.opacity = "0";
@@ -279,7 +315,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 form.style.display = "block";
                 procontainer.style.display = "block";
 
-                // Hide language button when survey starts
                 if (languageBtn) {
                     languageBtn.style.display = "none";
                 }
@@ -299,6 +334,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 }, 35);
             }, 210);
         });
+    }
+
+    function addLanguageInput() {
+        // Remove existing language input if present
+        const existingLangInput = document.querySelector(
+            'input[name="language"]'
+        );
+        if (existingLangInput) {
+            existingLangInput.remove();
+        }
+
+        // Add current language as hidden input
+        const langInput = document.createElement("input");
+        langInput.type = "hidden";
+        langInput.name = "language";
+        langInput.value = currentLanguage;
+        elements.form.appendChild(langInput);
     }
 
     function validateWelcomeEmail(emailInput, emailError) {
@@ -362,7 +414,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 nextBtn.style.background =
                     "linear-gradient(145deg, #4A90E2, #5da3f5)";
 
-                // Correct button order: Previous on left, Next on right
                 navContainer.appendChild(prevBtn);
                 navContainer.appendChild(nextBtn);
 
@@ -384,36 +435,37 @@ document.addEventListener("DOMContentLoaded", function () {
         updateProgress(0);
     }
 
-    // Progress calculation - only reaches 100% on form submission
     function updateProgress(index) {
         if (!elements.progressBar) return;
 
-        // Progress based on current step, but never reaches 100% until submission
         const totalQuestions = elements.steps.length;
-        // Maximum progress during questions is 95%, only 100% on submission
         const maxProgressDuringQuestions = 95;
         const percentage = Math.min(
             (index / totalQuestions) * 100,
             maxProgressDuringQuestions
         );
 
+        elements.progressBar.classList.add("updating");
         elements.progressBar.style.width = `${percentage}%`;
 
-        // Only trigger completion animation when actually at 100%
+        setTimeout(() => {
+            elements.progressBar.classList.remove("updating");
+        }, 600);
+
         if (percentage >= 100) {
             triggerProgressCompletionAnimation();
         }
     }
 
-    // Special function for setting progress to 100% on form submission
     function setProgressToComplete() {
         if (!elements.progressBar) return;
 
+        elements.progressBar.classList.add("completed");
         elements.progressBar.style.width = "100%";
+
         triggerProgressCompletionAnimation();
     }
 
-    // New function to count answered questions
     function getAnsweredQuestionsCount() {
         let count = 0;
         elements.steps.forEach((step, index) => {
@@ -424,7 +476,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return count;
     }
 
-    // Check if a step is answered
     function isStepAnswered(step) {
         const requiredInputs = step.querySelectorAll("input[required]");
         for (let input of requiredInputs) {
@@ -441,7 +492,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // Check "other" text input if "other" radio is selected
         const otherRadio = step.querySelector('input[value="other"]:checked');
         if (otherRadio) {
             const otherText = step.querySelector(".other-text-input");
@@ -465,9 +515,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (typeof confetti !== "undefined") {
-                setTimeout(() => triggerCompletionConfetti(), 200);
-                setTimeout(() => triggerCompletionConfetti(), 400);
-                setTimeout(() => triggerCompletionConfetti(), 600);
+                setTimeout(() => triggerCompletionConfetti(), 300);
             }
 
             setTimeout(() => {
@@ -483,14 +531,14 @@ document.addEventListener("DOMContentLoaded", function () {
         if (typeof confetti === "undefined") return;
 
         confetti({
-            particleCount: 50,
-            spread: 70,
-            origin: { y: 0.3 },
-            colors: ["#FFD700", "#FFA500", "#FF69B4", "#00CED1", "#32CD32"],
-            startVelocity: 35,
+            particleCount: 25,
+            spread: 60,
+            origin: { y: 0.4 },
+            colors: ["#FFD700", "#FFA500", "#FF69B4"],
+            startVelocity: 30,
             gravity: 0.8,
-            scalar: 1.2,
-            ticks: 120,
+            scalar: 1.0,
+            ticks: 100,
         });
     }
 
@@ -542,22 +590,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         switch (rating) {
             case 3:
-                particleCount = 10;
+                particleCount = 8;
                 colors = ["#FFD700", "#FFA500"];
                 break;
             case 4:
-                particleCount = 20;
+                particleCount = 12;
                 colors = ["#FFD700", "#FFA500", "#FF69B4"];
                 break;
             case 5:
-                particleCount = 30;
-                colors = [
-                    "#FFD700",
-                    "#FFA500",
-                    "#FF69B4",
-                    "#00CED1",
-                    "#32CD32",
-                ];
+                particleCount = 20;
+                colors = ["#FFD700", "#FFA500", "#FF69B4", "#00CED1"];
                 break;
             default:
                 return;
@@ -566,35 +608,17 @@ document.addEventListener("DOMContentLoaded", function () {
         if (typeof confetti !== "undefined") {
             confetti({
                 particleCount: particleCount,
-                spread: 60,
+                spread: 50,
                 origin: {
                     x: 0.5,
                     y: 0.7,
                 },
                 colors: colors,
                 gravity: 0.8,
-                scalar: 0.8,
-                startVelocity: 30,
-                ticks: 100,
+                scalar: 0.7,
+                startVelocity: 25,
+                ticks: 80,
             });
-
-            if (rating >= 4) {
-                setTimeout(() => {
-                    confetti({
-                        particleCount: particleCount / 2,
-                        spread: 40,
-                        origin: {
-                            x: 0.5,
-                            y: 0.7,
-                        },
-                        colors: colors,
-                        gravity: 0.6,
-                        scalar: 0.6,
-                        startVelocity: 20,
-                        ticks: 80,
-                    });
-                }, 150);
-            }
         }
     }
 
@@ -616,7 +640,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         setTimeout(() => {
             updateCarousel();
-            updateProgress(newIndex); // Progress updates when navigating
+            updateProgress(newIndex);
         }, 35);
 
         setTimeout(() => {
@@ -634,9 +658,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (current < elements.steps.length - 1) {
             navigateToStep(current + 1);
+
+            if ((current + 1) % 3 === 0) {
+                createProgressCelebration();
+            }
         } else {
             handleFormSubmission();
         }
+    }
+
+    function createProgressCelebration() {
+        const progressContainer = elements.progressBar?.parentElement;
+        if (!progressContainer) return;
+
+        for (let i = 0; i < 8; i++) {
+            const sparkle = document.createElement("div");
+            sparkle.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: ${Math.random() * 100}%;
+                width: 4px;
+                height: 4px;
+                background: radial-gradient(circle, #FFD700, transparent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 10;
+                animation: sparkleFloat 1.5s ease-out forwards;
+            `;
+
+            progressContainer.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1500);
+        }
+    }
+
+    if (!document.querySelector("#sparkle-styles")) {
+        const sparkleStyle = document.createElement("style");
+        sparkleStyle.id = "sparkle-styles";
+        sparkleStyle.textContent = `
+        @keyframes sparkleFloat {
+            0% {
+                transform: translateY(0) scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-20px) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-40px) scale(0);
+                opacity: 0;
+            }
+        }
+        `;
+        document.head.appendChild(sparkleStyle);
     }
 
     const otherRadio = document.getElementById("best_comm_other_radio");
@@ -672,7 +749,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         container.style.animation = "";
                     }, 600);
                 }
-                // Removed: Progress update on answer selection
             }
         });
     });
@@ -738,8 +814,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         label.classList.remove("just-selected");
                     }, 600);
                 }, 70);
-
-                // Removed: Progress update on star selection
             });
         });
 
@@ -748,42 +822,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    function triggerActionConfetti(type = "success") {
-        if (typeof confetti === "undefined") return;
-
-        const configs = {
-            success: {
-                particleCount: 15,
-                spread: 45,
-                colors: ["#32CD32", "#00FF00", "#90EE90"],
-                startVelocity: 25,
-            },
-            selection: {
-                particleCount: 8,
-                spread: 30,
-                colors: ["#4A90E2", "#50e3c2"],
-                startVelocity: 20,
-            },
-            progress: {
-                particleCount: 5,
-                spread: 25,
-                colors: ["#FFD700", "#FFA500"],
-                startVelocity: 15,
-            },
-        };
-
-        const config = configs[type] || configs.success;
-
-        confetti({
-            ...config,
-            origin: { x: 0.5, y: 0.8 },
-            gravity: 0.6,
-            scalar: 0.7,
-            ticks: 60,
-        });
-    }
-
     elements.form.addEventListener("submit", () => {
+        // Ensure language is included in form submission
+        addLanguageInput();
+
         if (otherRadio?.checked && otherText?.value.trim()) {
             let hiddenInput = document.querySelector(
                 'input[name="best_comm_custom"]'
@@ -847,11 +889,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function handleFormSubmission() {
-        // Set progress to 100% when submitting
         setProgressToComplete();
 
         const triggerConfetti = () => {
-            const count = 250;
+            const count = 80;
             const defaults = {
                 origin: { y: 0.7 },
                 zIndex: 10001,
@@ -866,67 +907,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
             }
 
-            fire(0.25, {
-                spread: 26,
-                startVelocity: 55,
-                colors: ["#FFD700", "#FFA500", "#FF69B4", "#00CED1", "#32CD32"],
-                scalar: 1.2,
+            fire(0.3, {
+                spread: 40,
+                startVelocity: 45,
+                colors: ["#FFD700", "#FFA500", "#FF69B4"],
+                scalar: 1.0,
             });
 
             fire(0.2, {
                 spread: 60,
-                colors: ["#4A90E2", "#50e3c2", "#b76df1", "#FFD700"],
-                startVelocity: 45,
-            });
-
-            fire(0.35, {
-                spread: 100,
-                decay: 0.91,
-                scalar: 0.8,
-                colors: ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7"],
+                colors: ["#4A90E2", "#50e3c2"],
                 startVelocity: 35,
-            });
-
-            fire(0.1, {
-                spread: 120,
-                startVelocity: 25,
-                decay: 0.92,
-                scalar: 1.4,
-                colors: ["#FF6B6B", "#4ECDC4", "#45B7D1"],
-                gravity: 1.2,
-            });
-
-            fire(0.1, {
-                spread: 120,
-                startVelocity: 45,
-                colors: ["#FFD700", "#FFA500", "#FF1493"],
-                scalar: 0.9,
-            });
-
-            fire(0.15, {
-                spread: 30,
-                startVelocity: 40,
-                colors: ["#FF69B4", "#FFB6C1", "#FFC0CB"],
-                shapes: ["heart"],
-                scalar: 0.8,
             });
         };
 
         if (typeof confetti !== "undefined") {
             triggerConfetti();
 
-            setTimeout(triggerConfetti, 105);
-            setTimeout(triggerConfetti, 210);
             setTimeout(() => {
                 confetti({
-                    particleCount: 100,
-                    spread: 160,
+                    particleCount: 40,
+                    spread: 100,
                     origin: { y: 0.6 },
-                    colors: ["#FFD700", "#FFA500", "#FF69B4", "#00CED1"],
-                    scalar: 1.5,
+                    colors: ["#FFD700", "#FFA500"],
+                    scalar: 1.2,
                     gravity: 0.6,
                 });
-            }, 315);
+            }, 200);
         }
 
         const celebrationMsg =
@@ -973,6 +980,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 hiddenInput.value = otherText.value.trim();
                 elements.form.appendChild(hiddenInput);
             }
+
+            // Ensure language is added before submission
+            addLanguageInput();
             elements.form.submit();
         }, 1750);
     }

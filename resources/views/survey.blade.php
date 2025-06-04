@@ -370,6 +370,3 @@
 </body>
 
 </html>
-
-
-{{-- .form-error border should be left or right depends on which mode --}}

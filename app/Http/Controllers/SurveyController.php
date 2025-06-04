@@ -11,22 +11,27 @@ class SurveyController extends Controller
     {
         $surveys = Survey::all();
         $existingEmails = Survey::pluck('email')->toArray();
-        
+
         return view('survey', compact('surveys', 'existingEmails'));
     }
 
     public function store(Request $request)
     {
+        $language = $request->input('language', 'ar'); // Default to Arabic if not provided
+
         $existingSurvey = Survey::where('email', $request->email)->first();
-        
+
         if ($existingSurvey) {
-            return redirect()->route('completed', ['status' => 'already_submitted']);
+            return redirect()->route('completed', [
+                'status' => 'already_submitted',
+                'lang' => $language
+            ]);
         }
-        
+
         if ($request->best_comm === 'other' && $request->has('best_comm_custom')) {
             $request->merge(['best_comm' => $request->best_comm_custom]);
         }
-        
+
         $validated = $request->validate([
             'email' => 'required|email|unique:survey,email',
             'effective_comm' => 'required',
@@ -42,20 +47,25 @@ class SurveyController extends Controller
             'env_comfort' => 'required',
             'env_resources' => 'required',
         ], [
-            'email.unique' => 'البريد الإلكتروني مستخدم بالفعل.',
-            'email.required' => 'يرجى إدخال البريد الإلكتروني.',
-            'email.email' => 'صيغة البريد الإلكتروني غير صحيحة.',
+            'email.unique' => $language === 'ar' ? 'البريد الإلكتروني مستخدم بالفعل.' : 'Email address is already in use.',
+            'email.required' => $language === 'ar' ? 'يرجى إدخال البريد الإلكتروني.' : 'Please enter your email address.',
+            'email.email' => $language === 'ar' ? 'صيغة البريد الإلكتروني غير صحيحة.' : 'Invalid email format.',
         ]);
 
         Survey::create($validated);
 
-        return redirect()->route('completed', ['status' => 'success']);
+        return redirect()->route('completed', [
+            'status' => 'success',
+            'lang' => $language
+        ]);
     }
-    
+
     public function completed(Request $request)
     {
         $status = $request->query('status', 'success');
-        return view('completed', compact('status'));
+        $language = $request->query('lang', 'ar');
+
+        return view('completed', compact('status', 'language'));
     }
 
     public function showSurveyCharts()
