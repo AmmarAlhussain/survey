@@ -11,14 +11,18 @@
             {{ ($language ?? 'ar') === 'ar' ? 'شكراً لك' : 'Thank You' }}
         @endif
     </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f4f7fc;
+            background: #03313B;
+            /* Navy blue background to match main page */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            color: #333;
+            color: #03313B;
+            /* Navy blue text */
             direction: {{ ($language ?? 'ar') === 'ar' ? 'rtl' : 'ltr' }};
             overflow-x: hidden;
             position: relative;
@@ -37,7 +41,7 @@
 
         .particle {
             position: absolute;
-            background: radial-gradient(circle, rgba(74, 144, 226, 0.6), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
             border-radius: 50%;
             animation: floatUp linear infinite;
             bottom: -200px;
@@ -93,7 +97,7 @@
             left: 10%;
             animation-duration: 8s;
             animation-delay: 0.5s;
-            background: radial-gradient(circle, rgba(74, 144, 226, 0.4), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
         }
 
         .particle:nth-child(2) {
@@ -102,7 +106,7 @@
             left: 20%;
             animation-duration: 10s;
             animation-delay: 1s;
-            background: radial-gradient(circle, rgba(80, 227, 194, 0.5), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
         }
 
         .particle:nth-child(3) {
@@ -111,7 +115,7 @@
             left: 30%;
             animation-duration: 12s;
             animation-delay: 1.5s;
-            background: radial-gradient(circle, rgba(183, 109, 241, 0.3), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
         }
 
         .particle:nth-child(4) {
@@ -120,7 +124,7 @@
             left: 40%;
             animation-duration: 9s;
             animation-delay: 2s;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.4), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.45), transparent);
         }
 
         .particle:nth-child(5) {
@@ -129,7 +133,7 @@
             left: 50%;
             animation-duration: 11s;
             animation-delay: 0.8s;
-            background: radial-gradient(circle, rgba(74, 144, 226, 0.5), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.55), transparent);
         }
 
         .particle:nth-child(6) {
@@ -138,7 +142,7 @@
             left: 60%;
             animation-duration: 13s;
             animation-delay: 2.5s;
-            background: radial-gradient(circle, rgba(80, 227, 194, 0.4), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
         }
 
         .particle:nth-child(7) {
@@ -147,7 +151,7 @@
             left: 70%;
             animation-duration: 8s;
             animation-delay: 1.2s;
-            background: radial-gradient(circle, rgba(183, 109, 241, 0.4), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
         }
 
         .particle:nth-child(8) {
@@ -156,7 +160,7 @@
             left: 80%;
             animation-duration: 10s;
             animation-delay: 1.8s;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent);
         }
 
         .particle:nth-child(9) {
@@ -165,7 +169,7 @@
             left: 90%;
             animation-duration: 12s;
             animation-delay: 2.2s;
-            background: radial-gradient(circle, rgba(74, 144, 226, 0.4), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
         }
 
         .particle:nth-child(10) {
@@ -174,15 +178,16 @@
             left: 15%;
             animation-duration: 9s;
             animation-delay: 2.8s;
-            background: radial-gradient(circle, rgba(80, 227, 194, 0.5), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.45), transparent);
         }
 
+        /* Enhanced Logo Styling - Matching main page */
         .logo-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 20px 0;
-            padding: 20px;
+            margin: 15px 0;
+            padding: 15px;
             position: relative;
             z-index: 99999;
         }
@@ -190,25 +195,106 @@
         .company-logo {
             width: 120px;
             height: 120px;
-            object-fit: contain;
             border-radius: 50%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 10px;
-            animation: logoFloat 3s ease-in-out infinite;
+            /* Navy blue border with gradient effect */
+            border: 3px solid transparent;
+            background-clip: padding-box;
+
+            /* Multiple layered shadows for depth */
+            box-shadow:
+                0 0 0 2px rgba(3, 49, 59, 0.8),
+                /* Navy border */
+                0 0 0 4px rgba(184, 53, 41, 0.3),
+                /* Red accent ring */
+                0 12px 40px rgba(3, 49, 59, 0.4),
+                /* Main shadow */
+                0 6px 20px rgba(0, 0, 0, 0.3),
+                /* Depth shadow */
+                inset 0 2px 8px rgba(255, 255, 255, 0.8),
+                /* Inner highlight */
+                inset 0 -2px 4px rgba(3, 49, 59, 0.1);
+            /* Inner depth */
+
+            padding: 12px;
+            animation: logoFloat 4s ease-in-out infinite, logoPulse 3s ease-in-out infinite alternate;
             z-index: 99999;
             position: relative;
+
+            /* Smooth transitions */
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            /* Subtle glow effect */
+            filter: drop-shadow(0 0 20px rgba(3, 49, 59, 0.2));
         }
 
+        /* Enhanced floating animation */
         @keyframes logoFloat {
 
             0%,
             100% {
-                transform: translateY(0);
+                transform: translateY(0) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-8px) rotate(1deg);
             }
 
             50% {
-                transform: translateY(-15px);
+                transform: translateY(-12px) rotate(0deg);
+            }
+
+            75% {
+                transform: translateY(-8px) rotate(-1deg);
+            }
+        }
+
+        /* Subtle pulsing glow effect */
+        @keyframes logoPulse {
+            0% {
+                box-shadow:
+                    0 0 0 2px rgba(3, 49, 59, 0.8),
+                    0 0 0 4px rgba(184, 53, 41, 0.3),
+                    0 12px 40px rgba(3, 49, 59, 0.4),
+                    0 6px 20px rgba(0, 0, 0, 0.3),
+                    inset 0 2px 8px rgba(255, 255, 255, 0.8),
+                    inset 0 -2px 4px rgba(3, 49, 59, 0.1);
+            }
+
+            100% {
+                box-shadow:
+                    0 0 0 2px rgba(3, 49, 59, 1),
+                    0 0 0 4px rgba(184, 53, 41, 0.5),
+                    0 15px 50px rgba(3, 49, 59, 0.6),
+                    0 8px 25px rgba(0, 0, 0, 0.4),
+                    inset 0 2px 8px rgba(255, 255, 255, 0.9),
+                    inset 0 -2px 4px rgba(3, 49, 59, 0.15);
+            }
+        }
+
+        /* Optional: Add a subtle background decoration behind the logo */
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle at center,
+                    rgba(3, 49, 59, 0.05) 0%,
+                    rgba(184, 53, 41, 0.03) 50%,
+                    transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: logoBackgroundPulse 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoBackgroundPulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1.1);
+                opacity: 0.8;
             }
         }
 
@@ -226,29 +312,19 @@
 
         .message-box {
             background: linear-gradient(145deg, #ffffff, #f8fbff);
+            /* White background matching main page */
             padding: 50px 40px;
             border-radius: 20px;
             box-shadow:
-                0 25px 60px rgba(0, 0, 0, 0.12),
-                0 10px 30px rgba(74, 144, 226, 0.08),
+                0 25px 60px rgba(0, 0, 0, 0.3),
+                0 10px 30px rgba(3, 49, 59, 0.2),
                 0 0 0 1px rgba(255, 255, 255, 0.8);
             max-width: 650px;
             width: 100%;
             position: relative;
             overflow: hidden;
-            border: 2px solid rgba(74, 144, 226, 0.1);
+            border: 2px solid rgba(3, 49, 59, 0.1);
             animation: fadeInIntroEnhanced 0.84s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .message-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.05), transparent);
-            animation: introShimmer 3s ease-in-out infinite;
         }
 
         @keyframes fadeInIntroEnhanced {
@@ -268,24 +344,11 @@
             }
         }
 
-        @keyframes introShimmer {
-            0% {
-                left: -100%;
-            }
-
-            50% {
-                left: -100%;
-            }
-
-            100% {
-                left: 100%;
-            }
-        }
-
         .icon-container {
             width: 100px;
             height: 100px;
-            background: linear-gradient(145deg, #4A90E2, #5da3f5);
+            background: linear-gradient(145deg, #B83529, #d4432f);
+            /* Red gradient matching main page */
             border-radius: 50%;
             margin: 0 auto 30px;
             display: flex;
@@ -293,48 +356,27 @@
             justify-content: center;
             animation: completionPulse 2s ease-in-out infinite alternate;
             box-shadow:
-                0 8px 25px rgba(74, 144, 226, 0.3),
+                0 8px 25px rgba(184, 53, 41, 0.3),
                 0 4px 15px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
         }
 
-        .icon-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: iconShimmer 2s ease-in-out infinite;
-        }
-
         @keyframes completionPulse {
             0% {
                 box-shadow:
-                    0 8px 25px rgba(74, 144, 226, 0.3),
+                    0 8px 25px rgba(184, 53, 41, 0.3),
                     0 4px 15px rgba(0, 0, 0, 0.1),
-                    0 0 0 0 rgba(74, 144, 226, 0);
+                    0 0 0 0 rgba(184, 53, 41, 0);
                 transform: scale(1);
             }
 
             100% {
                 box-shadow:
-                    0 12px 35px rgba(74, 144, 226, 0.4),
+                    0 12px 35px rgba(184, 53, 41, 0.4),
                     0 6px 20px rgba(0, 0, 0, 0.15),
-                    0 0 0 15px rgba(74, 144, 226, 0.1);
+                    0 0 0 15px rgba(184, 53, 41, 0.1);
                 transform: scale(1.05);
-            }
-        }
-
-        @keyframes iconShimmer {
-            0% {
-                left: -100%;
-            }
-
-            100% {
-                left: 100%;
             }
         }
 
@@ -359,12 +401,13 @@
         }
 
         .title {
-            color: #2c5282;
+            color: #03313B;
+            /* Navy blue text matching main page */
             margin-bottom: 20px;
             font-size: 2.2rem;
             font-weight: 700;
-            text-shadow: 0 2px 4px rgba(74, 144, 226, 0.1);
-            background: linear-gradient(145deg, #4A90E2, #2c5282);
+            text-shadow: 0 2px 4px rgba(3, 49, 59, 0.1);
+            background: linear-gradient(145deg, #03313B, #0a4a5a);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -372,7 +415,8 @@
 
         .message {
             font-size: 1.3rem;
-            color: #4a5568;
+            color: #03313B;
+            /* Navy blue text */
             margin-bottom: 25px;
             line-height: 1.6;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -380,9 +424,82 @@
 
         .sub-message {
             font-size: 1.1rem;
-            color: #718096;
+            color: #03313B;
+            /* Navy blue text */
             margin-bottom: 35px;
             line-height: 1.5;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(145deg, rgba(3, 49, 59, 0.05), rgba(3, 49, 59, 0.02));
+            border-radius: 15px;
+            border: 1px solid rgba(3, 49, 59, 0.1);
+        }
+
+        .contact-title {
+            color: #03313B;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .contact-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 10px;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: #03313B;
+            border: 1px solid rgba(3, 49, 59, 0.1);
+            min-width: 280px;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(3, 49, 59, 0.2);
+            background: linear-gradient(145deg, #f8fbff, #ffffff);
+        }
+
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 14px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .email-icon {
+            background: linear-gradient(145deg, #B83529, #d4432f);
+        }
+
+        .whatsapp-icon {
+            background: linear-gradient(145deg, #25D366, #128C7E);
+        }
+
+        .contact-text {
+            font-size: 1rem;
+            font-weight: 500;
+            direction: ltr;
+            text-align: left;
         }
 
         .language-transition {
@@ -407,8 +524,22 @@
             }
 
             .company-logo {
-                width: 100px;
-                height: 100px;
+                width: 90px;
+                height: 90px;
+                padding: 8px;
+
+                box-shadow:
+                    0 0 0 2px rgba(3, 49, 59, 0.8),
+                    0 0 0 3px rgba(184, 53, 41, 0.3),
+                    0 8px 25px rgba(3, 49, 59, 0.4),
+                    0 4px 15px rgba(0, 0, 0, 0.3),
+                    inset 0 2px 6px rgba(255, 255, 255, 0.8),
+                    inset 0 -2px 3px rgba(3, 49, 59, 0.1);
+            }
+
+            .logo-container {
+                margin: 10px 0;
+                padding: 10px;
             }
 
             .title {
@@ -434,6 +565,25 @@
 
             .icon-container span {
                 font-size: 40px;
+            }
+
+            .contact-section {
+                margin-top: 25px;
+                padding: 20px;
+            }
+
+            .contact-title {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+
+            .contact-item {
+                min-width: 250px;
+                padding: 10px 15px;
+            }
+
+            .contact-text {
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -487,6 +637,29 @@
                 </p>
             @endif
 
+            <!-- Contact Section -->
+            <div class="contact-section">
+                <h3 class="contact-title">
+                    {{ ($language ?? 'ar') === 'ar' ? 'للتواصل مع عائلة سيرا' : 'Contact Seera Family' }}
+                </h3>
+                <div class="contact-items">
+                    <a href="mailto:seera.family@seera.sa" class="contact-item">
+                        <div class="contact-icon email-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <span class="contact-text">seera.family@seera.sa</span>
+                    </a>
+
+                    <a href="https://wa.me/message/BRICORPYLBFFN1" target="_blank" class="contact-item">
+                        <div class="contact-icon whatsapp-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <span class="contact-text">
+                            {{ ($language ?? 'ar') === 'ar' ? '+966 50 543 1325' : '+966 50 543 1325' }}
+                        </span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -503,7 +676,9 @@
                     successTitle: "شكراً لك على المشاركة",
                     successMessage: "تم إرسال إجاباتك بنجاح",
                     successSubMessage: "نقدر وقتك ومشاركتك في تحسين بيئة العمل",
-                    pageTitle: status === 'already_submitted' ? 'الاستبيان مكتمل مسبقاً' : 'شكراً لك'
+                    pageTitle: status === 'already_submitted' ? 'الاستبيان مكتمل مسبقاً' : 'شكراً لك',
+                    contactTitle: "للتواصل مع عائلة سيرا",
+                    whatsappText: "واتساب عائلة سيرا"
                 },
                 en: {
                     alreadySubmittedTitle: "Thank You",
@@ -512,7 +687,9 @@
                     successTitle: "Thank You for Your Participation",
                     successMessage: "Your responses have been submitted successfully",
                     successSubMessage: "We appreciate your time and participation in improving our work environment",
-                    pageTitle: status === 'already_submitted' ? 'Survey Already Completed' : 'Thank You'
+                    pageTitle: status === 'already_submitted' ? 'Survey Already Completed' : 'Thank You',
+                    contactTitle: "Contact Seera Family",
+                    whatsappText: "Seera Family WhatsApp"
                 }
             };
 

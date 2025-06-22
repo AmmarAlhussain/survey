@@ -19,36 +19,51 @@ document.addEventListener("DOMContentLoaded", function () {
             nextButton: "التالي",
             submitButton: "إرسال",
             questions: [
-                "1. هل تجد القنوات المستخدمة للتواصل داخل الشركة فعالة ومناسبة؟ (الواتس اب - الشاشات - ايميل عائلة سير)",
-                "2. أكثر قنوات التواصل فعالية:",
-                "3. كيف تقيّم جودة التواصل؟",
-                "4. كيف تقيّم الفعاليات؟",
-                "5. هل تساهم الفعاليات في تعزيز الروح المعنوية؟",
-                "6. هل تعكس الفعاليات ثقافة الشركة؟",
-                "7. هل محتوى الفعاليات ممتع ومفيد؟",
-                "8. هل تلبي الفعاليات احتياجات الموظفين؟",
-                "9. كيف تقيّم تنظيم الفعاليات؟",
-                "10. هل بيئة العمل إيجابية ومحفزة؟",
-                "11. هل مساحة العمل مريحة؟",
-                "12. هل الموارد متوفرة؟",
+                "ما مدى رضاك عن بيئة العمل بشكل عام؟",
+                "هل تشعر أن بيئة العمل تدعم التوازن بين العمل والترفيه؟",
+                "هل تشعر أن الأنشطة المتنوعة في بيئة العمل تساعدك في التغلب على الروتين والضغوطات؟",
+                "ما مدى رضاك عن تنوع الفعاليات الداخلية؟",
+                "ما مدى رضاك عن دور إدارة تجربة الموظف (عائلة سيرا) ووضوح دورهم؟",
+                "ما مدى رضاك عن قنوات التواصل الخاصة بعائلة سيرا؟ (إيميل - واتساب - شاشات داخلية)",
+                "ما رأيك في محتوى وتصاميم الرسائل الخاصة بالتواصل مع الموظفين في المناسبات الاجتماعية والترفيهية وغيرها؟",
+                "ما مدى رضاك عن سرعة الاستجابة لرسائلك عبر ايميل عائلة سيرا أو عبر الواتساب؟",
+                "اقتراحات تطويرية (اختيارية)",
             ],
             answers: {
+                very_satisfied: "راضي جداً",
+                satisfied: "راضي",
+                neutral: "محايد",
+                unsatisfied: "غير راضي",
                 yes: "نعم",
                 no: "لا",
-                email: "البريد الإلكتروني",
-                whatsapp: "واتس أب",
-                screens: "الشاشات",
-                other: "غير ذلك",
             },
             placeholders: {
                 email: "أدخل بريدك الإلكتروني",
-                other: "يرجى التحديد",
+                suggestions: "يرجى كتابة اقتراحاتك",
             },
             errors: {
                 email: "الرجاء إدخال بريد إلكتروني بنطاق @almosafer.com أو @lumirental.com أو @seera.sa",
                 required: "الرجاء اختيار إجابة",
-                rating: "الرجاء اختيار تقييم",
-                otherText: "الرجاء ادخال الاجابة",
+            },
+            suggestionLabels: {
+                activities_suggestions: "اقتراحات للتحسين",
+                communication_suggestions: "اقتراحات للتحسين",
+                communication_improvement_suggestions:
+                    "اقتراحات تطويرية لقنوات التواصل:",
+                work_environment_improvement_suggestions:
+                    "اقتراحات تطويرية لبيئة العمل:",
+                events_improvement_suggestions:
+                    "اقتراحات تطويرية للفعاليات الداخلية:",
+            },
+            seeraFamilyInfo: {
+                knowUsTitle: "فرصة نعرفك علينا",
+                learnMoreTitle: "تعرّف علينا أكثر",
+                content: {
+                    intro: "<strong>عائلة سيرا تهتم بثلاث جوانب رئيسية:</strong>",
+                    first: "<strong>أولها بيئة العمل</strong>.. لان هدفنا تتأكد من انك تعمل في بيئة تقدرك وتهتم براحتك وقدرتك على الابداع",
+                    second: "<strong>وثانيا</strong> انك تتاكد ان صوتك مسموع وعشان كذا وفرنا لك قنوات تواصل مختلفة مثل: ايميل عائلة سيرا - واتساب عائلة سيرا عشان تتكلم معنا في أي وقت وبأي شي تحتاجه وبنوصل صوتك دائما.",
+                    third: "<strong>وأخيرا</strong> الفعاليات الترفيهية والاجتماعية والأنشطة المنوعة واللي نتمنى نطورها معكم كل يوم عشان توصلون البيئة الأمثل والأفضل لكم دائما.",
+                },
             },
             celebration: "شكراً جزيلاً على تقييمك!",
         },
@@ -62,36 +77,51 @@ document.addEventListener("DOMContentLoaded", function () {
             nextButton: "Next",
             submitButton: "Submit",
             questions: [
-                "1. Do you find the communication channels used within the company effective and appropriate? (WhatsApp - Screens - Seera Family Email)",
-                "2. Most effective communication channels:",
-                "3. How do you rate the quality of communication?",
-                "4. How do you rate the events?",
-                "5. Do events contribute to boosting morale?",
-                "6. Do events reflect the company culture?",
-                "7. Is the content of events entertaining and useful?",
-                "8. Do events meet employees' needs?",
-                "9. How do you rate the organization of events?",
-                "10. Is the work environment positive and motivating?",
-                "11. Is the workspace comfortable?",
-                "12. Are resources available?",
+                "How satisfied are you with the work environment in general?",
+                "Do you feel that the work environment supports a balance between work and entertainment?",
+                "Do you feel that the various activities in the work environment help you overcome routine and stress?",
+                "How satisfied are you with the variety of internal events?",
+                "How satisfied are you with the role of Employee Experience Management (Seera Family) and the clarity of their role?",
+                "How satisfied are you with the communication channels of Seera Family? (Email - WhatsApp - Internal Screens)",
+                "What do you think of the content and design of the messages for communicating with employees during social and recreational events and others?",
+                "How satisfied are you with the response time to your messages via Seera Family Email or WhatsApp?",
+                "Development Suggestions (Optional)",
             ],
             answers: {
+                very_satisfied: "Very satisfied",
+                satisfied: "Satisfied",
+                neutral: "Neutral",
+                unsatisfied: "Unsatisfied",
                 yes: "Yes",
                 no: "No",
-                email: "Email",
-                whatsapp: "WhatsApp",
-                screens: "Screens",
-                other: "Other",
             },
             placeholders: {
                 email: "Enter your email address",
-                other: "Please specify",
+                suggestions: "Please write your suggestions",
             },
             errors: {
                 email: "Please enter an email with domain @almosafer.com or @lumirental.com or @seera.sa",
                 required: "Please select an answer",
-                rating: "Please select a rating",
-                otherText: "Please enter your answer",
+            },
+            suggestionLabels: {
+                activities_suggestions: "Suggestions for improvement:",
+                communication_suggestions: "Suggestions for improvement:",
+                communication_improvement_suggestions:
+                    "Development suggestions for communication channels:",
+                work_environment_improvement_suggestions:
+                    "Development suggestions for work environment:",
+                events_improvement_suggestions:
+                    "Development suggestions for internal events:",
+            },
+            seeraFamilyInfo: {
+                knowUsTitle: "Opportunity to Get to Know Us",
+                learnMoreTitle: "Learn More About Us",
+                content: {
+                    intro: "<strong>Seera Family focuses on three main aspects:</strong>",
+                    first: "<strong>First</strong>, the work environment, because our goal is to ensure you work in a place that values and cares for your comfort and creativity.",
+                    second: "<strong>Second</strong>, we want to ensure your voice is heard, which is why we've provided you with various communication channels such as Seera Family Email and Seera Family WhatsApp to talk to us anytime about anything you need, and we will always amplify your voice.",
+                    third: "<strong>Finally</strong>, we aim to develop recreational, social events, and diverse activities with you every day to create the optimal and best environment for you.",
+                },
             },
             celebration: "Thank you very much for your feedback!",
         },
@@ -163,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const t = translations[currentLanguage];
 
         const contentElements = document.querySelectorAll(
-            ".intro-box h2, .intro-box p, .email-label, h3, .radio-label"
+            ".intro-box h2, .intro-box p, .email-label, h3, .radio-label, .suggestion-label"
         );
         contentElements.forEach((el) => {
             el.classList.add("language-transition", "fade-out");
@@ -201,6 +231,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 emailError.textContent = t.errors.email;
             }
 
+            // Update all suggestion labels
+            Object.keys(t.suggestionLabels).forEach((labelKey) => {
+                const labelElement = document.querySelector(
+                    `label[for="${labelKey}"]`
+                );
+                if (labelElement) {
+                    labelElement.textContent = t.suggestionLabels[labelKey];
+                }
+            });
+
             elements.steps.forEach((step, index) => {
                 const questionTitle = step.querySelector("h3");
                 if (questionTitle && t.questions[index]) {
@@ -230,29 +270,38 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 });
 
-                const otherInput = step.querySelector(".other-text-input");
-                if (otherInput) {
-                    otherInput.placeholder = t.placeholders.other;
-                }
+                const suggestionTextareas = step.querySelectorAll(
+                    ".suggestion-textarea"
+                );
+                suggestionTextareas.forEach((textarea) => {
+                    textarea.placeholder = t.placeholders.suggestions;
+                });
 
                 const errorElements = step.querySelectorAll(".form-error");
                 errorElements.forEach((errorEl) => {
-                    const inputName = errorEl.id.replace("-error", "");
-                    if (
-                        inputName.includes("rate") ||
-                        inputName.includes("organize")
-                    ) {
-                        errorEl.textContent = t.errors.rating;
-                    } else if (inputName === "best_comm") {
-                        errorEl.textContent = t.errors.otherText;
-                    } else {
-                        errorEl.textContent = t.errors.required;
-                    }
+                    errorEl.textContent = t.errors.required;
                 });
             });
 
+            // Update Seera Family info content
+            const seeraFamilyTitle =
+                document.getElementById("seera_family_title");
+            const seeraInfoContent = document.querySelector(
+                ".seera-info-content"
+            );
+
+            if (seeraInfoContent) {
+                const content = t.seeraFamilyInfo.content;
+                seeraInfoContent.innerHTML = `
+                    <p>${content.intro}</p>
+                    <p>${content.first}</p>
+                    <p>${content.second}</p>
+                    <p>${content.third}</p>
+                `;
+            }
+
             const textElements = document.querySelectorAll(
-                "h3, .radio-label, input, .form-error, .email-label"
+                "h3, .radio-label, input, .form-error, .email-label, .suggestion-label"
             );
             textElements.forEach((el) => {
                 if (currentLanguage === "ar") {
@@ -263,12 +312,18 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             const inputs = document.querySelectorAll(
-                'input[type="email"], .other-text-input'
+                'input[type="email"], .suggestion-textarea'
             );
             inputs.forEach((input) => {
                 input.style.textAlign =
                     currentLanguage === "ar" ? "right" : "left";
             });
+
+            // Update Seera info content text alignment
+            if (seeraInfoContent) {
+                seeraInfoContent.style.textAlign =
+                    currentLanguage === "ar" ? "right" : "left";
+            }
 
             setTimeout(() => {
                 contentElements.forEach((el) => {
@@ -433,6 +488,131 @@ document.addEventListener("DOMContentLoaded", function () {
         current = 0;
         updateCarousel();
         updateProgress(0);
+
+        // Initialize conditional field handlers
+        initializeConditionalFields();
+    }
+
+    function initializeConditionalFields() {
+        // Activities suggestions
+        const activitiesNoRadio = document.getElementById(
+            "activities_help_routine_no"
+        );
+        const activitiesNeutralRadio = document.getElementById(
+            "activities_help_routine_neutral"
+        );
+        const activitiesSuggestionsContainer = document.getElementById(
+            "activities_suggestions_container"
+        );
+
+        document
+            .querySelectorAll('input[name="activities_help_routine"]')
+            .forEach((radio) => {
+                radio.addEventListener("change", () => {
+                    if (
+                        activitiesNoRadio.checked ||
+                        activitiesNeutralRadio.checked
+                    ) {
+                        activitiesSuggestionsContainer.style.display = "block";
+                    } else {
+                        activitiesSuggestionsContainer.style.display = "none";
+                    }
+                });
+            });
+
+        // Employee experience Seera Family info
+        const employeeExperienceNeutral = document.getElementById(
+            "employee_experience_neutral"
+        );
+        const employeeExperienceUnsatisfied = document.getElementById(
+            "employee_experience_unsatisfied"
+        );
+        const seeraFamilyInfo = document.getElementById("seera_family_info");
+        const seeraFamilyTitle = document.getElementById("seera_family_title");
+
+        document
+            .querySelectorAll('input[name="employee_experience_satisfaction"]')
+            .forEach((radio) => {
+                radio.addEventListener("change", () => {
+                    const t = translations[currentLanguage];
+                    if (
+                        employeeExperienceNeutral.checked ||
+                        employeeExperienceUnsatisfied.checked
+                    ) {
+                        seeraFamilyInfo.style.display = "block";
+                        seeraFamilyTitle.textContent =
+                            t.seeraFamilyInfo.knowUsTitle;
+
+                        // Update the content when showing
+                        const seeraInfoContent = document.querySelector(
+                            ".seera-info-content"
+                        );
+                        if (seeraInfoContent) {
+                            const content = t.seeraFamilyInfo.content;
+                            seeraInfoContent.innerHTML = `
+                                <p>${content.intro}</p>
+                                <p>${content.first}</p>
+                                <p>${content.second}</p>
+                                <p>${content.third}</p>
+                            `;
+                            seeraInfoContent.style.textAlign =
+                                currentLanguage === "ar" ? "right" : "left";
+                        }
+                    } else if (radio.value === "satisfied") {
+                        seeraFamilyInfo.style.display = "block";
+                        seeraFamilyTitle.textContent =
+                            t.seeraFamilyInfo.learnMoreTitle;
+
+                        // Update the content when showing
+                        const seeraInfoContent = document.querySelector(
+                            ".seera-info-content"
+                        );
+                        if (seeraInfoContent) {
+                            const content = t.seeraFamilyInfo.content;
+                            seeraInfoContent.innerHTML = `
+                                <p>${content.intro}</p>
+                                <p>${content.first}</p>
+                                <p>${content.second}</p>
+                                <p>${content.third}</p>
+                            `;
+                            seeraInfoContent.style.textAlign =
+                                currentLanguage === "ar" ? "right" : "left";
+                        }
+                    } else {
+                        seeraFamilyInfo.style.display = "none";
+                    }
+                });
+            });
+
+        // Communication channels suggestions
+        const commChannelsUnsatisfied = document.getElementById(
+            "comm_channels_unsatisfied"
+        );
+        const commChannelsNeutral = document.getElementById(
+            "comm_channels_neutral"
+        );
+        const communicationSuggestionsContainer = document.getElementById(
+            "communication_suggestions_container"
+        );
+
+        document
+            .querySelectorAll(
+                'input[name="communication_channels_satisfaction"]'
+            )
+            .forEach((radio) => {
+                radio.addEventListener("change", () => {
+                    if (
+                        commChannelsUnsatisfied.checked ||
+                        commChannelsNeutral.checked
+                    ) {
+                        communicationSuggestionsContainer.style.display =
+                            "block";
+                    } else {
+                        communicationSuggestionsContainer.style.display =
+                            "none";
+                    }
+                });
+            });
     }
 
     function updateProgress(index) {
@@ -491,15 +671,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 return false;
             }
         }
-
-        const otherRadio = step.querySelector('input[value="other"]:checked');
-        if (otherRadio) {
-            const otherText = step.querySelector(".other-text-input");
-            if (otherText && !otherText.value.trim()) {
-                return false;
-            }
-        }
-
         return true;
     }
 
@@ -514,10 +685,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 particles.classList.add("particles-celebration");
             }
 
-            if (typeof confetti !== "undefined") {
-                setTimeout(() => triggerCompletionConfetti(), 300);
-            }
-
             setTimeout(() => {
                 progressBar.classList.remove("completed");
                 if (particles) {
@@ -525,21 +692,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }, 2000);
         }
-    }
-
-    function triggerCompletionConfetti() {
-        if (typeof confetti === "undefined") return;
-
-        confetti({
-            particleCount: 25,
-            spread: 60,
-            origin: { y: 0.4 },
-            colors: ["#FFD700", "#FFA500", "#FF69B4"],
-            startVelocity: 30,
-            gravity: 0.8,
-            scalar: 1.0,
-            ticks: 100,
-        });
     }
 
     function updateCarousel() {
@@ -582,44 +734,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 step.classList.add("hidden");
             }
         });
-    }
-
-    function triggerStarConfetti(rating) {
-        let particleCount = 0;
-        let colors = [];
-
-        switch (rating) {
-            case 3:
-                particleCount = 8;
-                colors = ["#FFD700", "#FFA500"];
-                break;
-            case 4:
-                particleCount = 12;
-                colors = ["#FFD700", "#FFA500", "#FF69B4"];
-                break;
-            case 5:
-                particleCount = 20;
-                colors = ["#FFD700", "#FFA500", "#FF69B4", "#00CED1"];
-                break;
-            default:
-                return;
-        }
-
-        if (typeof confetti !== "undefined") {
-            confetti({
-                particleCount: particleCount,
-                spread: 50,
-                origin: {
-                    x: 0.5,
-                    y: 0.7,
-                },
-                colors: colors,
-                gravity: 0.8,
-                scalar: 0.7,
-                startVelocity: 25,
-                ticks: 80,
-            });
-        }
     }
 
     function navigateToStep(newIndex) {
@@ -716,23 +830,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.head.appendChild(sparkleStyle);
     }
 
-    const otherRadio = document.getElementById("best_comm_other_radio");
-    const otherContainer = document.getElementById("best_comm_other_container");
-    const otherText = document.getElementById("best_comm_other_text");
-
-    if (otherRadio && otherContainer && otherText) {
-        document
-            .querySelectorAll('input[name="best_comm"]')
-            .forEach((radio) => {
-                radio.addEventListener("change", () => {
-                    otherContainer.style.display = otherRadio.checked
-                        ? "block"
-                        : "none";
-                    otherText.toggleAttribute("required", otherRadio.checked);
-                });
-            });
-    }
-
     document.querySelectorAll("input").forEach((input) => {
         const eventType = input.type === "email" ? "input" : "change";
         input.addEventListener(eventType, () => {
@@ -753,91 +850,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    document.querySelectorAll(".star-rating").forEach((starBlock) => {
-        const labels = [...starBlock.querySelectorAll("label.star")];
-        const inputs = [...starBlock.querySelectorAll("input")];
-        const inputName = inputs[0]?.name;
-
-        if (!labels.length || !inputs.length) return;
-
-        const isStarRatingQuestion =
-            inputName &&
-            (inputName.includes("rate_comm_quality") ||
-                inputName.includes("rate_events") ||
-                inputName.includes("events_organize"));
-
-        labels.forEach((label, index) => {
-            label.addEventListener("mouseover", () => {
-                labels.forEach((l, i) =>
-                    l.classList.toggle("hovered", i <= index)
-                );
-            });
-
-            label.addEventListener("mouseout", () => {
-                labels.forEach((l) => l.classList.remove("hovered"));
-                const selected = inputs.findIndex((input) => input.checked);
-                if (selected >= 0) {
-                    labels.forEach((l, i) =>
-                        l.classList.toggle("selected", i <= selected)
-                    );
-                }
-            });
-
-            label.addEventListener("click", () => {
-                const errorEl = document.getElementById(`${inputName}-error`);
-                if (errorEl) errorEl.classList.remove("active");
-
-                inputs[index].checked = true;
-                labels.forEach((l) => {
-                    l.classList.remove("selected", "just-selected");
-                    l.style = "";
-                });
-
-                label.classList.add("just-selected");
-
-                if (isStarRatingQuestion) {
-                    const rating = index + 1;
-                    triggerStarConfetti(rating);
-                }
-
-                setTimeout(() => {
-                    labels.forEach((l, i) => {
-                        if (i <= index) {
-                            l.classList.add("selected");
-                            l.style.opacity = "1";
-                            l.style.textShadow =
-                                "0 0 15px #FFD700, 0 0 10px #FFD700";
-                        }
-                    });
-
-                    setTimeout(() => {
-                        label.classList.remove("just-selected");
-                    }, 600);
-                }, 70);
-            });
-        });
-
-        starBlock.addEventListener("mouseleave", () => {
-            labels.forEach((l) => l.classList.remove("hovered"));
-        });
-    });
-
     elements.form.addEventListener("submit", () => {
         // Ensure language is included in form submission
         addLanguageInput();
-
-        if (otherRadio?.checked && otherText?.value.trim()) {
-            let hiddenInput = document.querySelector(
-                'input[name="best_comm_custom"]'
-            );
-            if (!hiddenInput) {
-                hiddenInput = document.createElement("input");
-                hiddenInput.type = "hidden";
-                hiddenInput.name = "best_comm_custom";
-                elements.form.appendChild(hiddenInput);
-            }
-            hiddenInput.value = otherText.value.trim();
-        }
     });
 
     function validateCurrentStep() {
@@ -870,71 +885,11 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        if (
-            currentStep.getAttribute("data-step") === "2" &&
-            otherRadio?.checked &&
-            !otherText?.value.trim()
-        ) {
-            if (otherText) otherText.classList.add("error");
-            const errorEl = document.getElementById("best_comm-error");
-            if (errorEl) {
-                const t = translations[currentLanguage];
-                errorEl.textContent = t.errors.otherText;
-                errorEl.classList.add("active");
-            }
-            isValid = false;
-        }
-
         return isValid;
     }
 
     function handleFormSubmission() {
         setProgressToComplete();
-
-        const triggerConfetti = () => {
-            const count = 80;
-            const defaults = {
-                origin: { y: 0.7 },
-                zIndex: 10001,
-                gravity: 0.8,
-            };
-
-            function fire(particleRatio, opts) {
-                confetti(
-                    Object.assign({}, defaults, opts, {
-                        particleCount: Math.floor(count * particleRatio),
-                    })
-                );
-            }
-
-            fire(0.3, {
-                spread: 40,
-                startVelocity: 45,
-                colors: ["#FFD700", "#FFA500", "#FF69B4"],
-                scalar: 1.0,
-            });
-
-            fire(0.2, {
-                spread: 60,
-                colors: ["#4A90E2", "#50e3c2"],
-                startVelocity: 35,
-            });
-        };
-
-        if (typeof confetti !== "undefined") {
-            triggerConfetti();
-
-            setTimeout(() => {
-                confetti({
-                    particleCount: 40,
-                    spread: 100,
-                    origin: { y: 0.6 },
-                    colors: ["#FFD700", "#FFA500"],
-                    scalar: 1.2,
-                    gravity: 0.6,
-                });
-            }, 200);
-        }
 
         const celebrationMsg =
             document.querySelector(".celebration-msg") ||
@@ -966,21 +921,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1400);
 
         setTimeout(() => {
-            const customOption = document.querySelector(
-                'input[name="best_comm_custom"]'
-            );
-            if (
-                otherRadio?.checked &&
-                otherText?.value.trim() &&
-                !customOption
-            ) {
-                const hiddenInput = document.createElement("input");
-                hiddenInput.type = "hidden";
-                hiddenInput.name = "best_comm_custom";
-                hiddenInput.value = otherText.value.trim();
-                elements.form.appendChild(hiddenInput);
-            }
-
             // Ensure language is added before submission
             addLanguageInput();
             elements.form.submit();

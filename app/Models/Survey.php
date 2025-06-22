@@ -30,5 +30,4 @@ class Survey extends Model
         'env_resources',
         'stars',
     ];
-
 }
