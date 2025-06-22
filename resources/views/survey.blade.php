@@ -73,7 +73,6 @@
             <input type="hidden" name="email" id="hiddenEmail">
 
             <div class="survey-carousel">
-                <!-- Question 1: Work Environment Satisfaction -->
                 <div class="step current" data-step="1">
                     <div class="card-header">
                         <h3>ما مدى رضاك عن بيئة العمل بشكل عام؟</h3>
@@ -105,7 +104,6 @@
                     </div>
                 </div>
 
-                <!-- Question 2: Work-Entertainment Balance -->
                 <div class="step next" data-step="2">
                     <div class="card-header">
                         <h3>هل تشعر أن بيئة العمل تدعم التوازن بين العمل والترفيه؟</h3>
@@ -132,7 +130,6 @@
                     </div>
                 </div>
 
-                <!-- Question 3: Activities Help with Routine -->
                 <div class="step hidden" data-step="3">
                     <div class="card-header">
                         <h3>هل تشعر أن الأنشطة المتنوعة في بيئة العمل تساعدك في التغلب على الروتين والضغوطات؟</h3>
@@ -166,7 +163,6 @@
                     </div>
                 </div>
 
-                <!-- Question 4: Events Variety Satisfaction -->
                 <div class="step hidden" data-step="4">
                     <div class="card-header">
                         <h3>ما مدى رضاك عن تنوع الفعاليات الداخلية؟</h3>
@@ -193,7 +189,6 @@
                     </div>
                 </div>
 
-                <!-- Question 5: Employee Experience Management Satisfaction -->
                 <div class="step hidden" data-step="5">
                     <div class="card-header">
                         <h3>ما مدى رضاك عن دور إدارة تجربة الموظف (عائلة سيرا) ووضوح دورهم؟</h3>
@@ -238,7 +233,6 @@
                     </div>
                 </div>
 
-                <!-- Question 6: Communication Channels Satisfaction -->
                 <div class="step hidden" data-step="6">
                     <div class="card-header">
                         <h3>ما مدى رضاك عن قنوات التواصل الخاصة بعائلة سيرا؟ (إيميل - واتساب - شاشات داخلية)</h3>
@@ -275,7 +269,6 @@
                     </div>
                 </div>
 
-                <!-- Question 7: Content and Design Opinion -->
                 <div class="step hidden" data-step="7">
                     <div class="card-header">
                         <h3>ما رأيك في محتوى وتصاميم الرسائل الخاصة بالتواصل مع الموظفين في المناسبات الاجتماعية
@@ -303,7 +296,6 @@
                     </div>
                 </div>
 
-                <!-- Question 8: Response Time Satisfaction -->
                 <div class="step hidden" data-step="8">
                     <div class="card-header">
                         <h3>ما مدى رضاك عن سرعة الاستجابة لرسائلك عبر ايميل عائلة سيرا أو عبر الواتساب؟</h3>
@@ -330,7 +322,6 @@
                     </div>
                 </div>
 
-                <!-- Optional Suggestions -->
                 <div class="step hidden" data-step="9">
                     <div class="card-header">
                         <h3>اقتراحات تطويرية (اختيارية)</h3>

@@ -18,18 +18,19 @@ class SurveyFactory extends Factory
     {
         return [
             'email' => $this->faker->unique()->userName . '@' . $this->faker->randomElement(['almosafer.com', 'lumirental.com', 'seera.sa']),
-            'effective_comm' => $this->faker->randomElement(['yes', 'no']),
-            'best_comm' => $this->faker->randomElement(['email', 'whatsapp', 'screens', 'X', 'facebook', 'snapchat']),
-            'rate_comm_quality' => $this->faker->numberBetween(1, 5),
-            'rate_events' => $this->faker->numberBetween(1, 5),
-            'events_morale' => $this->faker->randomElement(['yes', 'no']),
-            'events_culture' => $this->faker->randomElement(['yes', 'no']),
-            'events_content' => $this->faker->randomElement(['yes', 'no']),
-            'events_interest' => $this->faker->randomElement(['yes', 'no']),
-            'events_organize' => $this->faker->numberBetween(1, 5),
-            'culture_env' => $this->faker->randomElement(['yes', 'no']),
-            'env_comfort' => $this->faker->randomElement(['yes', 'no']),
-            'env_resources' => $this->faker->randomElement(['yes', 'no']),
+            'work_environment_satisfaction' => $this->faker->randomElement(['very_satisfied', 'satisfied', 'neutral', 'unsatisfied']),
+            'work_entertainment_balance' => $this->faker->randomElement(['yes', 'neutral', 'no']),
+            'activities_help_routine' => $this->faker->randomElement(['yes', 'neutral', 'no']),
+            'activities_suggestions' => $this->faker->optional(0.3)->sentence(10),
+            'events_variety_satisfaction' => $this->faker->randomElement(['satisfied', 'neutral', 'unsatisfied']),
+            'employee_experience_satisfaction' => $this->faker->randomElement(['satisfied', 'neutral', 'unsatisfied']),
+            'communication_channels_satisfaction' => $this->faker->randomElement(['satisfied', 'neutral', 'unsatisfied']),
+            'communication_suggestions' => $this->faker->optional(0.3)->sentence(10),
+            'content_design_satisfaction' => $this->faker->randomElement(['satisfied', 'neutral', 'unsatisfied']),
+            'response_time_satisfaction' => $this->faker->randomElement(['satisfied', 'neutral', 'unsatisfied']),
+            'communication_improvement_suggestions' => $this->faker->optional(0.2)->sentence(15),
+            'work_environment_improvement_suggestions' => $this->faker->optional(0.2)->sentence(15),
+            'events_improvement_suggestions' => $this->faker->optional(0.2)->sentence(15),
         ];
     }
 }
