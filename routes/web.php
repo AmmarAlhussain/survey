@@ -23,3 +23,5 @@ Route::get('/completed', [SurveyController::class, 'completed'])->name('complete
 // Additional routes if you have them
 Route::get('/charts', [SurveyController::class, 'showSurveyCharts'])->name('survey.charts');
 Route::get('/logs', [SurveyController::class, 'logs'])->name('survey.logs');
+
+Route::post('/check-employee', [SurveyController::class, 'checkEmployee']);

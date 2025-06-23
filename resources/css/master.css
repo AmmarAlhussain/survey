@@ -7,12 +7,10 @@
 body {
     font-family: Arial, sans-serif;
     background: #03313B;
-    /* Navy blue background */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     color: #03313B;
-    /* Navy blue text */
     direction: rtl;
     overflow-x: hidden;
     position: relative;
@@ -51,12 +49,9 @@ body {
     }
 }
 
-/* REMOVED: White shimmer effect on progress container */
-
 .progress-bar {
     height: 100%;
     background: linear-gradient(135deg, #B83529, #d4432f, #B83529);
-    /* Red progress bar */
     background-size: 400% 100%;
     box-shadow:
         0 0 20px rgba(184, 53, 41, 0.6),
@@ -89,8 +84,6 @@ body {
             0 0 0 1px rgba(255, 255, 255, 0.2);
     }
 }
-
-/* REMOVED: White wave effect on progress bar */
 
 .progress-bar.completed {
     animation: progressGradientFlow 3s ease-in-out infinite,
@@ -160,66 +153,6 @@ body {
     }
 
     100% {
-        transform: scaleY(1);
-    }
-}
-
-.progress-bar.completed {
-    animation: progressGradientFlow 4s ease-in-out infinite,
-        progressComplete 1.5s ease-out;
-    box-shadow:
-        0 0 40px rgba(184, 53, 41, 1),
-        0 0 80px rgba(184, 53, 41, 0.8),
-        0 0 120px rgba(184, 53, 41, 0.6),
-        0 0 160px rgba(184, 53, 41, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.3);
-}
-
-@keyframes progressComplete {
-    0% {
-        box-shadow:
-            0 0 20px rgba(184, 53, 41, 0.6),
-            inset 0 2px 4px rgba(255, 255, 255, 0.3);
-        transform: scaleY(1);
-    }
-
-    25% {
-        box-shadow:
-            0 0 60px rgba(184, 53, 41, 0.9),
-            0 0 100px rgba(184, 53, 41, 0.7),
-            0 0 140px rgba(184, 53, 41, 0.5),
-            inset 0 2px 4px rgba(255, 255, 255, 0.3);
-        transform: scaleY(1.15);
-    }
-
-    50% {
-        box-shadow:
-            0 0 80px rgba(184, 53, 41, 1),
-            0 0 120px rgba(184, 53, 41, 0.8),
-            0 0 160px rgba(184, 53, 41, 0.6),
-            0 0 200px rgba(184, 53, 41, 0.4),
-            0 0 240px rgba(184, 53, 41, 0.3),
-            inset 0 2px 4px rgba(255, 255, 255, 0.3);
-        transform: scaleY(1.3);
-    }
-
-    75% {
-        box-shadow:
-            0 0 60px rgba(184, 53, 41, 0.9),
-            0 0 100px rgba(184, 53, 41, 0.7),
-            0 0 140px rgba(184, 53, 41, 0.5),
-            0 0 180px rgba(184, 53, 41, 0.3),
-            inset 0 2px 4px rgba(255, 255, 255, 0.3);
-        transform: scaleY(1.15);
-    }
-
-    100% {
-        box-shadow:
-            0 0 40px rgba(184, 53, 41, 1),
-            0 0 80px rgba(184, 53, 41, 0.8),
-            0 0 120px rgba(184, 53, 41, 0.6),
-            0 0 160px rgba(184, 53, 41, 0.4),
-            inset 0 2px 4px rgba(255, 255, 255, 0.3);
         transform: scaleY(1);
     }
 }
@@ -720,8 +653,6 @@ input.error {
     /* Remove max-width constraint */
 }
 
-/* REMOVED: White shimmer effect on radio containers */
-
 .radio-container:hover {
     background: #a02a20;
     /* Darker red on hover */
@@ -731,8 +662,6 @@ input.error {
         0 8px 20px rgba(184, 53, 41, 0.3),
         0 3px 10px rgba(0, 0, 0, 0.15);
 }
-
-/* REMOVED: White hover shimmer effect */
 
 .radio-container input[type="radio"] {
     position: relative;
@@ -874,8 +803,6 @@ input.error {
         0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* REMOVED: White shimmer effect on nav buttons */
-
 .nav-btn:hover:not(:disabled) {
     background: linear-gradient(145deg, #022a32, #03313B);
     transform: translateY(-3px) scale(1.02);
@@ -883,8 +810,6 @@ input.error {
         0 8px 25px rgba(3, 49, 59, 0.4),
         0 4px 15px rgba(0, 0, 0, 0.15);
 }
-
-/* REMOVED: White hover shimmer effect on nav buttons */
 
 .nav-btn:active:not(:disabled) {
     transform: translateY(-1px) scale(0.98);
@@ -938,14 +863,10 @@ body[dir="ltr"] .form-error {
     border-width: 0px 0px 0px 3px;
 }
 
-/* REMOVED: White shimmer effect on form errors */
-
 .form-error.active {
     display: block;
     animation: errorSlideEnhanced 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
-/* REMOVED: White active shimmer effect on form errors */
 
 @keyframes errorSlideEnhanced {
     0% {
@@ -1087,8 +1008,6 @@ body[dir="ltr"] .form-error {
     animation: fadeInIntroEnhanced 0.84s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* REMOVED: White shimmer effect on intro box */
-
 .intro-box h2 {
     color: #03313B;
     /* Navy blue text */
@@ -1111,12 +1030,12 @@ body[dir="ltr"] .form-error {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.email-section {
+.employee-id-section {
     margin: 15px 0;
     text-align: right;
 }
 
-.email-label {
+.employee-id-label {
     display: block;
     color: #03313B;
     /* Navy blue text */
@@ -1126,7 +1045,7 @@ body[dir="ltr"] .form-error {
     text-shadow: 0 1px 2px rgba(3, 49, 59, 0.1);
 }
 
-#welcomeEmail {
+#welcomeEmployeeId {
     width: 100%;
     padding: 15px;
     margin-bottom: 10px;
@@ -1143,7 +1062,7 @@ body[dir="ltr"] .form-error {
     /* Navy blue text */
 }
 
-#welcomeEmail:focus {
+#welcomeEmployeeId:focus {
     border-color: #03313B;
     box-shadow:
         0 0 0 3px rgba(3, 49, 59, 0.15),
@@ -1154,7 +1073,46 @@ body[dir="ltr"] .form-error {
     transform: translateY(-1px);
 }
 
-#welcome-email-error {
+.loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+    color: #03313B;
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.loading-indicator[style*="flex"] {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.loading-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(3, 49, 59, 0.2);
+    border-top: 2px solid #03313B;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    background: transparent !important;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#welcome-employee-id-error {
     color: #dc3545;
     font-size: 0.9rem;
     margin-top: 5px;
@@ -1166,15 +1124,15 @@ body[dir="ltr"] .form-error {
     box-shadow: 0 2px 8px rgba(220, 53, 69, 0.1);
 }
 
-body[dir="rtl"] #welcome-email-error {
+body[dir="rtl"] #welcome-employee-id-error {
     border-right: 3px solid #dc3545;
 }
 
-body[dir="ltr"] #welcome-email-error {
+body[dir="ltr"] #welcome-employee-id-error {
     border-left: 3px solid #dc3545;
 }
 
-#welcome-email-error.active {
+#welcome-employee-id-error.active {
     display: block;
     animation: errorSlideEnhanced 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -1277,8 +1235,6 @@ body[dir="ltr"] #welcome-email-error {
         0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* REMOVED: White shimmer effect on language button */
-
 .lang-btn:active {
     transform: translateY(0) scale(0.98);
     transition: all 0.07s ease;
@@ -1306,8 +1262,6 @@ body[dir="ltr"] #welcome-email-error {
     min-width: 200px;
 }
 
-/* REMOVED: White shimmer effect on start button */
-
 #startSurveyBtn:hover {
     background: linear-gradient(145deg, #022a32, #03313B);
     transform: translateY(-3px) scale(1.05);
@@ -1315,8 +1269,6 @@ body[dir="ltr"] #welcome-email-error {
         0 10px 30px rgba(3, 49, 59, 0.4),
         0 5px 15px rgba(0, 0, 0, 0.15);
 }
-
-/* REMOVED: White hover shimmer effect on start button */
 
 #startSurveyBtn:active {
     transform: translateY(-1px) scale(0.98);
@@ -1339,8 +1291,6 @@ body[dir="ltr"] #welcome-email-error {
         transform: translateY(0) scale(1);
     }
 }
-
-/* REMOVED: White shimmer animation */
 
 .page-transition {
     position: fixed;
@@ -1759,5 +1709,292 @@ header .language-switcher {
 
     .suggestion-textarea {
         min-height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-container {
+        padding: 10px;
+    }
+
+    .controls-section {
+        padding: 15px;
+    }
+
+    .step {
+        width: 98%;
+        min-width: 320px;
+    }
+
+    .controls-section {
+        padding: 20px;
+    }
+
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-input-wrapper {
+        min-width: auto;
+    }
+
+    .length-control {
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .length-select {
+        min-width: 100px;
+    }
+
+    .dt-button {
+        min-width: 100px !important;
+        padding: 12px 16px !important;
+        font-size: 0.85rem;
+    }
+
+    .export-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .dt-button {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .intro-box {
+        margin: 15px auto;
+        padding: 25px 20px;
+        max-width: 95%;
+    }
+
+    .intro-box h2 {
+        font-size: 1.6rem;
+        margin-bottom: 12px;
+    }
+
+    .intro-box p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    #startSurveyBtn {
+        padding: 14px 25px;
+        font-size: 1rem;
+        min-width: 160px;
+        margin-top: 20px;
+    }
+
+    .card-header {
+        padding: 15px 12px 8px 12px;
+    }
+
+    .card-content {
+        padding: 12px 12px;
+    }
+
+    .card-footer {
+        padding: 8px 12px 15px 12px;
+    }
+
+    .radio-group {
+        gap: 4px;
+        margin: 8px 0;
+    }
+
+    .radio-container {
+        padding: 10px 6px;
+    }
+
+    .radio-container input[type="radio"] {
+        width: 16px;
+        height: 16px;
+        margin: 0 6px 0 0;
+    }
+
+    .radio-container input[type="radio"]:checked::after {
+        width: 6px;
+        height: 6px;
+    }
+
+    .radio-label {
+        font-size: 0.8rem;
+        line-height: 1.1;
+    }
+
+    h3 {
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+
+    .nav-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        min-width: 70px;
+    }
+
+    .suggestion-textarea {
+        min-height: 50px;
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .suggestion-label {
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+    }
+
+    .form-error {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+        margin-top: 6px;
+    }
+
+    .loading-indicator {
+        font-size: 0.8rem;
+        margin: 8px 0;
+    }
+
+    .loading-spinner {
+        width: 14px;
+        height: 14px;
+    }
+
+    #welcome-employee-id-error {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+}
+
+
+.welcome-msg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(145deg, #03313B, #0a4a5a);
+    color: #fff;
+    padding: 40px 60px;
+    border-radius: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10000;
+    box-shadow:
+        0 25px 80px rgba(3, 49, 59, 0.6),
+        0 15px 40px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    min-width: 400px;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    animation: welcomePulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes welcomePulse {
+    0% {
+        box-shadow:
+            0 25px 80px rgba(3, 49, 59, 0.6),
+            0 15px 40px rgba(0, 0, 0, 0.3),
+            0 0 0 0 rgba(3, 49, 59, 0);
+    }
+
+    100% {
+        box-shadow:
+            0 30px 100px rgba(3, 49, 59, 0.8),
+            0 20px 50px rgba(0, 0, 0, 0.4),
+            0 0 0 10px rgba(3, 49, 59, 0.2);
+    }
+}
+
+.welcome-msg .employee-name {
+    color: #B83529;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 15px 0 20px 0;
+    font-size: 36px;
+    animation: nameGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes nameGlow {
+    0% {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    100% {
+        text-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(184, 53, 41, 0.5),
+            0 0 30px rgba(184, 53, 41, 0.3);
+    }
+}
+
+.welcome-msg .welcome-title {
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.welcome-msg .starting-message {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-top: 20px;
+}
+
+/* RTL support for welcome message */
+body[dir="rtl"] .welcome-msg {
+    direction: rtl;
+}
+
+body[dir="ltr"] .welcome-msg {
+    direction: ltr;
+}
+
+/* Mobile responsiveness for welcome message */
+@media (max-width: 768px) {
+    .welcome-msg {
+        min-width: 90%;
+        padding: 30px 25px;
+        font-size: 24px;
+    }
+
+    .welcome-msg .welcome-title {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+
+    .welcome-msg .employee-name {
+        font-size: 30px;
+        margin: 12px 0 15px 0;
+    }
+
+    .welcome-msg .starting-message {
+        font-size: 16px;
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-msg {
+        min-width: 95%;
+        padding: 25px 20px;
+        font-size: 20px;
+    }
+
+    .welcome-msg .welcome-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .welcome-msg .employee-name {
+        font-size: 26px;
+        margin: 10px 0 12px 0;
+    }
+
+    .welcome-msg .starting-message {
+        font-size: 14px;
+        margin-top: 12px;
     }
 }

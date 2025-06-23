@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Employee;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,15 +10,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class SurveyFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            'email' => $this->faker->unique()->userName . '@' . $this->faker->randomElement(['almosafer.com', 'lumirental.com', 'seera.sa']),
+            // Placeholder, will be overridden in the seeder
+            'employee_id' => null,
+
             'work_environment_satisfaction' => $this->faker->randomElement(['very_satisfied', 'satisfied', 'neutral', 'unsatisfied']),
             'work_entertainment_balance' => $this->faker->randomElement(['yes', 'neutral', 'no']),
             'activities_help_routine' => $this->faker->randomElement(['yes', 'neutral', 'no']),

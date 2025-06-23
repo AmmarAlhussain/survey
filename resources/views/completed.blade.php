@@ -23,9 +23,9 @@
             min-height: 100vh;
             color: #03313B;
             /* Navy blue text */
-            direction: {{ ($language ?? 'ar') === 'ar' ? 'rtl' : 'ltr' }};
-            overflow-x: hidden;
             position: relative;
+            overflow-x: hidden;
+            direction: {{ ($language ?? 'ar') === 'ar' ? 'rtl' : 'ltr' }};
         }
 
         .floating-particles {
@@ -179,6 +179,60 @@
             animation-duration: 9s;
             animation-delay: 2.8s;
             background: radial-gradient(circle, rgba(255, 255, 255, 0.45), transparent);
+        }
+
+        .particle:nth-child(11) {
+            width: 6px;
+            height: 6px;
+            left: 25%;
+            animation-duration: 11s;
+            animation-delay: 3.2s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .particle:nth-child(12) {
+            width: 5px;
+            height: 5px;
+            left: 35%;
+            animation-duration: 14s;
+            animation-delay: 3.5s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
+        }
+
+        .particle:nth-child(13) {
+            width: 8px;
+            height: 8px;
+            left: 45%;
+            animation-duration: 8s;
+            animation-delay: 4s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.45), transparent);
+        }
+
+        .particle:nth-child(14) {
+            width: 4px;
+            height: 4px;
+            left: 55%;
+            animation-duration: 10s;
+            animation-delay: 4.5s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .particle:nth-child(15) {
+            width: 7px;
+            height: 7px;
+            left: 65%;
+            animation-duration: 12s;
+            animation-delay: 5s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.55), transparent);
+        }
+
+        .particles-celebration {
+            animation-duration: 3s !important;
+        }
+
+        .particles-celebration .particle {
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4), transparent) !important;
+            animation-duration: 2s !important;
         }
 
         /* Enhanced Logo Styling - Matching main page */
@@ -591,6 +645,11 @@
 
 <body>
     <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
         <div class="particle"></div>
         <div class="particle"></div>
         <div class="particle"></div>

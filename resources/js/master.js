@@ -38,12 +38,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 no: "لا",
             },
             placeholders: {
-                email: "أدخل بريدك الإلكتروني",
+                employee_id: "أدخل رقم الموظف (8 أرقام على الأقل)",
                 suggestions: "يرجى كتابة اقتراحاتك",
             },
             errors: {
-                email: "الرجاء إدخال بريد إلكتروني بنطاق @almosafer.com أو @lumirental.com أو @seera.sa",
+                employee_id: "الرجاء إدخال رقم موظف مكون من 8 أرقام على الأقل",
+                employee_not_found: "رقم الموظف غير موجود في النظام",
+                already_completed: "لقد قمت بإكمال الاستبيان مسبقاً",
                 required: "الرجاء اختيار إجابة",
+                network_error: "حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى",
+            },
+            messages: {
+                checking: "جاري التحقق من رقم الموظف...",
+                loading: "جاري التحميل...",
+                welcome: "مرحباً بك",
+                startingNow: "سيبدأ الاستبيان الآن...",
             },
             suggestionLabels: {
                 activities_suggestions: "اقتراحات للتحسين",
@@ -96,12 +105,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 no: "No",
             },
             placeholders: {
-                email: "Enter your email address",
+                employee_id: "Enter your employee ID (at least 8 digits)",
                 suggestions: "Please write your suggestions",
             },
             errors: {
-                email: "Please enter an email with domain @almosafer.com or @lumirental.com or @seera.sa",
+                employee_id:
+                    "Please enter an employee ID with at least 8 digits",
+                employee_not_found: "Employee ID not found in the system",
+                already_completed: "You have already completed this survey",
                 required: "Please select an answer",
+                network_error: "Connection error, please try again",
+            },
+            messages: {
+                checking: "Checking employee ID...",
+                loading: "Loading...",
+                welcome: "Welcome",
+                startingNow: "Survey will start now...",
             },
             suggestionLabels: {
                 activities_suggestions: "Suggestions for improvement:",
@@ -193,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const t = translations[currentLanguage];
 
         const contentElements = document.querySelectorAll(
-            ".intro-box h2, .intro-box p, .email-label, h3, .radio-label, .suggestion-label"
+            ".intro-box h2, .intro-box p, .employee-id-label, h3, .radio-label, .suggestion-label"
         );
         contentElements.forEach((el) => {
             el.classList.add("language-transition", "fade-out");
@@ -203,9 +222,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const introTitle = document.querySelector(".intro-box h2");
             const introText = document.querySelector(".intro-box p");
             const startButton = document.getElementById("startSurveyBtn");
-            const emailLabel = document.querySelector(".email-label");
-            const emailInput = document.getElementById("welcomeEmail");
-            const emailError = document.getElementById("welcome-email-error");
+            const employeeIdLabel =
+                document.querySelector(".employee-id-label");
+            const employeeIdInput =
+                document.getElementById("welcomeEmployeeId");
+            const employeeIdError = document.getElementById(
+                "welcome-employee-id-error"
+            );
 
             if (introTitle) {
                 introTitle.textContent = t.introTitle;
@@ -218,17 +241,15 @@ document.addEventListener("DOMContentLoaded", function () {
             if (startButton) {
                 startButton.textContent = t.startButton;
             }
-            if (emailLabel) {
-                emailLabel.textContent =
-                    currentLanguage === "ar"
-                        ? "البريد الإلكتروني:"
-                        : "Email Address:";
+            if (employeeIdLabel) {
+                employeeIdLabel.textContent =
+                    currentLanguage === "ar" ? "رقم الموظف:" : "Employee ID:";
             }
-            if (emailInput) {
-                emailInput.placeholder = t.placeholders.email;
+            if (employeeIdInput) {
+                employeeIdInput.placeholder = t.placeholders.employee_id;
             }
-            if (emailError) {
-                emailError.textContent = t.errors.email;
+            if (employeeIdError) {
+                employeeIdError.textContent = t.errors.employee_id;
             }
 
             // Update all suggestion labels
@@ -301,7 +322,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const textElements = document.querySelectorAll(
-                "h3, .radio-label, input, .form-error, .email-label, .suggestion-label"
+                "h3, .radio-label, input, .form-error, .employee-id-label, .suggestion-label"
             );
             textElements.forEach((el) => {
                 if (currentLanguage === "ar") {
@@ -312,7 +333,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             const inputs = document.querySelectorAll(
-                'input[type="email"], .suggestion-textarea'
+                'input[type="text"], .suggestion-textarea'
             );
             inputs.forEach((input) => {
                 input.style.textAlign =
@@ -340,54 +361,179 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 250);
     }
 
+    // AJAX function to check employee ID
+    async function checkEmployeeId(employeeId) {
+        const t = translations[currentLanguage];
+        const loadingIndicator = document.getElementById("loadingIndicator");
+        const employeeIdError = document.getElementById(
+            "welcome-employee-id-error"
+        );
+        const employeeIdInput = document.getElementById("welcomeEmployeeId");
+
+        // Show loading
+        loadingIndicator.style.display = "flex";
+        employeeIdError.classList.remove("active");
+        employeeIdInput.classList.remove("error");
+
+        try {
+            const response = await fetch("/check-employee", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content"),
+                },
+                body: JSON.stringify({
+                    employee_id: employeeId,
+                    language: currentLanguage, // Send current language
+                }),
+            });
+
+            const data = await response.json();
+            loadingIndicator.style.display = "none";
+
+            if (data.success) {
+                if (data.has_survey) {
+                    // Employee has already completed survey
+                    window.location.href = `/completed?status=already_submitted&lang=${currentLanguage}`;
+                    return { success: false };
+                } else {
+                    // Employee exists but no survey - show welcome message and proceed
+                    showWelcomeMessage(data.employee_name);
+                    return { success: true, employeeName: data.employee_name };
+                }
+            } else {
+                // Employee not found
+                employeeIdError.textContent = t.errors.employee_not_found;
+                employeeIdError.classList.add("active");
+                employeeIdInput.classList.add("error");
+                return { success: false };
+            }
+        } catch (error) {
+            loadingIndicator.style.display = "none";
+            employeeIdError.textContent = t.errors.network_error;
+            employeeIdError.classList.add("active");
+            employeeIdInput.classList.add("error");
+            return { success: false };
+        }
+    }
+
+    // Function to show welcome message with employee name
+    function showWelcomeMessage(employeeName) {
+        const t = translations[currentLanguage];
+
+        const welcomeMsg = document.createElement("div");
+        welcomeMsg.className = "welcome-msg";
+        welcomeMsg.style.cssText = `
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(145deg, #03313B, #0a4a5a);
+            color: #fff; padding: 40px 60px;
+            border-radius: 20px; font-size: 28px;
+            font-weight: bold; text-align: center;
+            z-index: 10000; 
+            box-shadow: 0 25px 80px rgba(3, 49, 59, 0.6), 0 15px 40px rgba(0, 0, 0, 0.3);
+            opacity: 0; border: 3px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            min-width: 400px;
+            direction: ${currentLanguage === "ar" ? "rtl" : "ltr"};
+        `;
+
+        welcomeMsg.innerHTML = `
+            <div style="font-size: 32px; margin-bottom: 15px; color: #ffffff;">
+                ${t.messages.welcome}
+            </div>
+            <div style="font-size: 36px; margin-bottom: 20px; color: #B83529; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                ${employeeName}
+            </div>
+            <div style="font-size: 18px; opacity: 0.9;">
+                ${t.messages.startingNow}
+            </div>
+        `;
+
+        document.body.appendChild(welcomeMsg);
+
+        // Animate in
+        setTimeout(() => {
+            welcomeMsg.style.opacity = "1";
+            welcomeMsg.style.transform = "translate(-50%, -50%) scale(1.05)";
+            welcomeMsg.style.transition =
+                "all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)";
+        }, 100);
+
+        // Scale back to normal
+        setTimeout(() => {
+            welcomeMsg.style.transform = "translate(-50%, -50%) scale(1)";
+        }, 600);
+
+        // Animate out
+        setTimeout(() => {
+            welcomeMsg.style.opacity = "0";
+            welcomeMsg.style.transform = "translate(-50%, -50%) scale(0.95)";
+            setTimeout(() => welcomeMsg.remove(), 400);
+        }, 2500);
+    }
+
     if (introBox && startBtn && form) {
-        startBtn.addEventListener("click", () => {
-            const emailInput = document.getElementById("welcomeEmail");
-            const emailError = document.getElementById("welcome-email-error");
+        startBtn.addEventListener("click", async () => {
+            const employeeIdInput =
+                document.getElementById("welcomeEmployeeId");
+            const employeeIdError = document.getElementById(
+                "welcome-employee-id-error"
+            );
 
-            if (!validateWelcomeEmail(emailInput, emailError)) {
+            if (!validateWelcomeEmployeeId(employeeIdInput, employeeIdError)) {
                 return;
             }
 
-            if (checkEmailExists(emailInput.value.trim())) {
-                window.location.href = `/completed?status=already_submitted&lang=${currentLanguage}`;
+            const employeeId = employeeIdInput.value.trim();
+
+            // Check employee ID via AJAX
+            const result = await checkEmployeeId(employeeId);
+
+            if (!result.success) {
                 return;
             }
 
-            const hiddenEmailInput = document.getElementById("hiddenEmail");
-            if (hiddenEmailInput) {
-                hiddenEmailInput.value = emailInput.value.trim();
+            const hiddenEmployeeIdInput =
+                document.getElementById("hiddenEmployeeId");
+            if (hiddenEmployeeIdInput) {
+                hiddenEmployeeIdInput.value = employeeId;
             }
 
             // Add language as hidden input
             addLanguageInput();
 
-            introBox.style.transform = "translateY(-30px) scale(0.95)";
-            introBox.style.opacity = "0";
-
+            // Wait for welcome message to finish (3000ms) before proceeding
             setTimeout(() => {
-                introBox.style.display = "none";
-                form.style.display = "block";
-                procontainer.style.display = "block";
-
-                if (languageBtn) {
-                    languageBtn.style.display = "none";
-                }
-
-                form.style.opacity = "0";
-                form.style.transform = "translateY(20px)";
+                introBox.style.transform = "translateY(-30px) scale(0.95)";
+                introBox.style.opacity = "0";
 
                 setTimeout(() => {
-                    form.style.transition =
-                        "all 0.42s cubic-bezier(0.34, 1.56, 0.64, 1)";
-                    form.style.opacity = "1";
-                    form.style.transform = "translateY(0)";
+                    introBox.style.display = "none";
+                    form.style.display = "block";
+                    procontainer.style.display = "block";
+
+                    if (languageBtn) {
+                        languageBtn.style.display = "none";
+                    }
+
+                    form.style.opacity = "0";
+                    form.style.transform = "translateY(20px)";
 
                     setTimeout(() => {
-                        initializeCarousel();
-                    }, 100);
-                }, 35);
-            }, 210);
+                        form.style.transition =
+                            "all 0.42s cubic-bezier(0.34, 1.56, 0.64, 1)";
+                        form.style.opacity = "1";
+                        form.style.transform = "translateY(0)";
+
+                        setTimeout(() => {
+                            initializeCarousel();
+                        }, 100);
+                    }, 35);
+                }, 210);
+            }, 3000); // Wait for welcome message to finish
         });
     }
 
@@ -408,27 +554,25 @@ document.addEventListener("DOMContentLoaded", function () {
         elements.form.appendChild(langInput);
     }
 
-    function validateWelcomeEmail(emailInput, emailError) {
-        const email = emailInput.value.trim();
-        emailError.classList.remove("active");
-        emailInput.classList.remove("error");
+    function validateWelcomeEmployeeId(employeeIdInput, employeeIdError) {
+        const employeeId = employeeIdInput.value.trim();
+        const t = translations[currentLanguage];
 
-        if (!email) {
-            emailError.classList.add("active");
-            emailInput.classList.add("error");
+        employeeIdError.classList.remove("active");
+        employeeIdInput.classList.remove("error");
+
+        if (!employeeId) {
+            employeeIdError.textContent = t.errors.employee_id;
+            employeeIdError.classList.add("active");
+            employeeIdInput.classList.add("error");
             return false;
         }
 
-        const allowedDomains = ["almosafer.com", "lumirental.com", "seera.sa"];
-        const emailLower = email.toLowerCase();
-        const validDomain = allowedDomains.some((domain) =>
-            emailLower.endsWith("@" + domain)
-        );
-        const validFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-        if (!validFormat || !validDomain) {
-            emailError.classList.add("active");
-            emailInput.classList.add("error");
+        // Validate numeric employee code with at least 8 digits (no letters allowed)
+        if (!/^\d{8,}$/.test(employeeId)) {
+            employeeIdError.textContent = t.errors.employee_id;
+            employeeIdError.classList.add("active");
+            employeeIdInput.classList.add("error");
             return false;
         }
 
@@ -550,11 +694,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (seeraInfoContent) {
                             const content = t.seeraFamilyInfo.content;
                             seeraInfoContent.innerHTML = `
-                                <p>${content.intro}</p>
-                                <p>${content.first}</p>
-                                <p>${content.second}</p>
-                                <p>${content.third}</p>
-                            `;
+                            <p>${content.intro}</p>
+                            <p>${content.first}</p>
+                            <p>${content.second}</p>
+                            <p>${content.third}</p>
+                        `;
                             seeraInfoContent.style.textAlign =
                                 currentLanguage === "ar" ? "right" : "left";
                         }
@@ -570,11 +714,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (seeraInfoContent) {
                             const content = t.seeraFamilyInfo.content;
                             seeraInfoContent.innerHTML = `
-                                <p>${content.intro}</p>
-                                <p>${content.first}</p>
-                                <p>${content.second}</p>
-                                <p>${content.third}</p>
-                            `;
+                            <p>${content.intro}</p>
+                            <p>${content.first}</p>
+                            <p>${content.second}</p>
+                            <p>${content.third}</p>
+                        `;
                             seeraInfoContent.style.textAlign =
                                 currentLanguage === "ar" ? "right" : "left";
                         }
@@ -831,7 +975,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.querySelectorAll("input").forEach((input) => {
-        const eventType = input.type === "email" ? "input" : "change";
+        const eventType = input.type === "text" ? "input" : "change";
         input.addEventListener(eventType, () => {
             const errorEl = document.getElementById(`${input.name}-error`);
             if (errorEl) errorEl.classList.remove("active");
@@ -925,13 +1069,6 @@ document.addEventListener("DOMContentLoaded", function () {
             addLanguageInput();
             elements.form.submit();
         }, 1750);
-    }
-
-    function checkEmailExists(email) {
-        return window.existingEmails?.some(
-            (existingEmail) =>
-                existingEmail.toLowerCase() === email.toLowerCase()
-        );
     }
 
     if (form.style.display !== "none") {

@@ -37,23 +37,38 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
+            /* Navy blue border with gradient effect */
             border: 3px solid transparent;
             background-clip: padding-box;
+
+            /* Multiple layered shadows for depth */
             box-shadow:
                 0 0 0 2px rgba(3, 49, 59, 0.8),
+                /* Navy border */
                 0 0 0 4px rgba(184, 53, 41, 0.3),
+                /* Red accent ring */
                 0 12px 40px rgba(3, 49, 59, 0.4),
+                /* Main shadow */
                 0 6px 20px rgba(0, 0, 0, 0.3),
+                /* Depth shadow */
                 inset 0 2px 8px rgba(255, 255, 255, 0.8),
+                /* Inner highlight */
                 inset 0 -2px 4px rgba(3, 49, 59, 0.1);
+            /* Inner depth */
+
             padding: 12px;
             animation: logoFloat 4s ease-in-out infinite, logoPulse 3s ease-in-out infinite alternate;
             z-index: 99999;
             position: relative;
+
+            /* Smooth transitions */
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            /* Subtle glow effect */
             filter: drop-shadow(0 0 20px rgba(3, 49, 59, 0.2));
         }
 
+        /* Enhanced floating animation */
         @keyframes logoFloat {
 
             0%,
@@ -74,6 +89,7 @@
             }
         }
 
+        /* Subtle pulsing glow effect */
         @keyframes logoPulse {
             0% {
                 box-shadow:
@@ -96,19 +112,7 @@
             }
         }
 
-        .company-logo:hover {
-            transform: translateY(-15px) scale(1.05);
-            box-shadow:
-                0 0 0 3px rgba(3, 49, 59, 1),
-                0 0 0 6px rgba(184, 53, 41, 0.6),
-                0 20px 60px rgba(3, 49, 59, 0.5),
-                0 10px 30px rgba(0, 0, 0, 0.4),
-                inset 0 3px 12px rgba(255, 255, 255, 0.9),
-                inset 0 -3px 6px rgba(3, 49, 59, 0.2);
-
-            filter: drop-shadow(0 0 30px rgba(3, 49, 59, 0.4));
-        }
-
+        /* Optional: Add a subtle background decoration behind the logo */
         .logo-container::before {
             content: '';
             position: absolute;
@@ -480,6 +484,213 @@
             background: transparent !important;
         }
 
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none !important;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+            bottom: -200px;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                bottom: -250px;
+                opacity: 0;
+                transform: translateX(0) rotate(0deg);
+            }
+
+            5% {
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 0.3;
+                bottom: -150px;
+            }
+
+            25% {
+                opacity: 0.6;
+                bottom: -50px;
+            }
+
+            35% {
+                opacity: 1;
+                bottom: 50px;
+            }
+
+            85% {
+                opacity: 1;
+                bottom: 90vh;
+            }
+
+            95% {
+                opacity: 0.3;
+                bottom: 110vh;
+            }
+
+            100% {
+                bottom: 130vh;
+                opacity: 0;
+                transform: translateX(50px) rotate(360deg);
+            }
+        }
+
+        .particle:nth-child(1) {
+            width: 6px;
+            height: 6px;
+            left: 10%;
+            animation-duration: 8s;
+            animation-delay: 0.5s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+        }
+
+        .particle:nth-child(2) {
+            width: 4px;
+            height: 4px;
+            left: 20%;
+            animation-duration: 10s;
+            animation-delay: 1s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .particle:nth-child(3) {
+            width: 8px;
+            height: 8px;
+            left: 30%;
+            animation-duration: 12s;
+            animation-delay: 1.5s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
+        }
+
+        .particle:nth-child(4) {
+            width: 5px;
+            height: 5px;
+            left: 40%;
+            animation-duration: 9s;
+            animation-delay: 2s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.45), transparent);
+        }
+
+        .particle:nth-child(5) {
+            width: 7px;
+            height: 7px;
+            left: 50%;
+            animation-duration: 11s;
+            animation-delay: 0.8s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.55), transparent);
+        }
+
+        .particle:nth-child(6) {
+            width: 4px;
+            height: 4px;
+            left: 60%;
+            animation-duration: 13s;
+            animation-delay: 2.5s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .particle:nth-child(7) {
+            width: 6px;
+            height: 6px;
+            left: 70%;
+            animation-duration: 8s;
+            animation-delay: 1.2s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
+        }
+
+        .particle:nth-child(8) {
+            width: 5px;
+            height: 5px;
+            left: 80%;
+            animation-duration: 10s;
+            animation-delay: 1.8s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent);
+        }
+
+        .particle:nth-child(9) {
+            width: 7px;
+            height: 7px;
+            left: 90%;
+            animation-duration: 12s;
+            animation-delay: 2.2s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
+        }
+
+        .particle:nth-child(10) {
+            width: 4px;
+            height: 4px;
+            left: 15%;
+            animation-duration: 9s;
+            animation-delay: 2.8s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.45), transparent);
+        }
+
+        .particle:nth-child(11) {
+            width: 6px;
+            height: 6px;
+            left: 25%;
+            animation-duration: 11s;
+            animation-delay: 3.2s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .particle:nth-child(12) {
+            width: 5px;
+            height: 5px;
+            left: 35%;
+            animation-duration: 14s;
+            animation-delay: 3.5s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
+        }
+
+        .particle:nth-child(13) {
+            width: 8px;
+            height: 8px;
+            left: 45%;
+            animation-duration: 8s;
+            animation-delay: 4s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.45), transparent);
+        }
+
+        .particle:nth-child(14) {
+            width: 4px;
+            height: 4px;
+            left: 55%;
+            animation-duration: 10s;
+            animation-delay: 4.5s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .particle:nth-child(15) {
+            width: 7px;
+            height: 7px;
+            left: 65%;
+            animation-duration: 12s;
+            animation-delay: 5s;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.55), transparent);
+        }
+
+        .particles-celebration {
+            animation-duration: 3s !important;
+        }
+
+        .particles-celebration .particle {
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4), transparent) !important;
+            animation-duration: 2s !important;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 12px;
@@ -564,7 +775,7 @@
 </head>
 
 <body>
-    {{-- <div class="floating-particles">
+    <div class="floating-particles">
         <div class="particle"></div>
         <div class="particle"></div>
         <div class="particle"></div>
@@ -580,7 +791,7 @@
         <div class="particle"></div>
         <div class="particle"></div>
         <div class="particle"></div>
-    </div> --}}
+    </div>
 
     <header>
         <div class="logo-container">
@@ -816,19 +1027,19 @@
             fields.forEach(field => {
                 processedData[field] = {};
 
-                // Initialize based on field type - FIXED ORDER
+                // Initialize based on field type - CONSISTENT ORDER (Best to Worst)
                 if (fieldTypes[field] === 'satisfaction_4levels') {
-                    // Match the chart labels order
+                    // Order: very_satisfied, satisfied, neutral, unsatisfied
                     ['very_satisfied', 'satisfied', 'neutral', 'unsatisfied'].forEach(level => {
                         processedData[field][level] = 0;
                     });
                 } else if (fieldTypes[field] === 'satisfaction_3levels') {
-                    // Match the chart labels order
+                    // Order: satisfied, neutral, unsatisfied
                     ['satisfied', 'neutral', 'unsatisfied'].forEach(level => {
                         processedData[field][level] = 0;
                     });
                 } else if (fieldTypes[field] === 'ternary') {
-                    // Match the chart labels order
+                    // Order: yes, neutral, no
                     ['yes', 'neutral', 'no'].forEach(level => {
                         processedData[field][level] = 0;
                     });
@@ -863,7 +1074,6 @@
                 let satisfactionPercentage = 0;
 
                 if (fieldTypes[field] === 'satisfaction_4levels') {
-                    // Calculate weighted satisfaction: very_satisfied=100%, satisfied=75%, neutral=50%, unsatisfied=25%
                     const total = Object.values(data).reduce((sum, count) => sum + count, 0);
                     if (total > 0) {
                         const weightedScore = (data.very_satisfied * 100 + data.satisfied * 75 + data.neutral * 50 +
@@ -871,7 +1081,6 @@
                         satisfactionPercentage = weightedScore;
                     }
                 } else if (fieldTypes[field] === 'satisfaction_3levels') {
-                    // Calculate weighted satisfaction: satisfied=100%, neutral=50%, unsatisfied=0%
                     const total = Object.values(data).reduce((sum, count) => sum + count, 0);
                     if (total > 0) {
                         const weightedScore = (data.satisfied * 100 + data.neutral * 50 + data.unsatisfied * 0) /
@@ -879,7 +1088,6 @@
                         satisfactionPercentage = weightedScore;
                     }
                 } else if (fieldTypes[field] === 'ternary') {
-                    // Calculate weighted satisfaction: yes=100%, neutral=50%, no=0%
                     const total = Object.values(data).reduce((sum, count) => sum + count, 0);
                     if (total > 0) {
                         const weightedScore = (data.yes * 100 + data.neutral * 50 + data.no * 0) / total;
@@ -1008,17 +1216,16 @@
             let chartType = 'doughnut';
             let colors, options, chartLabels, chartData;
 
+            // CONSISTENT ORDER FOR ALL: From Best to Worst
             if (fieldType === 'satisfaction_4levels') {
                 chartLabels = ['very_satisfied', 'satisfied', 'neutral', 'unsatisfied'];
-                colors = ['#2d7d32', '#68d391', '#ed8936',
-                    '#f56565'
-                ];
+                colors = ['#2d7d32', '#68d391', '#ed8936', '#f56565']; // Very Satisfied (dark green) -> Unsatisfied (red)
             } else if (fieldType === 'satisfaction_3levels') {
                 chartLabels = ['satisfied', 'neutral', 'unsatisfied'];
-                colors = ['#48bb78', '#ed8936', '#f56565'];
+                colors = ['#48bb78', '#ed8936', '#f56565']; // Satisfied (green) -> Unsatisfied (red)
             } else if (fieldType === 'ternary') {
                 chartLabels = ['yes', 'neutral', 'no'];
-                colors = ['#48bb78', '#ed8936', '#f56565'];
+                colors = ['#48bb78', '#ed8936', '#f56565']; // Yes (green) -> No (red)
             }
 
             chartData = chartLabels.map(key => data[key] || 0);
@@ -1039,13 +1246,15 @@
                             generateLabels: function(chart) {
                                 const data = chart.data;
                                 if (data.labels.length && data.datasets.length) {
-                                    return data.labels.map((label, i) => ({
+                                    const labels = data.labels.map((label, i) => ({
                                         text: label,
                                         fillStyle: data.datasets[0].backgroundColor[i],
                                         strokeStyle: data.datasets[0].backgroundColor[i],
                                         lineWidth: 0,
                                         index: i
                                     }));
+                                    // Reverse only the legend order, not the chart data
+                                    return labels.reverse();
                                 }
                                 return [];
                             }
@@ -1088,7 +1297,7 @@
                             callbacks: {
                                 label: function(context) {
                                     const value = context.raw;
-                                    const percentage = ((value / total) * 100).toFixed(1);
+                                    const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
                                     return `${value} (${percentage}%)`;
                                 }
                             }
@@ -1097,7 +1306,7 @@
                 }
             });
 
-            // Add statistics below chart
+            // Add statistics below chart - SAME ORDER AS CHART
             const stats = document.createElement('div');
             stats.className = 'chart-stats';
 
@@ -1107,10 +1316,11 @@
             }
 
             if (fieldType === 'satisfaction_4levels') {
-                const verySatisfiedPct = ((data.very_satisfied / total) * 100).toFixed(1);
-                const satisfiedPct = ((data.satisfied / total) * 100).toFixed(1);
-                const neutralPct = ((data.neutral / total) * 100).toFixed(1);
-                const unsatisfiedPct = ((data.unsatisfied / total) * 100).toFixed(1);
+                // Order: very_satisfied, satisfied, neutral, unsatisfied (SAME AS CHART)
+                const verySatisfiedPct = total > 0 ? ((data.very_satisfied / total) * 100).toFixed(1) : '0.0';
+                const satisfiedPct = total > 0 ? ((data.satisfied / total) * 100).toFixed(1) : '0.0';
+                const neutralPct = total > 0 ? ((data.neutral / total) * 100).toFixed(1) : '0.0';
+                const unsatisfiedPct = total > 0 ? ((data.unsatisfied / total) * 100).toFixed(1) : '0.0';
 
                 stats.innerHTML = `
                     <div class="chart-stat chart-stat-very-satisfied">
@@ -1130,40 +1340,42 @@
                         <div class="chart-stat-label">غير راضي</div>
                     </div>`;
             } else if (fieldType === 'satisfaction_3levels') {
-                const satisfiedPct = ((data.satisfied / total) * 100).toFixed(1);
-                const neutralPct = ((data.neutral / total) * 100).toFixed(1);
-                const unsatisfiedPct = ((data.unsatisfied / total) * 100).toFixed(1);
+                // Order: satisfied, neutral, unsatisfied (SAME AS CHART)
+                const satisfiedPct = total > 0 ? ((data.satisfied / total) * 100).toFixed(1) : '0.0';
+                const neutralPct = total > 0 ? ((data.neutral / total) * 100).toFixed(1) : '0.0';
+                const unsatisfiedPct = total > 0 ? ((data.unsatisfied / total) * 100).toFixed(1) : '0.0';
 
                 stats.innerHTML = `
-                    <div class="chart-stat chart-stat-unsatisfied">
-                        <div class="chart-stat-value">${unsatisfiedPct}%</div>
-                        <div class="chart-stat-label">غير راضي</div>
-                    </div>
-                    <div class="chart-stat chart-stat-neutral">
-                        <div class="chart-stat-value">${neutralPct}%</div>
-                        <div class="chart-stat-label">محايد</div>
-                    </div>
                     <div class="chart-stat chart-stat-satisfied">
                         <div class="chart-stat-value">${satisfiedPct}%</div>
                         <div class="chart-stat-label">راضي</div>
-                    </div>`;
-            } else if (fieldType === 'ternary') {
-                const yesPct = ((data.yes / total) * 100).toFixed(1);
-                const neutralPct = ((data.neutral / total) * 100).toFixed(1);
-                const noPct = ((data.no / total) * 100).toFixed(1);
-
-                stats.innerHTML = `
-                    <div class="chart-stat chart-stat-no">
-                        <div class="chart-stat-value">${noPct}%</div>
-                        <div class="chart-stat-label">لا</div>
                     </div>
                     <div class="chart-stat chart-stat-neutral">
                         <div class="chart-stat-value">${neutralPct}%</div>
                         <div class="chart-stat-label">محايد</div>
                     </div>
+                    <div class="chart-stat chart-stat-unsatisfied">
+                        <div class="chart-stat-value">${unsatisfiedPct}%</div>
+                        <div class="chart-stat-label">غير راضي</div>
+                    </div>`;
+            } else if (fieldType === 'ternary') {
+                // Order: yes, neutral, no (SAME AS CHART)
+                const yesPct = total > 0 ? ((data.yes / total) * 100).toFixed(1) : '0.0';
+                const neutralPct = total > 0 ? ((data.neutral / total) * 100).toFixed(1) : '0.0';
+                const noPct = total > 0 ? ((data.no / total) * 100).toFixed(1) : '0.0';
+
+                stats.innerHTML = `
                     <div class="chart-stat chart-stat-yes">
                         <div class="chart-stat-value">${yesPct}%</div>
                         <div class="chart-stat-label">نعم</div>
+                    </div>
+                    <div class="chart-stat chart-stat-neutral">
+                        <div class="chart-stat-value">${neutralPct}%</div>
+                        <div class="chart-stat-label">محايد</div>
+                    </div>
+                    <div class="chart-stat chart-stat-no">
+                        <div class="chart-stat-value">${noPct}%</div>
+                        <div class="chart-stat-label">لا</div>
                     </div>`;
             }
 

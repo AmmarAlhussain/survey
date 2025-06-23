@@ -13,8 +13,8 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f4f7fc;
+            font-family: Arial, sans-serif;
+            background: #03313B;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -37,7 +37,7 @@
 
         .particle {
             position: absolute;
-            background: radial-gradient(circle, rgba(74, 144, 226, 0.6), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
             border-radius: 50%;
             animation: floatUp linear infinite;
             bottom: -200px;
@@ -93,7 +93,7 @@
             left: 10%;
             animation-duration: 8s;
             animation-delay: 0.5s;
-            background: radial-gradient(circle, rgba(74, 144, 226, 0.4), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
         }
 
         .particle:nth-child(2) {
@@ -102,7 +102,7 @@
             left: 20%;
             animation-duration: 10s;
             animation-delay: 1s;
-            background: radial-gradient(circle, rgba(80, 227, 194, 0.5), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
         }
 
         .particle:nth-child(3) {
@@ -111,7 +111,7 @@
             left: 30%;
             animation-duration: 12s;
             animation-delay: 1.5s;
-            background: radial-gradient(circle, rgba(183, 109, 241, 0.3), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
         }
 
         .particle:nth-child(4) {
@@ -120,7 +120,7 @@
             left: 40%;
             animation-duration: 9s;
             animation-delay: 2s;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.4), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.45), transparent);
         }
 
         .particle:nth-child(5) {
@@ -129,7 +129,7 @@
             left: 50%;
             animation-duration: 11s;
             animation-delay: 0.8s;
-            background: radial-gradient(circle, rgba(74, 144, 226, 0.5), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.55), transparent);
         }
 
         .particle:nth-child(6) {
@@ -138,7 +138,7 @@
             left: 60%;
             animation-duration: 13s;
             animation-delay: 2.5s;
-            background: radial-gradient(circle, rgba(80, 227, 194, 0.4), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
         }
 
         .particle:nth-child(7) {
@@ -147,7 +147,7 @@
             left: 70%;
             animation-duration: 8s;
             animation-delay: 1.2s;
-            background: radial-gradient(circle, rgba(183, 109, 241, 0.4), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
         }
 
         .particle:nth-child(8) {
@@ -156,7 +156,7 @@
             left: 80%;
             animation-duration: 10s;
             animation-delay: 1.8s;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent);
         }
 
         .particle:nth-child(9) {
@@ -165,7 +165,7 @@
             left: 90%;
             animation-duration: 12s;
             animation-delay: 2.2s;
-            background: radial-gradient(circle, rgba(74, 144, 226, 0.4), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), transparent);
         }
 
         .particle:nth-child(10) {
@@ -174,41 +174,123 @@
             left: 15%;
             animation-duration: 9s;
             animation-delay: 2.8s;
-            background: radial-gradient(circle, rgba(80, 227, 194, 0.5), transparent);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.45), transparent);
         }
 
+        /* Enhanced Logo Styling - Matching survey.blade.php */
         .logo-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 10px 0 20px 0;
-            padding: 10px;
+            margin: 15px 0;
+            padding: 15px;
             position: relative;
             z-index: 99999;
         }
 
         .company-logo {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 8px;
-            animation: logoFloat 3s ease-in-out infinite;
+            /* Navy blue border with gradient effect */
+            border: 3px solid transparent;
+            background-clip: padding-box;
+
+            /* Multiple layered shadows for depth */
+            box-shadow:
+                0 0 0 2px rgba(3, 49, 59, 0.8),
+                /* Navy border */
+                0 0 0 4px rgba(184, 53, 41, 0.3),
+                /* Red accent ring */
+                0 12px 40px rgba(3, 49, 59, 0.4),
+                /* Main shadow */
+                0 6px 20px rgba(0, 0, 0, 0.3),
+                /* Depth shadow */
+                inset 0 2px 8px rgba(255, 255, 255, 0.8),
+                /* Inner highlight */
+                inset 0 -2px 4px rgba(3, 49, 59, 0.1);
+            /* Inner depth */
+
+            padding: 12px;
+            animation: logoFloat 4s ease-in-out infinite, logoPulse 3s ease-in-out infinite alternate;
             z-index: 99999;
             position: relative;
+
+            /* Smooth transitions */
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            /* Subtle glow effect */
+            filter: drop-shadow(0 0 20px rgba(3, 49, 59, 0.2));
         }
 
+        /* Enhanced floating animation */
         @keyframes logoFloat {
 
             0%,
             100% {
-                transform: translateY(0);
+                transform: translateY(0) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-8px) rotate(1deg);
             }
 
             50% {
-                transform: translateY(-10px);
+                transform: translateY(-12px) rotate(0deg);
+            }
+
+            75% {
+                transform: translateY(-8px) rotate(-1deg);
+            }
+        }
+
+        /* Subtle pulsing glow effect */
+        @keyframes logoPulse {
+            0% {
+                box-shadow:
+                    0 0 0 2px rgba(3, 49, 59, 0.8),
+                    0 0 0 4px rgba(184, 53, 41, 0.3),
+                    0 12px 40px rgba(3, 49, 59, 0.4),
+                    0 6px 20px rgba(0, 0, 0, 0.3),
+                    inset 0 2px 8px rgba(255, 255, 255, 0.8),
+                    inset 0 -2px 4px rgba(3, 49, 59, 0.1);
+            }
+
+            100% {
+                box-shadow:
+                    0 0 0 2px rgba(3, 49, 59, 1),
+                    0 0 0 4px rgba(184, 53, 41, 0.5),
+                    0 15px 50px rgba(3, 49, 59, 0.6),
+                    0 8px 25px rgba(0, 0, 0, 0.4),
+                    inset 0 2px 8px rgba(255, 255, 255, 0.9),
+                    inset 0 -2px 4px rgba(3, 49, 59, 0.15);
+            }
+        }
+
+        /* Optional: Add a subtle background decoration behind the logo */
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle at center,
+                    rgba(3, 49, 59, 0.05) 0%,
+                    rgba(184, 53, 41, 0.03) 50%,
+                    transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: logoBackgroundPulse 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoBackgroundPulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1.1);
+                opacity: 0.8;
             }
         }
 
@@ -229,8 +311,8 @@
             margin-bottom: 30px;
             box-shadow:
                 0 15px 35px rgba(0, 0, 0, 0.08),
-                0 5px 15px rgba(74, 144, 226, 0.1);
-            border: 2px solid rgba(74, 144, 226, 0.1);
+                0 5px 15px rgba(3, 49, 59, 0.1);
+            border: 2px solid rgba(3, 49, 59, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -242,11 +324,11 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.03), transparent);
-            animation: shimmer 3s ease-in-out infinite;
+            background: linear-gradient(90deg, transparent, rgba(3, 49, 59, 0.03), transparent);
+            animation: controlsShimmer 3s ease-in-out infinite;
         }
 
-        @keyframes shimmer {
+        @keyframes controlsShimmer {
             0% {
                 left: -100%;
             }
@@ -295,7 +377,7 @@
         .export-label {
             font-size: 1rem;
             font-weight: 600;
-            color: #4A90E2;
+            color: #03313B;
             margin-left: 10px;
         }
 
@@ -306,7 +388,7 @@
         }
 
         .dt-button {
-            background: linear-gradient(145deg, #4A90E2, #357ABD) !important;
+            background: linear-gradient(145deg, #03313B, #0a4a5a) !important;
             color: white !important;
             border: none !important;
             border-radius: 16px !important;
@@ -315,7 +397,7 @@
             margin: 0 !important;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow:
-                0 6px 20px rgba(74, 144, 226, 0.3),
+                0 6px 20px rgba(3, 49, 59, 0.3),
                 0 2px 8px rgba(0, 0, 0, 0.1);
             font-weight: 600;
             text-transform: none;
@@ -343,11 +425,15 @@
         }
 
         .dt-button:hover {
-            background: linear-gradient(145deg, #357ABD, #2E5B8A) !important;
+            background: linear-gradient(145deg, #022a32, #03313B) !important;
             transform: translateY(-3px) scale(1.05);
             box-shadow:
-                0 12px 30px rgba(74, 144, 226, 0.4),
+                0 12px 30px rgba(3, 49, 59, 0.4),
                 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .dt-button:hover::before {
+            left: 100%;
         }
 
         .dt-button:hover::before {
@@ -359,41 +445,21 @@
             transition: all 0.1s ease;
         }
 
-        .dt-button:nth-child(1)::after {
-            content: '🖨️';
-            margin-right: 6px;
-        }
-
-        .dt-button:nth-child(2)::after {
-            content: '📊';
-            margin-right: 6px;
-        }
-
-        .dt-button:nth-child(3)::after {
-            content: '📈';
-            margin-right: 6px;
-        }
-
-        .dt-button:nth-child(4)::after {
-            content: '📋';
-            margin-right: 6px;
-        }
-
         .search-container {
             display: flex;
             align-items: center;
             gap: 15px;
             flex-wrap: wrap;
             padding-top: 20px;
-            border-top: 2px solid rgba(74, 144, 226, 0.1);
+            border-top: 2px solid rgba(3, 49, 59, 0.1);
         }
 
         .search-label {
             font-weight: 600;
-            color: #4A90E2;
+            color: #03313B;
             font-size: 1.1rem;
             white-space: nowrap;
-            text-shadow: 0 1px 2px rgba(74, 144, 226, 0.1);
+            text-shadow: 0 1px 2px rgba(3, 49, 59, 0.1);
         }
 
         .search-input-wrapper {
@@ -405,25 +471,25 @@
         .search-input {
             width: 100%;
             padding: 16px 55px 16px 20px;
-            border: 2px solid rgba(74, 144, 226, 0.2);
+            border: 2px solid rgba(3, 49, 59, 0.2);
             border-radius: 18px;
             font-size: 1rem;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             background: linear-gradient(145deg, #ffffff, #f8fbff);
             box-shadow:
                 inset 0 2px 8px rgba(0, 0, 0, 0.05),
-                0 2px 8px rgba(74, 144, 226, 0.1);
+                0 2px 8px rgba(3, 49, 59, 0.1);
             color: #2d3748;
             font-weight: 500;
         }
 
         .search-input:focus {
             outline: none;
-            border-color: #4A90E2;
+            border-color: #03313B;
             box-shadow:
-                0 0 0 4px rgba(74, 144, 226, 0.15),
-                inset 0 2px 8px rgba(74, 144, 226, 0.08),
-                0 4px 15px rgba(74, 144, 226, 0.2);
+                0 0 0 4px rgba(3, 49, 59, 0.15),
+                inset 0 2px 8px rgba(3, 49, 59, 0.08),
+                0 4px 15px rgba(3, 49, 59, 0.2);
             background: #ffffff;
             transform: translateY(-2px);
         }
@@ -438,14 +504,14 @@
             left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: #4A90E2;
+            color: #03313B;
             font-size: 1.3rem;
             pointer-events: none;
             transition: all 0.3s ease;
         }
 
         .search-input:focus+.search-icon {
-            color: #357ABD;
+            color: #03313B;
             transform: translateY(-50%) scale(1.1);
         }
 
@@ -458,14 +524,14 @@
 
         .length-label {
             font-weight: 600;
-            color: #4A90E2;
+            color: #03313B;
             font-size: 1rem;
-            text-shadow: 0 1px 2px rgba(74, 144, 226, 0.1);
+            text-shadow: 0 1px 2px rgba(3, 49, 59, 0.1);
         }
 
         .length-select {
             padding: 12px 16px;
-            border: 2px solid rgba(74, 144, 226, 0.2);
+            border: 2px solid rgba(3, 49, 59, 0.2);
             border-radius: 12px;
             font-size: 0.95rem;
             font-weight: 600;
@@ -477,25 +543,25 @@
             text-align: center;
             box-shadow:
                 inset 0 2px 8px rgba(0, 0, 0, 0.05),
-                0 2px 8px rgba(74, 144, 226, 0.1);
+                0 2px 8px rgba(3, 49, 59, 0.1);
         }
 
         .length-select:focus {
             outline: none;
-            border-color: #4A90E2;
+            border-color: #03313B;
             box-shadow:
-                0 0 0 4px rgba(74, 144, 226, 0.15),
-                inset 0 2px 8px rgba(74, 144, 226, 0.08),
-                0 4px 15px rgba(74, 144, 226, 0.2);
+                0 0 0 4px rgba(3, 49, 59, 0.15),
+                inset 0 2px 8px rgba(3, 49, 59, 0.08),
+                0 4px 15px rgba(3, 49, 59, 0.2);
             background: #ffffff;
             transform: translateY(-2px);
         }
 
         .length-select:hover {
-            border-color: rgba(74, 144, 226, 0.4);
+            border-color: rgba(3, 49, 59, 0.4);
             transform: translateY(-1px);
             box-shadow:
-                0 4px 15px rgba(74, 144, 226, 0.15),
+                0 4px 15px rgba(3, 49, 59, 0.15),
                 inset 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
@@ -505,8 +571,8 @@
             overflow: hidden;
             box-shadow:
                 0 20px 50px rgba(0, 0, 0, 0.1),
-                0 8px 25px rgba(74, 144, 226, 0.1);
-            border: 2px solid rgba(74, 144, 226, 0.1);
+                0 8px 25px rgba(3, 49, 59, 0.1);
+            border: 2px solid rgba(3, 49, 59, 0.1);
             position: relative;
             margin-bottom: 40px;
         }
@@ -518,7 +584,7 @@
             left: -100%;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #4A90E2, #50e3c2, #b76df1, #FFD700);
+            background: linear-gradient(90deg, #03313B, #B83529, #03313B, #FFD700);
             animation: progressFlow 3s ease-in-out infinite;
         }
 
@@ -550,12 +616,12 @@
 
         table.dataTable th:nth-child(1),
         table.dataTable td:nth-child(1) {
-            width: 4%;
+            width: 3%;
         }
 
         table.dataTable th:nth-child(2),
         table.dataTable td:nth-child(2) {
-            width: 16%;
+            width: 7%;
         }
 
         table.dataTable th:nth-child(3),
@@ -565,12 +631,12 @@
 
         table.dataTable th:nth-child(4),
         table.dataTable td:nth-child(4) {
-            width: 8%;
+            width: 7%;
         }
 
         table.dataTable th:nth-child(5),
         table.dataTable td:nth-child(5) {
-            width: 8%;
+            width: 7%;
         }
 
         table.dataTable th:nth-child(6),
@@ -595,12 +661,12 @@
 
         table.dataTable th:nth-child(10),
         table.dataTable td:nth-child(10) {
-            width: 7%;
+            width: 8%;
         }
 
         table.dataTable th:nth-child(11),
         table.dataTable td:nth-child(11) {
-            width: 8%;
+            width: 7%;
         }
 
         table.dataTable th:nth-child(12),
@@ -610,16 +676,21 @@
 
         table.dataTable th:nth-child(13),
         table.dataTable td:nth-child(13) {
-            width: 7%;
+            width: 8%;
         }
 
         table.dataTable th:nth-child(14),
         table.dataTable td:nth-child(14) {
-            width: 5%;
+            width: 8%;
+        }
+
+        table.dataTable th:nth-child(15),
+        table.dataTable td:nth-child(15) {
+            width: 8%;
         }
 
         table.dataTable thead {
-            background: linear-gradient(145deg, #4A90E2, #357ABD);
+            background: linear-gradient(145deg, #03313B, #0a4a5a);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -659,7 +730,7 @@
         }
 
         table.dataTable thead th:hover {
-            background: linear-gradient(145deg, #357ABD, #2E5B8A);
+            background: linear-gradient(145deg, #022a32, #03313B);
             transform: translateY(-1px);
             transition: all 0.3s ease;
         }
@@ -668,7 +739,7 @@
             padding: 12px 8px;
             font-size: 0.8rem;
             text-align: center;
-            border-bottom: 1px solid rgba(74, 144, 226, 0.08);
+            border-bottom: 1px solid rgba(3, 49, 59, 0.08);
             background: transparent;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
@@ -690,11 +761,12 @@
             background: #ffffff;
         }
 
+        /* High specificity selectors to override DataTables library styles */
         table.dataTable tbody tr:hover {
             background: linear-gradient(145deg, #e6f3ff, #dbeafe) !important;
             transform: translateY(-2px) scale(1.01);
             box-shadow:
-                0 8px 25px rgba(74, 144, 226, 0.15),
+                0 8px 25px rgba(3, 49, 59, 0.15),
                 0 4px 15px rgba(0, 0, 0, 0.1);
             z-index: 10;
         }
@@ -704,27 +776,13 @@
             font-weight: 600;
         }
 
-        .star-rating-display {
-            font-size: 1.3rem;
-            color: #FFD700;
-            text-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
-            letter-spacing: 3px;
-            display: inline-flex;
-            gap: 2px;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-        }
-
-        .star-rating-display .empty-star {
-            color: #e2e8f0;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
+        /* DataTables info and pagination container styles */
         .dataTables_wrapper .dataTables_info,
         .dataTables_wrapper .dataTables_paginate {
             padding: 25px 30px;
             background: linear-gradient(145deg, #f8fbff, #ffffff);
             margin: 0;
-            border-top: 2px solid rgba(74, 144, 226, 0.1);
+            border-top: 2px solid rgba(3, 49, 59, 0.1);
         }
 
         .dataTables_wrapper .dataTables_info {
@@ -739,59 +797,79 @@
             direction: ltr;
         }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
+        /* DataTables pagination button overrides with maximum specificity */
+        .dataTables_wrapper .dataTables_paginate .paginate_button,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.previous,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.next,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.first,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.last,
+        .dataTables_wrapper .dataTables_paginate span .paginate_button {
             padding: 12px 18px !important;
-            margin: 0 6px;
-            background: linear-gradient(145deg, #ffffff, #f8fbff) !important;
-            border: 2px solid rgba(74, 144, 226, 0.2) !important;
+            margin: 0 6px !important;
+            background: #03313B !important;
+            background-color: #03313B !important;
+            background-image: none !important;
+            border: 2px solid #03313B !important;
             border-radius: 14px !important;
-            color: #4A90E2 !important;
+            color: #ffffff !important;
             font-size: 0.95rem !important;
             font-weight: 600 !important;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
             cursor: pointer !important;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05) !important;
             text-decoration: none !important;
-            position: relative;
-            overflow: hidden;
         }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.1), transparent);
-            transition: left 0.4s ease;
+        /* Current active page button */
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
+        .dataTables_wrapper .dataTables_paginate span .paginate_button.current {
+            background: #B83529 !important;
+            background-color: #B83529 !important;
+            background-image: none !important;
+            color: #ffffff !important;
+            border-color: #B83529 !important;
+            transform: scale(1.1) !important;
+            box-shadow: 0 6px 20px rgba(184, 53, 41, 0.4) !important;
         }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-            background: linear-gradient(145deg, #4A90E2, #357ABD) !important;
-            color: #fff !important;
-            border-color: #4A90E2 !important;
-            transform: scale(1.1);
-            box-shadow:
-                0 6px 20px rgba(74, 144, 226, 0.4) !important,
-                0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        /* Hover states for non-current buttons */
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover:not(.current),
+        .dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.next:hover,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.first:hover,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.last:hover,
+        .dataTables_wrapper .dataTables_paginate span .paginate_button:hover:not(.current) {
+            background: #022a32 !important;
+            background-color: #022a32 !important;
+            background-image: none !important;
+            color: #ffffff !important;
+            border-color: #022a32 !important;
+            transform: translateY(-2px) scale(1.05) !important;
+            box-shadow: 0 6px 20px rgba(3, 49, 59, 0.4) !important;
         }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover:not(.current) {
-            background: linear-gradient(145deg, #e6f3ff, #dbeafe) !important;
-            color: #357ABD !important;
-            transform: translateY(-2px) scale(1.05);
-            box-shadow:
-                0 6px 20px rgba(74, 144, 226, 0.2) !important,
-                0 3px 10px rgba(0, 0, 0, 0.1) !important;
+        /* Active click state */
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active,
+        .dataTables_wrapper .dataTables_paginate span .paginate_button:active {
+            transform: scale(0.95) !important;
+            background: #03313B !important;
+            background-color: #03313B !important;
+            color: #ffffff !important;
         }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover::before {
-            left: 100%;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
-            transform: scale(0.95);
+        /* Disabled state */
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
+        .dataTables_wrapper .dataTables_paginate span .paginate_button.disabled {
+            background: #6c757d !important;
+            background-color: #6c757d !important;
+            background-image: none !important;
+            color: #ffffff !important;
+            border-color: #6c757d !important;
+            opacity: 0.6 !important;
+            cursor: not-allowed !important;
+            transform: none !important;
         }
 
         div.dataTables_filter,
@@ -801,6 +879,50 @@
 
         .dt-buttons {
             margin-bottom: 0 !important;
+        }
+
+        .status-satisfied {
+            background: linear-gradient(145deg, #48bb78, #38a169);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(72, 187, 120, 0.3);
+        }
+
+        .status-very-satisfied {
+            background: linear-gradient(145deg, #2d7d32, #1b5e20);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(45, 125, 50, 0.3);
+        }
+
+        .status-neutral {
+            background: linear-gradient(145deg, #ed8936, #dd6b20);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(237, 137, 54, 0.3);
+        }
+
+        .status-unsatisfied {
+            background: linear-gradient(145deg, #f56565, #e53e3e);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(245, 101, 101, 0.3);
         }
 
         .status-yes {
@@ -825,19 +947,43 @@
             box-shadow: 0 2px 8px rgba(245, 101, 101, 0.3);
         }
 
+        .suggestion-text {
+            font-size: 0.75rem;
+            color: #4a5568;
+            background: linear-gradient(145deg, rgba(3, 49, 59, 0.05), rgba(3, 49, 59, 0.02));
+            border-radius: 8px;
+            padding: 6px 8px;
+            margin: 0 2px;
+            display: inline-block;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: help;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-text:hover {
+            max-width: none;
+            white-space: normal;
+            word-wrap: break-word;
+            background: linear-gradient(145deg, rgba(3, 49, 59, 0.1), rgba(3, 49, 59, 0.05));
+            transform: scale(1.02);
+            z-index: 100;
+            position: relative;
+        }
+
         .email-cell {
             font-family: 'Courier New', monospace;
             font-weight: 500;
-            color: #4A90E2;
-            background: linear-gradient(145deg, rgba(74, 144, 226, 0.05), rgba(74, 144, 226, 0.02));
+            color: #03313B;
+            background: linear-gradient(145deg, rgba(3, 49, 59, 0.05), rgba(3, 49, 59, 0.02));
             border-radius: 8px;
             padding: 8px 12px;
             margin: 0 4px;
         }
 
-        .dt-center {
-            text-align: center !important;
-        }
+
 
         @media (max-width: 1024px) {
             .dashboard-container {
@@ -868,10 +1014,6 @@
         }
 
         @media (max-width: 768px) {
-            .page-title {
-                font-size: 1.8rem;
-            }
-
             .controls-section {
                 padding: 20px;
             }
@@ -906,11 +1048,10 @@
                 font-size: 0.85rem;
             }
 
-            .star-rating-display {
-                font-size: 0.9rem;
-                letter-spacing: 0.5px;
-            }
-
+            .status-satisfied,
+            .status-very-satisfied,
+            .status-neutral,
+            .status-unsatisfied,
             .status-yes,
             .status-no {
                 font-size: 0.6rem;
@@ -920,6 +1061,36 @@
             .email-cell {
                 font-size: 0.65rem;
                 padding: 3px 4px;
+            }
+
+            .suggestion-text {
+                font-size: 0.6rem;
+                padding: 2px 4px;
+                max-width: 120px;
+            }
+
+            .suggestion-text:hover {
+                font-size: 0.65rem;
+                max-width: 200px;
+            }
+
+            .company-logo {
+                width: 90px;
+                height: 90px;
+                padding: 8px;
+
+                box-shadow:
+                    0 0 0 2px rgba(3, 49, 59, 0.8),
+                    0 0 0 3px rgba(184, 53, 41, 0.3),
+                    0 8px 25px rgba(3, 49, 59, 0.4),
+                    0 4px 15px rgba(0, 0, 0, 0.3),
+                    inset 0 2px 6px rgba(255, 255, 255, 0.8),
+                    inset 0 -2px 3px rgba(3, 49, 59, 0.1);
+            }
+
+            .logo-container {
+                margin: 10px 0;
+                padding: 10px;
             }
         }
 
@@ -932,21 +1103,16 @@
                 padding: 15px;
             }
 
-            .page-title {
-                font-size: 1.5rem;
-            }
-
             table.dataTable thead th,
             table.dataTable tbody td {
                 padding: 6px 3px;
                 font-size: 0.65rem;
             }
 
-            .star-rating-display {
-                font-size: 0.8rem;
-                letter-spacing: 0px;
-            }
-
+            .status-satisfied,
+            .status-very-satisfied,
+            .status-neutral,
+            .status-unsatisfied,
             .status-yes,
             .status-no {
                 font-size: 0.55rem;
@@ -956,6 +1122,17 @@
             .email-cell {
                 font-size: 0.6rem;
                 padding: 2px 3px;
+            }
+
+            .suggestion-text {
+                font-size: 0.55rem;
+                padding: 1px 3px;
+                max-width: 100px;
+            }
+
+            .suggestion-text:hover {
+                font-size: 0.6rem;
+                max-width: 150px;
             }
 
             .export-buttons {
@@ -969,27 +1146,7 @@
             }
         }
 
-        .loading-shimmer {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200px 100%;
-            animation: shimmer 1.5s infinite;
-        }
 
-        @keyframes tableSlideIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .main-table-container {
-            animation: tableSlideIn 0.6s ease-out;
-        }
 
         @media (max-width: 1200px) {
             .main-table-container {
@@ -1063,103 +1220,144 @@
                     <thead>
                         <tr>
                             <th>رقم</th>
-                            <th>البريد الإلكتروني</th>
-                            <th>القنوات التواصل داخل الشركة فعالة</th>
-                            <th>أكثر قنوات التواصل فعالية</th>
-                            <th>تقيّم جودة التواصل</th>
-                            <th>تقيّم الفعاليات</th>
-                            <th>تساهم الفعاليات في تعزيز الروح المعنوية</th>
-                            <th>تعكس الفعاليات ثقافة الشركة</th>
-                            <th>محتوى الفعاليات ممتع ومفيد</th>
-                            <th>تلبي الفعاليات احتياجات الموظفين</th>
-                            <th>كيف تقيّم تنظيم الفعاليات</th>
-                            <th>بيئة العمل إيجابية ومحفزة</th>
-                            <th>مساحة العمل مريحة</th>
-                            <th>الموارد متوفرة</th>
+                            <th>رقم الموظف</th>
+                            <th>مدى الرضا عن بيئة العمل</th>
+                            <th>التوازن بين العمل والترفيه</th>
+                            <th>الأنشطة تساعد في كسر الروتين</th>
+                            <th>اقتراحات الأنشطة</th>
+                            <th>مدى الرضا عن تنوع الفعاليات</th>
+                            <th>مدى الرضا عن تجربة الموظف</th>
+                            <th>مدى الرضا عن قنوات التواصل</th>
+                            <th>اقتراحات التواصل</th>
+                            <th>مدى الرضا عن تصميم المحتوى</th>
+                            <th>مدى الرضا عن سرعة الاستجابة</th>
+                            <th>اقتراحات قنوات التواصل</th>
+                            <th>اقتراحات بيئة العمل</th>
+                            <th>اقتراحات الفعاليات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($surveys as $index => $survey)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td><span class="email-cell">{{ $survey->email }}</span></td>
+                                <td><span class="email-cell">{{ $survey->employee_code }}</span></td>
                                 <td>
-                                    @if ($survey->effective_comm === 'yes')
-                                        <span class="status-yes">{{ $labels[$survey->effective_comm] }}</span>
+                                    @if ($survey->work_environment_satisfaction === 'very_satisfied')
+                                        <span
+                                            class="status-very-satisfied">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
+                                    @elseif ($survey->work_environment_satisfaction === 'satisfied')
+                                        <span
+                                            class="status-satisfied">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
+                                    @elseif ($survey->work_environment_satisfaction === 'neutral')
+                                        <span
+                                            class="status-neutral">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
                                     @else
-                                        <span class="status-no">{{ $labels[$survey->effective_comm] }}</span>
-                                    @endif
-                                </td>
-                                <td>{{ $labels[$survey->best_comm] ?? $survey->best_comm }}</td>
-                                <td>
-                                    <div class="star-rating-display" data-rating="{{ $survey->rate_comm_quality }}">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            {!! $i <= $survey->rate_comm_quality ? '★' : '☆' !!}
-                                        @endfor
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="star-rating-display" data-rating="{{ $survey->rate_events }}">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            {!! $i <= $survey->rate_events ? '★' : '☆' !!}
-                                        @endfor
-                                    </div>
-                                </td>
-                                <td>
-                                    @if ($survey->events_morale === 'yes')
-                                        <span class="status-yes">{{ $labels[$survey->events_morale] }}</span>
-                                    @else
-                                        <span class="status-no">{{ $labels[$survey->events_morale] }}</span>
+                                        <span
+                                            class="status-unsatisfied">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($survey->events_culture === 'yes')
-                                        <span class="status-yes">{{ $labels[$survey->events_culture] }}</span>
+                                    @if ($survey->work_entertainment_balance === 'yes')
+                                        <span
+                                            class="status-yes">{{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}</span>
+                                    @elseif ($survey->work_entertainment_balance === 'neutral')
+                                        <span
+                                            class="status-neutral">{{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}</span>
                                     @else
-                                        <span class="status-no">{{ $labels[$survey->events_culture] }}</span>
+                                        <span
+                                            class="status-no">{{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($survey->events_content === 'yes')
-                                        <span class="status-yes">{{ $labels[$survey->events_content] }}</span>
+                                    @if ($survey->activities_help_routine === 'yes')
+                                        <span
+                                            class="status-yes">{{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}</span>
+                                    @elseif ($survey->activities_help_routine === 'neutral')
+                                        <span
+                                            class="status-neutral">{{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}</span>
                                     @else
-                                        <span class="status-no">{{ $labels[$survey->events_content] }}</span>
+                                        <span
+                                            class="status-no">{{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($survey->events_interest === 'yes')
-                                        <span class="status-yes">{{ $labels[$survey->events_interest] }}</span>
+                                    <span class="suggestion-text">{{ $survey->activities_suggestions ?? '-' }}</span>
+                                </td>
+                                <td>
+                                    @if ($survey->events_variety_satisfaction === 'satisfied')
+                                        <span
+                                            class="status-satisfied">{{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}</span>
+                                    @elseif ($survey->events_variety_satisfaction === 'neutral')
+                                        <span
+                                            class="status-neutral">{{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}</span>
                                     @else
-                                        <span class="status-no">{{ $labels[$survey->events_interest] }}</span>
+                                        <span
+                                            class="status-unsatisfied">{{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="star-rating-display" data-rating="{{ $survey->events_organize }}">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            {!! $i <= $survey->events_organize ? '★' : '☆' !!}
-                                        @endfor
-                                    </div>
-                                </td>
-                                <td>
-                                    @if ($survey->culture_env === 'yes')
-                                        <span class="status-yes">{{ $labels[$survey->culture_env] }}</span>
+                                    @if ($survey->employee_experience_satisfaction === 'satisfied')
+                                        <span
+                                            class="status-satisfied">{{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}</span>
+                                    @elseif ($survey->employee_experience_satisfaction === 'neutral')
+                                        <span
+                                            class="status-neutral">{{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}</span>
                                     @else
-                                        <span class="status-no">{{ $labels[$survey->culture_env] }}</span>
+                                        <span
+                                            class="status-unsatisfied">{{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($survey->env_comfort === 'yes')
-                                        <span class="status-yes">{{ $labels[$survey->env_comfort] }}</span>
+                                    @if ($survey->communication_channels_satisfaction === 'satisfied')
+                                        <span
+                                            class="status-satisfied">{{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}</span>
+                                    @elseif ($survey->communication_channels_satisfaction === 'neutral')
+                                        <span
+                                            class="status-neutral">{{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}</span>
                                     @else
-                                        <span class="status-no">{{ $labels[$survey->env_comfort] }}</span>
+                                        <span
+                                            class="status-unsatisfied">{{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}</span>
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($survey->env_resources === 'yes')
-                                        <span class="status-yes">{{ $labels[$survey->env_resources] }}</span>
+                                    <span
+                                        class="suggestion-text">{{ $survey->communication_suggestions ?? '-' }}</span>
+                                </td>
+                                <td>
+                                    @if ($survey->content_design_satisfaction === 'satisfied')
+                                        <span
+                                            class="status-satisfied">{{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}</span>
+                                    @elseif ($survey->content_design_satisfaction === 'neutral')
+                                        <span
+                                            class="status-neutral">{{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}</span>
                                     @else
-                                        <span class="status-no">{{ $labels[$survey->env_resources] }}</span>
+                                        <span
+                                            class="status-unsatisfied">{{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}</span>
                                     @endif
+                                </td>
+                                <td>
+                                    @if ($survey->response_time_satisfaction === 'satisfied')
+                                        <span
+                                            class="status-satisfied">{{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}</span>
+                                    @elseif ($survey->response_time_satisfaction === 'neutral')
+                                        <span
+                                            class="status-neutral">{{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}</span>
+                                    @else
+                                        <span
+                                            class="status-unsatisfied">{{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <span
+                                        class="suggestion-text">{{ $survey->communication_improvement_suggestions ?? '-' }}</span>
+                                </td>
+                                <td>
+                                    <span
+                                        class="suggestion-text">{{ $survey->work_environment_improvement_suggestions ?? '-' }}</span>
+                                </td>
+                                <td>
+                                    <span
+                                        class="suggestion-text">{{ $survey->events_improvement_suggestions ?? '-' }}</span>
                                 </td>
                             </tr>
                         @endforeach
@@ -1195,12 +1393,9 @@
                                 body: function(data, row, column, node) {
                                     var $node = $(node);
 
-                                    var $starRating = $node.find('.star-rating-display');
-                                    if ($starRating.length) {
-                                        return $starRating.data('rating');
-                                    }
-
-                                    var $statusBadge = $node.find('.status-yes, .status-no');
+                                    var $statusBadge = $node.find(
+                                        '.status-yes, .status-no, .status-satisfied, .status-very-satisfied, .status-neutral, .status-unsatisfied'
+                                    );
                                     if ($statusBadge.length) {
                                         return $statusBadge.text();
                                     }
@@ -1208,6 +1403,11 @@
                                     var $emailCell = $node.find('.email-cell');
                                     if ($emailCell.length) {
                                         return $emailCell.text();
+                                    }
+
+                                    var $suggestionText = $node.find('.suggestion-text');
+                                    if ($suggestionText.length) {
+                                        return $suggestionText.text();
                                     }
 
                                     return $node.text();
@@ -1224,12 +1424,9 @@
                                 body: function(data, row, column, node) {
                                     var $node = $(node);
 
-                                    var $starRating = $node.find('.star-rating-display');
-                                    if ($starRating.length) {
-                                        return $starRating.data('rating');
-                                    }
-
-                                    var $statusBadge = $node.find('.status-yes, .status-no');
+                                    var $statusBadge = $node.find(
+                                        '.status-yes, .status-no, .status-satisfied, .status-very-satisfied, .status-neutral, .status-unsatisfied'
+                                    );
                                     if ($statusBadge.length) {
                                         return $statusBadge.text();
                                     }
@@ -1237,6 +1434,11 @@
                                     var $emailCell = $node.find('.email-cell');
                                     if ($emailCell.length) {
                                         return $emailCell.text();
+                                    }
+
+                                    var $suggestionText = $node.find('.suggestion-text');
+                                    if ($suggestionText.length) {
+                                        return $suggestionText.text();
                                     }
 
                                     return $node.text();
@@ -1253,12 +1455,9 @@
                                 body: function(data, row, column, node) {
                                     var $node = $(node);
 
-                                    var $starRating = $node.find('.star-rating-display');
-                                    if ($starRating.length) {
-                                        return $starRating.data('rating');
-                                    }
-
-                                    var $statusBadge = $node.find('.status-yes, .status-no');
+                                    var $statusBadge = $node.find(
+                                        '.status-yes, .status-no, .status-satisfied, .status-very-satisfied, .status-neutral, .status-unsatisfied'
+                                    );
                                     if ($statusBadge.length) {
                                         return $statusBadge.text();
                                     }
@@ -1266,6 +1465,11 @@
                                     var $emailCell = $node.find('.email-cell');
                                     if ($emailCell.length) {
                                         return $emailCell.text();
+                                    }
+
+                                    var $suggestionText = $node.find('.suggestion-text');
+                                    if ($suggestionText.length) {
+                                        return $suggestionText.text();
                                     }
 
                                     return $node.text();
@@ -1300,15 +1504,6 @@
                 order: [
                     [0, 'asc']
                 ],
-                columnDefs: [{
-                        orderable: false,
-                        targets: [4, 5, 10]
-                    },
-                    {
-                        className: "dt-center",
-                        targets: "_all"
-                    }
-                ],
                 drawCallback: function(settings) {
                     $('.dataTable tbody tr').each(function(index) {
                         $(this).css('animation-delay', (index * 0.05) + 's');
@@ -1327,10 +1522,6 @@
                 var length = $(this).val();
                 table.page.len(length).draw();
             });
-
-            setTimeout(function() {
-                $('.main-table-container').addClass('loaded');
-            }, 300);
         });
 
         $('<style>')

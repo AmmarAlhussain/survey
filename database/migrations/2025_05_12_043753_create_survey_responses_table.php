@@ -8,9 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('survey', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->string('employee_code')->unique();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('arabic_name');
             $table->string('email')->unique();
+            $table->boolean('is_head_office')->default(true);
+        });
+
+        Schema::create('surveys', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->enum('work_environment_satisfaction', ['very_satisfied', 'satisfied', 'neutral', 'unsatisfied']);
             $table->enum('work_entertainment_balance', ['yes', 'neutral', 'no']);
             $table->enum('activities_help_routine', ['yes', 'neutral', 'no']);
@@ -29,6 +39,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('survey');
+        Schema::dropIfExists('surveys');
+        Schema::dropIfExists('employees');
     }
 };

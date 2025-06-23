@@ -7,7 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>استبيان رأي الموظفين</title>
     @vite(['resources/css/master.css'])
-
 </head>
 
 <body>
@@ -40,10 +39,6 @@
         </div>
     </header>
 
-    <script>
-        window.existingEmails = @json($existingEmails);
-    </script>
-
     <div class="progress-container" id="progressContainer">
         <div class="progress-bar" id="progressBar"></div>
     </div>
@@ -54,11 +49,16 @@
                 <h2>مرحبًا بك في استبيان رأي الموظفين</h2>
                 <p>نقدّر وقتك ومشاركتك في هذا الاستبيان، وسيُستخدم لتحسين بيئة العمل والتواصل داخل الشركة.</p>
 
-                <div class="email-section">
-                    <label for="welcomeEmail" class="email-label">البريد الإلكتروني:</label>
-                    <input type="email" id="welcomeEmail" name="email" required placeholder="أدخل بريدك الإلكتروني">
-                    <div class="form-error" id="welcome-email-error">
-                        الرجاء إدخال بريد إلكتروني بنطاق @almosafer.com أو @lumirental.com أو @seera.sa
+                <div class="employee-id-section">
+                    <label for="welcomeEmployeeId" class="employee-id-label">رقم الموظف:</label>
+                    <input type="text" id="welcomeEmployeeId" name="employee_id" required
+                        placeholder="أدخل رقم الموظف">
+                    <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+                        <span>جاري التحقق...</span>
+                        <div class="loading-spinner"></div>
+                    </div>
+                    <div class="form-error" id="welcome-employee-id-error">
+                        الرجاء إدخال رقم موظف صحيح
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@
 
         <form id="surveyForm" action="{{ route('store') }}" method="POST" style="display: none;">
             @csrf
-            <input type="hidden" name="email" id="hiddenEmail">
+            <input type="hidden" name="employee_id" id="hiddenEmployeeId">
 
             <div class="survey-carousel">
                 <div class="step current" data-step="1">
@@ -256,8 +256,7 @@
                             </label>
                         </div>
                         <div id="communication_suggestions_container" style="display: none; margin-top: 15px;">
-                            <label for="communication_suggestions" class="suggestion-label">اقتراحات
-                                للتحسين</label>
+                            <label for="communication_suggestions" class="suggestion-label">اقتراحات للتحسين</label>
                             <textarea id="communication_suggestions" name="communication_suggestions" placeholder="يرجى كتابة اقتراحاتك"
                                 class="suggestion-textarea"></textarea>
                         </div>
