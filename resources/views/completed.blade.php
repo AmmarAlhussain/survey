@@ -11,11 +11,15 @@
             {{ ($language ?? 'ar') === 'ar' ? 'شكراً لك' : 'Thank You' }}
         @endif
     </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Cairo', Arial, sans-serif;
             background: #03313B;
             /* Navy blue background to match main page */
             display: flex;
@@ -235,7 +239,12 @@
             animation-duration: 2s !important;
         }
 
-        /* Enhanced Logo Styling - Matching main page */
+        .logo-container * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         .logo-container {
             display: flex;
             justify-content: center;
@@ -247,8 +256,8 @@
         }
 
         .company-logo {
-            width: 120px;
-            height: 120px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             /* Navy blue border with gradient effect */
             border: 3px solid transparent;
@@ -521,6 +530,7 @@
             color: #03313B;
             border: 1px solid rgba(3, 49, 59, 0.1);
             min-width: 280px;
+            cursor: pointer;
         }
 
         .contact-item:hover {
@@ -702,12 +712,12 @@
                     {{ ($language ?? 'ar') === 'ar' ? 'للتواصل مع عائلة سيرا' : 'Contact Seera Family' }}
                 </h3>
                 <div class="contact-items">
-                    <a href="mailto:seera.family@seera.sa" class="contact-item">
+                    <div class="contact-item" onclick="openGmail()">
                         <div class="contact-icon email-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <span class="contact-text">seera.family@seera.sa</span>
-                    </a>
+                    </div>
 
                     <a href="https://wa.me/message/BRICORPYLBFFN1" target="_blank" class="contact-item">
                         <div class="contact-icon whatsapp-icon">
@@ -751,8 +761,28 @@
                     whatsappText: "Seera Family WhatsApp"
                 }
             };
-
         });
+
+        function openGmail() {
+            const currentLanguage = "{{ $language ?? 'ar' }}";
+            const email = 'seera.family@seera.sa';
+
+            // Set subject and body based on language
+            const subject = currentLanguage === 'ar' ?
+                'تواصل مع عائلة سيرا - استبيان رأي الموظفين' :
+                'Contact Seera Family - Employee Opinion Survey';
+
+            const body = currentLanguage === 'ar' ?
+                'مرحباً عائلة سيرا،\n\nأود التواصل معكم بخصوص:\n\n\nشكراً لكم،' :
+                'Hello Seera Family,\n\nI would like to contact you regarding:\n\n\nThank you,';
+
+            // Create Gmail compose URL
+            const gmailUrl =
+                `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            // Open Gmail in a new tab
+            window.open(gmailUrl, '_blank');
+        }
     </script>
 </body>
 

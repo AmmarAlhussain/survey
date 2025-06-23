@@ -32,11 +32,10 @@ class SurveyController extends Controller
 
                 // Choose name based on language
                 if ($language === 'en') {
-                    // English: Use first_name + last_name
-                    $employeeName = trim($employee->first_name . ' ' . $employee->last_name);
+                    $employeeName = trim($employee->first_name);
                 } else {
                     // Arabic: Use arabic_name, fallback to English if not available
-                    $employeeName = $employee->arabic_name ?? trim($employee->first_name . ' ' . $employee->last_name);
+                    $employeeName = explode(' ', $employee->arabic_name)[0] ?? trim($employee->first_name);
                 }
 
                 return response()->json([

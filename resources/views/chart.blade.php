@@ -11,11 +11,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Cairo', Arial, sans-serif;
 
         }
 
         body {
-            font-family: Arial, sans-serif;
             background: #03313B;
             direction: rtl;
             overflow-x: hidden;
@@ -34,8 +34,8 @@
         }
 
         .company-logo {
-            width: 120px;
-            height: 120px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             /* Navy blue border with gradient effect */
             border: 3px solid transparent;
