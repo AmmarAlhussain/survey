@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>نتائج الاستبيان - الرسوم البيانية</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -37,38 +42,24 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            /* Navy blue border with gradient effect */
             border: 3px solid transparent;
             background-clip: padding-box;
-
-            /* Multiple layered shadows for depth */
             box-shadow:
                 0 0 0 2px rgba(3, 49, 59, 0.8),
-                /* Navy border */
                 0 0 0 4px rgba(184, 53, 41, 0.3),
-                /* Red accent ring */
                 0 12px 40px rgba(3, 49, 59, 0.4),
-                /* Main shadow */
                 0 6px 20px rgba(0, 0, 0, 0.3),
-                /* Depth shadow */
                 inset 0 2px 8px rgba(255, 255, 255, 0.8),
-                /* Inner highlight */
                 inset 0 -2px 4px rgba(3, 49, 59, 0.1);
-            /* Inner depth */
 
             padding: 12px;
             animation: logoFloat 4s ease-in-out infinite, logoPulse 3s ease-in-out infinite alternate;
             z-index: 99999;
             position: relative;
-
-            /* Smooth transitions */
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-            /* Subtle glow effect */
             filter: drop-shadow(0 0 20px rgba(3, 49, 59, 0.2));
         }
 
-        /* Enhanced floating animation */
         @keyframes logoFloat {
 
             0%,
@@ -89,7 +80,6 @@
             }
         }
 
-        /* Subtle pulsing glow effect */
         @keyframes logoPulse {
             0% {
                 box-shadow:
@@ -112,7 +102,6 @@
             }
         }
 
-        /* Optional: Add a subtle background decoration behind the logo */
         .logo-container::before {
             content: '';
             position: absolute;
@@ -771,6 +760,59 @@
                 font-size: 1.4rem;
             }
         }
+
+        @media screen and (max-width: 767px) {
+            .company-logo {
+                width: 120px;
+                height: 120px;
+                animation: logoFloat 4s ease-in-out infinite, logoPulse 3s ease-in-out infinite alternate;
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                filter: drop-shadow(0 0 15px rgba(3, 49, 59, 0.2));
+                padding: 15px;
+            }
+
+            .logo-container::before {
+                animation: logoBackgroundPulse 6s ease-in-out infinite alternate;
+                width: 130px;
+                height: 130px;
+            }
+
+            .logo-container {
+                margin: 15px 0;
+                padding: 15px;
+            }
+
+            .logo-container::before {
+                animation: logoBackgroundPulse 6s ease-in-out infinite alternate;
+                width: 130px;
+                height: 130px;
+            }
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            .company-logo {
+                width: 150px;
+                height: 150px;
+                animation: logoFloat 8s ease-in-out infinite;
+                padding: 15px;
+            }
+
+            .company-logo:hover {
+                transform: translateY(-8px) scale(1.02);
+                transition: all 0.2s ease;
+            }
+
+            .logo-container {
+                margin: 20px 0;
+                padding: 20px;
+            }
+
+            .logo-container::before {
+                animation: logoBackgroundPulse 12s ease-in-out infinite alternate;
+                width: 150px;
+                height: 150px;
+            }
+        }
     </style>
 </head>
 
@@ -939,7 +981,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // JavaScript to find and fix any remaining white background elements
             function forceNavyBackground() {
                 const allElements = document.querySelectorAll('*');
 
@@ -947,13 +988,11 @@
                     const computedStyle = window.getComputedStyle(element);
                     const bgColor = computedStyle.backgroundColor;
 
-                    // Check if element has white background
                     if (bgColor === 'rgb(255, 255, 255)' ||
                         bgColor === 'white' ||
                         bgColor === '#ffffff' ||
                         bgColor === '#fff') {
 
-                        // Skip elements that should have white backgrounds
                         const allowedWhiteClasses = [
                             'chart-card', 'stat-card', 'message-box',
                             'contact-item', 'chart-stat', 'stat-tooltip',
@@ -973,15 +1012,12 @@
                 });
             }
 
-            // Run immediately
             forceNavyBackground();
 
-            // Run again after charts load
             setTimeout(forceNavyBackground, 1000);
 
             const surveyData = @json($surveys);
 
-            // Fixed labels to match your factory data
             const labels = {
                 'yes': 'نعم',
                 'no': 'لا',
@@ -993,13 +1029,11 @@
 
             setTimeout(() => {
                 renderCharts(surveyData, labels);
-                // Fix backgrounds again after charts render
                 setTimeout(forceNavyBackground, 500);
             }, 600);
         });
 
         function renderCharts(surveyData, translations) {
-            // Updated fields to match your factory
             const fields = [
                 'work_environment_satisfaction',
                 'work_entertainment_balance',
@@ -1011,12 +1045,11 @@
                 'response_time_satisfaction'
             ];
 
-            // Updated field types to match your data structure
             const fieldTypes = {
-                'work_environment_satisfaction': 'satisfaction_4levels', // very_satisfied, satisfied, neutral, unsatisfied
-                'work_entertainment_balance': 'ternary', // yes, neutral, no
-                'activities_help_routine': 'ternary', // yes, neutral, no
-                'events_variety_satisfaction': 'satisfaction_3levels', // satisfied, neutral, unsatisfied
+                'work_environment_satisfaction': 'satisfaction_4levels',
+                'work_entertainment_balance': 'ternary',
+                'activities_help_routine': 'ternary',
+                'events_variety_satisfaction': 'satisfaction_3levels',
                 'employee_experience_satisfaction': 'satisfaction_3levels',
                 'communication_channels_satisfaction': 'satisfaction_3levels',
                 'content_design_satisfaction': 'satisfaction_3levels',
@@ -1027,25 +1060,20 @@
             fields.forEach(field => {
                 processedData[field] = {};
 
-                // Initialize based on field type - CONSISTENT ORDER (Best to Worst)
                 if (fieldTypes[field] === 'satisfaction_4levels') {
-                    // Order: very_satisfied, satisfied, neutral, unsatisfied
                     ['very_satisfied', 'satisfied', 'neutral', 'unsatisfied'].forEach(level => {
                         processedData[field][level] = 0;
                     });
                 } else if (fieldTypes[field] === 'satisfaction_3levels') {
-                    // Order: satisfied, neutral, unsatisfied
                     ['satisfied', 'neutral', 'unsatisfied'].forEach(level => {
                         processedData[field][level] = 0;
                     });
                 } else if (fieldTypes[field] === 'ternary') {
-                    // Order: yes, neutral, no
                     ['yes', 'neutral', 'no'].forEach(level => {
                         processedData[field][level] = 0;
                     });
                 }
 
-                // Count responses
                 surveyData.forEach(record => {
                     let value = record[field];
                     if (processedData[field][value] !== undefined) {
@@ -1056,7 +1084,6 @@
 
             animateNumber('total-responses', 0, surveyData.length, 1000);
 
-            // Calculate satisfaction scores
             const satisfactionScores = {};
             const questionLabels = {
                 'work_environment_satisfaction': 'الرضا عن بيئة العمل',
@@ -1216,16 +1243,15 @@
             let chartType = 'doughnut';
             let colors, options, chartLabels, chartData;
 
-            // CONSISTENT ORDER FOR ALL: From Best to Worst
             if (fieldType === 'satisfaction_4levels') {
                 chartLabels = ['very_satisfied', 'satisfied', 'neutral', 'unsatisfied'];
-                colors = ['#2d7d32', '#68d391', '#ed8936', '#f56565']; // Very Satisfied (dark green) -> Unsatisfied (red)
+                colors = ['#2d7d32', '#68d391', '#ed8936', '#f56565'];
             } else if (fieldType === 'satisfaction_3levels') {
                 chartLabels = ['satisfied', 'neutral', 'unsatisfied'];
-                colors = ['#48bb78', '#ed8936', '#f56565']; // Satisfied (green) -> Unsatisfied (red)
+                colors = ['#48bb78', '#ed8936', '#f56565'];
             } else if (fieldType === 'ternary') {
                 chartLabels = ['yes', 'neutral', 'no'];
-                colors = ['#48bb78', '#ed8936', '#f56565']; // Yes (green) -> No (red)
+                colors = ['#48bb78', '#ed8936', '#f56565'];
             }
 
             chartData = chartLabels.map(key => data[key] || 0);
@@ -1253,7 +1279,6 @@
                                         lineWidth: 0,
                                         index: i
                                     }));
-                                    // Reverse only the legend order, not the chart data
                                     return labels.reverse();
                                 }
                                 return [];
@@ -1306,17 +1331,14 @@
                 }
             });
 
-            // Add statistics below chart - SAME ORDER AS CHART
             const stats = document.createElement('div');
             stats.className = 'chart-stats';
 
-            // Add four-level class for 4-level satisfaction charts
             if (fieldType === 'satisfaction_4levels') {
                 stats.classList.add('four-level');
             }
 
             if (fieldType === 'satisfaction_4levels') {
-                // Order: very_satisfied, satisfied, neutral, unsatisfied (SAME AS CHART)
                 const verySatisfiedPct = total > 0 ? ((data.very_satisfied / total) * 100).toFixed(1) : '0.0';
                 const satisfiedPct = total > 0 ? ((data.satisfied / total) * 100).toFixed(1) : '0.0';
                 const neutralPct = total > 0 ? ((data.neutral / total) * 100).toFixed(1) : '0.0';
@@ -1340,7 +1362,6 @@
                         <div class="chart-stat-label">غير راضي</div>
                     </div>`;
             } else if (fieldType === 'satisfaction_3levels') {
-                // Order: satisfied, neutral, unsatisfied (SAME AS CHART)
                 const satisfiedPct = total > 0 ? ((data.satisfied / total) * 100).toFixed(1) : '0.0';
                 const neutralPct = total > 0 ? ((data.neutral / total) * 100).toFixed(1) : '0.0';
                 const unsatisfiedPct = total > 0 ? ((data.unsatisfied / total) * 100).toFixed(1) : '0.0';
@@ -1359,7 +1380,6 @@
                         <div class="chart-stat-label">غير راضي</div>
                     </div>`;
             } else if (fieldType === 'ternary') {
-                // Order: yes, neutral, no (SAME AS CHART)
                 const yesPct = total > 0 ? ((data.yes / total) * 100).toFixed(1) : '0.0';
                 const neutralPct = total > 0 ? ((data.neutral / total) * 100).toFixed(1) : '0.0';
                 const noPct = total > 0 ? ((data.no / total) * 100).toFixed(1) : '0.0';

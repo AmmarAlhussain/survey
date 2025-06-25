@@ -21,7 +21,6 @@ class EmployeeFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'arabic_name' => $this->faker->optional(0.7)->name(),
-            'email' => $this->faker->unique()->userName . '@' . $this->faker->randomElement(['almosafer.com', 'lumirental.com', 'seera.sa']),
             'is_head_office' => $this->faker->boolean(60),
         ];
     }

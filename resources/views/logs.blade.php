@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>لوحة عرض استبيان الموظفين</title>
     <style>
         * {
@@ -177,7 +182,6 @@
             background: radial-gradient(circle, rgba(255, 255, 255, 0.45), transparent);
         }
 
-        /* Enhanced Logo Styling - Matching survey.blade.php */
         .logo-container {
             display: flex;
             justify-content: center;
@@ -192,38 +196,24 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            /* Navy blue border with gradient effect */
             border: 3px solid transparent;
             background-clip: padding-box;
-
-            /* Multiple layered shadows for depth */
             box-shadow:
                 0 0 0 2px rgba(3, 49, 59, 0.8),
-                /* Navy border */
                 0 0 0 4px rgba(184, 53, 41, 0.3),
-                /* Red accent ring */
                 0 12px 40px rgba(3, 49, 59, 0.4),
-                /* Main shadow */
                 0 6px 20px rgba(0, 0, 0, 0.3),
-                /* Depth shadow */
                 inset 0 2px 8px rgba(255, 255, 255, 0.8),
-                /* Inner highlight */
                 inset 0 -2px 4px rgba(3, 49, 59, 0.1);
-            /* Inner depth */
 
             padding: 12px;
             animation: logoFloat 4s ease-in-out infinite, logoPulse 3s ease-in-out infinite alternate;
             z-index: 99999;
             position: relative;
-
-            /* Smooth transitions */
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-            /* Subtle glow effect */
             filter: drop-shadow(0 0 20px rgba(3, 49, 59, 0.2));
         }
 
-        /* Enhanced floating animation */
         @keyframes logoFloat {
 
             0%,
@@ -244,7 +234,6 @@
             }
         }
 
-        /* Subtle pulsing glow effect */
         @keyframes logoPulse {
             0% {
                 box-shadow:
@@ -267,7 +256,6 @@
             }
         }
 
-        /* Optional: Add a subtle background decoration behind the logo */
         .logo-container::before {
             content: '';
             position: absolute;
@@ -430,10 +418,6 @@
             box-shadow:
                 0 12px 30px rgba(3, 49, 59, 0.4),
                 0 4px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .dt-button:hover::before {
-            left: 100%;
         }
 
         .dt-button:hover::before {
@@ -761,7 +745,6 @@
             background: #ffffff;
         }
 
-        /* High specificity selectors to override DataTables library styles */
         table.dataTable tbody tr:hover {
             background: linear-gradient(145deg, #e6f3ff, #dbeafe) !important;
             transform: translateY(-2px) scale(1.01);
@@ -776,7 +759,6 @@
             font-weight: 600;
         }
 
-        /* DataTables info and pagination container styles */
         .dataTables_wrapper .dataTables_info,
         .dataTables_wrapper .dataTables_paginate {
             padding: 25px 30px;
@@ -797,7 +779,6 @@
             direction: ltr;
         }
 
-        /* DataTables pagination button overrides with maximum specificity */
         .dataTables_wrapper .dataTables_paginate .paginate_button,
         .dataTables_wrapper .dataTables_paginate .paginate_button.previous,
         .dataTables_wrapper .dataTables_paginate .paginate_button.next,
@@ -820,7 +801,6 @@
             text-decoration: none !important;
         }
 
-        /* Current active page button */
         .dataTables_wrapper .dataTables_paginate .paginate_button.current,
         .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
         .dataTables_wrapper .dataTables_paginate span .paginate_button.current {
@@ -833,7 +813,6 @@
             box-shadow: 0 6px 20px rgba(184, 53, 41, 0.4) !important;
         }
 
-        /* Hover states for non-current buttons */
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover:not(.current),
         .dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover,
         .dataTables_wrapper .dataTables_paginate .paginate_button.next:hover,
@@ -849,7 +828,6 @@
             box-shadow: 0 6px 20px rgba(3, 49, 59, 0.4) !important;
         }
 
-        /* Active click state */
         .dataTables_wrapper .dataTables_paginate .paginate_button:active,
         .dataTables_wrapper .dataTables_paginate span .paginate_button:active {
             transform: scale(0.95) !important;
@@ -858,7 +836,6 @@
             color: #ffffff !important;
         }
 
-        /* Disabled state */
         .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
         .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
         .dataTables_wrapper .dataTables_paginate span .paginate_button.disabled {
@@ -983,109 +960,235 @@
             margin: 0 4px;
         }
 
+        /* Card Layout for Mobile/Tablet */
+        .cards-container {
+            display: none;
+            padding: 20px;
+            gap: 16px;
+        }
 
+        .survey-card {
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08), 0 3px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin-bottom: 16px;
+        }
 
-        @media (max-width: 1024px) {
+        .survey-card:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12), 0 6px 15px rgba(3, 49, 59, 0.1);
+        }
+
+        .card-header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(3, 49, 59, 0.1);
+        }
+
+        .card-number {
+            background: linear-gradient(145deg, #03313B, #0a4a5a);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(3, 49, 59, 0.3);
+        }
+
+        .card-employee-id {
+            background: linear-gradient(145deg, #B83529, #d4432f);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 3px 10px rgba(184, 53, 41, 0.3);
+        }
+
+        .card-content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .card-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card-field-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #03313B;
+            text-shadow: 0 1px 2px rgba(3, 49, 59, 0.1);
+        }
+
+        .card-field-value {
+            display: flex;
+            align-items: center;
+            min-height: 32px;
+        }
+
+        .card-status {
+            display: inline-block;
+        }
+
+        .card-suggestion {
+            background: linear-gradient(145deg, rgba(3, 49, 59, 0.05), rgba(3, 49, 59, 0.02));
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            color: #4a5568;
+            line-height: 1.4;
+            max-height: 60px;
+            overflow-y: auto;
+            border-left: 3px solid rgba(3, 49, 59, 0.2);
+        }
+
+        .card-suggestion:empty::after {
+            content: '-';
+            color: #a0aec0;
+            font-style: italic;
+        }
+
+        /* Mobile/Tablet specific responsive styles */
+        @media screen and (max-width: 1024px) {
             .dashboard-container {
                 padding: 15px;
             }
 
-            .search-input-wrapper {
-                min-width: 280px;
-            }
-
-            .export-buttons {
-                justify-content: center;
+            .controls-section {
+                padding: 20px 15px;
+                border-radius: 16px;
             }
 
             .controls-header {
                 flex-direction: column;
+                gap: 15px;
                 text-align: center;
             }
 
-            .search-container {
-                flex-wrap: wrap;
+            .controls-title {
+                font-size: 1.2rem;
                 justify-content: center;
             }
 
-            .length-control {
-                margin-top: 10px;
+            .export-section {
+                justify-content: center;
+                width: 100%;
+                flex-direction: row;
             }
-        }
 
-        @media (max-width: 768px) {
-            .controls-section {
-                padding: 20px;
+            .export-label {
+                font-size: 0.9rem;
+                margin: 0 0 8px 0;
+                text-align: center;
+                width: 100%;
+            }
+
+            .export-buttons {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 8px;
+                width: 400px;
+                max-width: 400px;
+            }
+
+            .dt-button {
+                min-width: auto !important;
+                padding: 12px 16px !important;
+                font-size: 0.8rem !important;
+                border-radius: 12px !important;
+                white-space: nowrap;
+                justify-content: center;
             }
 
             .search-container {
                 flex-direction: column;
+                gap: 12px;
                 align-items: stretch;
+                padding-top: 15px;
+            }
+
+            .search-label {
+                text-align: center;
+                font-size: 1rem;
             }
 
             .search-input-wrapper {
                 min-width: auto;
+                width: 100%;
+            }
+
+            .search-input {
+                padding: 14px 45px 14px 16px;
+                font-size: 0.9rem;
+                border-radius: 14px;
+            }
+
+            .search-icon {
+                left: 16px;
+                font-size: 1.1rem;
             }
 
             .length-control {
                 justify-content: center;
-                margin-top: 15px;
+                align-items: center;
+                gap: 10px;
             }
 
             .length-select {
                 min-width: 100px;
+                padding: 12px 16px;
+                font-size: 0.9rem;
+                border-radius: 10px;
             }
 
-            table.dataTable thead th,
-            table.dataTable tbody td {
-                padding: 8px 4px;
-                font-size: 0.7rem;
+            /* Show cards, hide table on tablet/mobile */
+            .main-table-container {
+                display: none;
             }
 
-            .dt-button {
-                min-width: 100px !important;
-                padding: 12px 16px !important;
-                font-size: 0.85rem;
+            .cards-container {
+                display: block;
+                background: linear-gradient(145deg, #ffffff, #f8fbff);
+                border-radius: 20px;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(3, 49, 59, 0.1);
+                border: 2px solid rgba(3, 49, 59, 0.1);
+                position: relative;
+                overflow: hidden;
+                margin-bottom: 30px;
             }
 
-            .status-satisfied,
-            .status-very-satisfied,
-            .status-neutral,
-            .status-unsatisfied,
-            .status-yes,
-            .status-no {
-                font-size: 0.6rem;
-                padding: 3px 6px;
-            }
-
-            .email-cell {
-                font-size: 0.65rem;
-                padding: 3px 4px;
-            }
-
-            .suggestion-text {
-                font-size: 0.6rem;
-                padding: 2px 4px;
-                max-width: 120px;
-            }
-
-            .suggestion-text:hover {
-                font-size: 0.65rem;
-                max-width: 200px;
+            .cards-container::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 4px;
+                background: linear-gradient(90deg, #03313B, #B83529, #03313B, #FFD700);
+                animation: progressFlow 3s ease-in-out infinite;
             }
 
             .company-logo {
-                width: 90px;
-                height: 90px;
-                padding: 8px;
-
-                box-shadow:
-                    0 0 0 2px rgba(3, 49, 59, 0.8),
-                    0 0 0 3px rgba(184, 53, 41, 0.3),
-                    0 8px 25px rgba(3, 49, 59, 0.4),
-                    0 4px 15px rgba(0, 0, 0, 0.3),
-                    inset 0 2px 6px rgba(255, 255, 255, 0.8),
-                    inset 0 -2px 3px rgba(3, 49, 59, 0.1);
+                width: 150px;
+                height: 150px;
+                padding: 10px;
             }
 
             .logo-container {
@@ -1094,19 +1197,154 @@
             }
         }
 
-        @media (max-width: 480px) {
+        @media screen and (max-width: 767px) {
+            body {
+                font-size: 14px;
+            }
+
+            .floating-particles {
+                display: none;
+            }
+
+            .logo-container {
+                margin: 8px 0;
+                padding: 8px;
+            }
+
+            .company-logo {
+                width: 80px;
+                height: 80px;
+                padding: 6px;
+            }
+
             .dashboard-container {
-                padding: 10px;
+                padding: 8px;
             }
 
             .controls-section {
-                padding: 15px;
+                padding: 15px 10px;
+                border-radius: 12px;
+                margin-bottom: 15px;
             }
 
-            table.dataTable thead th,
-            table.dataTable tbody td {
-                padding: 6px 3px;
-                font-size: 0.65rem;
+            .controls-title {
+                font-size: 1.1rem;
+                gap: 8px;
+            }
+
+            .controls-title::before {
+                font-size: 1.1rem;
+            }
+
+            .export-section {
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+            }
+
+            .export-label {
+                font-size: 0.85rem;
+                margin: 0 0 5px 0;
+            }
+
+            .export-buttons {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+                width: 100%;
+            }
+
+            .dt-button {
+                padding: 10px 8px !important;
+                font-size: 0.75rem !important;
+                border-radius: 10px !important;
+                min-width: auto !important;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .search-container {
+                flex-direction: column;
+                gap: 10px;
+                padding-top: 12px;
+            }
+
+            .search-label {
+                font-size: 0.9rem;
+                margin-bottom: 5px;
+            }
+
+            .search-input {
+                padding: 12px 40px 12px 14px;
+                font-size: 0.85rem;
+                border-radius: 12px;
+            }
+
+            .search-icon {
+                left: 14px;
+                font-size: 1rem;
+            }
+
+            .length-control {
+                gap: 8px;
+                margin-top: 5px;
+            }
+
+            .length-label {
+                font-size: 0.85rem;
+            }
+
+            .length-select {
+                padding: 10px 12px;
+                font-size: 0.8rem;
+                border-radius: 8px;
+                min-width: 80px;
+            }
+
+            .cards-container {
+                padding: 12px;
+                gap: 12px;
+                border-radius: 16px;
+                margin-bottom: 20px;
+            }
+
+            .survey-card {
+                padding: 16px;
+                border-radius: 12px;
+                margin-bottom: 12px;
+            }
+
+            .card-header-info {
+                margin-bottom: 12px;
+                padding-bottom: 10px;
+            }
+
+            .card-number {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+
+            .card-employee-id {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .card-content-grid {
+                gap: 10px;
+            }
+
+            .card-field-label {
+                font-size: 0.75rem;
+            }
+
+            .card-suggestion {
+                padding: 6px 10px;
+                font-size: 0.7rem;
+                max-height: 50px;
+                border-left-width: 2px;
             }
 
             .status-satisfied,
@@ -1115,48 +1353,172 @@
             .status-unsatisfied,
             .status-yes,
             .status-no {
-                font-size: 0.55rem;
-                padding: 2px 4px;
-            }
-
-            .email-cell {
-                font-size: 0.6rem;
-                padding: 2px 3px;
-            }
-
-            .suggestion-text {
-                font-size: 0.55rem;
-                padding: 1px 3px;
-                max-width: 100px;
-            }
-
-            .suggestion-text:hover {
-                font-size: 0.6rem;
-                max-width: 150px;
-            }
-
-            .export-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .dt-button {
-                width: 100% !important;
-                justify-content: center !important;
+                font-size: 0.7rem;
+                padding: 4px 8px;
+                border-radius: 16px;
             }
         }
 
+        @media screen and (max-width: 480px) {
+            .dashboard-container {
+                padding: 5px;
+            }
 
+            .controls-section {
+                padding: 12px 8px;
+            }
 
-        @media (max-width: 1200px) {
+            .export-buttons {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .dt-button {
+                padding: 8px 12px !important;
+                font-size: 0.7rem !important;
+            }
+
+            .cards-container {
+                padding: 8px;
+                gap: 8px;
+            }
+
+            .survey-card {
+                padding: 12px;
+                margin-bottom: 8px;
+            }
+
+            .card-header-info {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .card-number {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+
+            .card-employee-id {
+                padding: 4px 8px;
+                font-size: 0.75rem;
+            }
+
+            .card-content-grid {
+                gap: 8px;
+            }
+
+            .card-field-label {
+                font-size: 0.7rem;
+            }
+
+            .card-suggestion {
+                padding: 4px 8px;
+                font-size: 0.65rem;
+                max-height: 40px;
+            }
+
+            .status-satisfied,
+            .status-very-satisfied,
+            .status-neutral,
+            .status-unsatisfied,
+            .status-yes,
+            .status-no {
+                font-size: 0.65rem;
+                padding: 3px 6px;
+                border-radius: 12px;
+            }
+
+            .company-logo {
+                width: 120px;
+                height: 120px;
+                padding: 4px;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .company-logo {
+                width: 120px;
+                height: 120px;
+                animation: logoFloat 4s ease-in-out infinite, logoPulse 3s ease-in-out infinite alternate;
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                filter: drop-shadow(0 0 15px rgba(3, 49, 59, 0.2));
+                padding: 15px;
+            }
+
+            .logo-container::before {
+                animation: logoBackgroundPulse 6s ease-in-out infinite alternate;
+                width: 130px;
+                height: 130px;
+            }
+
+            .logo-container {
+                margin: 15px 0;
+                padding: 15px;
+            }
+
+            .logo-container::before {
+                animation: logoBackgroundPulse 6s ease-in-out infinite alternate;
+                width: 130px;
+                height: 130px;
+            }
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            .company-logo {
+                width: 150px;
+                height: 150px;
+                animation: logoFloat 8s ease-in-out infinite;
+                padding: 15px;
+            }
+
+            .company-logo:hover {
+                transform: translateY(-8px) scale(1.02);
+                transition: all 0.2s ease;
+            }
+
+            .logo-container {
+                margin: 20px 0;
+                padding: 20px;
+            }
+
+            .logo-container::before {
+                animation: logoBackgroundPulse 12s ease-in-out infinite alternate;
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        /* Desktop only - keep table visible */
+        @media screen and (min-width: 1025px) {
+            .cards-container {
+                display: none;
+            }
+
             .main-table-container {
-                margin: 0 -10px;
-                border-radius: 16px;
+                display: block;
+            }
+        }
+
+        @keyframes fadeInRow {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
             }
 
-            .table-wrapper {
-                border-radius: 16px;
+            to {
+                opacity: 1;
+                transform: translateX(0);
             }
+        }
+
+        .fadeInRow {
+            animation: fadeInRow 0.5s ease-out forwards;
+        }
+
+        .card-fadeIn {
+            animation: fadeInRow 0.3s ease-out forwards;
         }
     </style>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
@@ -1214,6 +1576,7 @@
             </div>
         </div>
 
+        <!-- Desktop Table View -->
         <div class="main-table-container">
             <div class="table-wrapper">
                 <table id="surveyTable">
@@ -1365,6 +1728,162 @@
                 </table>
             </div>
         </div>
+
+        <!-- Mobile/Tablet Card View -->
+        <div class="cards-container" id="cardsContainer">
+            @foreach ($surveys as $index => $survey)
+                <div class="survey-card">
+                    <div class="card-header-info">
+                        <div class="card-number">{{ $index + 1 }}</div>
+                        <div class="card-employee-id">{{ $survey->employee_code }}</div>
+                    </div>
+
+                    <div class="card-content-grid">
+                        <div class="card-field">
+                            <div class="card-field-label">مدى الرضا عن بيئة العمل</div>
+                            <div class="card-field-value">
+                                <span
+                                    class="card-status 
+                                    @if ($survey->work_environment_satisfaction === 'very_satisfied') status-very-satisfied
+                                    @elseif ($survey->work_environment_satisfaction === 'satisfied') status-satisfied
+                                    @elseif ($survey->work_environment_satisfaction === 'neutral') status-neutral
+                                    @else status-unsatisfied @endif">
+                                    {{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">التوازن بين العمل والترفيه</div>
+                            <div class="card-field-value">
+                                <span
+                                    class="card-status 
+                                    @if ($survey->work_entertainment_balance === 'yes') status-yes
+                                    @elseif ($survey->work_entertainment_balance === 'neutral') status-neutral
+                                    @else status-no @endif">
+                                    {{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">الأنشطة تساعد في كسر الروتين</div>
+                            <div class="card-field-value">
+                                <span
+                                    class="card-status 
+                                    @if ($survey->activities_help_routine === 'yes') status-yes
+                                    @elseif ($survey->activities_help_routine === 'neutral') status-neutral
+                                    @else status-no @endif">
+                                    {{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">اقتراحات الأنشطة</div>
+                            <div class="card-field-value">
+                                <div class="card-suggestion">{{ $survey->activities_suggestions }}</div>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">مدى الرضا عن تنوع الفعاليات</div>
+                            <div class="card-field-value">
+                                <span
+                                    class="card-status 
+                                    @if ($survey->events_variety_satisfaction === 'satisfied') status-satisfied
+                                    @elseif ($survey->events_variety_satisfaction === 'neutral') status-neutral
+                                    @else status-unsatisfied @endif">
+                                    {{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">مدى الرضا عن تجربة الموظف</div>
+                            <div class="card-field-value">
+                                <span
+                                    class="card-status 
+                                    @if ($survey->employee_experience_satisfaction === 'satisfied') status-satisfied
+                                    @elseif ($survey->employee_experience_satisfaction === 'neutral') status-neutral
+                                    @else status-unsatisfied @endif">
+                                    {{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">مدى الرضا عن قنوات التواصل</div>
+                            <div class="card-field-value">
+                                <span
+                                    class="card-status 
+                                    @if ($survey->communication_channels_satisfaction === 'satisfied') status-satisfied
+                                    @elseif ($survey->communication_channels_satisfaction === 'neutral') status-neutral
+                                    @else status-unsatisfied @endif">
+                                    {{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">اقتراحات التواصل</div>
+                            <div class="card-field-value">
+                                <div class="card-suggestion">{{ $survey->communication_suggestions }}</div>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">مدى الرضا عن تصميم المحتوى</div>
+                            <div class="card-field-value">
+                                <span
+                                    class="card-status 
+                                    @if ($survey->content_design_satisfaction === 'satisfied') status-satisfied
+                                    @elseif ($survey->content_design_satisfaction === 'neutral') status-neutral
+                                    @else status-unsatisfied @endif">
+                                    {{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">مدى الرضا عن سرعة الاستجابة</div>
+                            <div class="card-field-value">
+                                <span
+                                    class="card-status 
+                                    @if ($survey->response_time_satisfaction === 'satisfied') status-satisfied
+                                    @elseif ($survey->response_time_satisfaction === 'neutral') status-neutral
+                                    @else status-unsatisfied @endif">
+                                    {{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">اقتراحات قنوات التواصل</div>
+                            <div class="card-field-value">
+                                <div class="card-suggestion">{{ $survey->communication_improvement_suggestions }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">اقتراحات بيئة العمل</div>
+                            <div class="card-field-value">
+                                <div class="card-suggestion">{{ $survey->work_environment_improvement_suggestions }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-field">
+                            <div class="card-field-label">اقتراحات الفعاليات</div>
+                            <div class="card-field-value">
+                                <div class="card-suggestion">{{ $survey->events_improvement_suggestions }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -1514,34 +2033,58 @@
 
             table.buttons().container().appendTo('#export-buttons');
 
+            // Enhanced search functionality for both table and cards
             $('#custom-search').on('keyup', function() {
-                table.search(this.value).draw();
+                var searchTerm = this.value.toLowerCase();
+
+                // Search in DataTable
+                table.search(searchTerm).draw();
+
+                // Search in cards (for mobile/tablet)
+                filterCards(searchTerm);
             });
 
             $('#length-select').on('change', function() {
                 var length = $(this).val();
                 table.page.len(length).draw();
+
+                // Also update cards display
+                updateCardsDisplay(length);
+            });
+
+            // Function to filter cards
+            function filterCards(searchTerm) {
+                $('.survey-card').each(function() {
+                    var cardText = $(this).text().toLowerCase();
+                    if (cardText.indexOf(searchTerm) > -1) {
+                        $(this).show().addClass('card-fadeIn');
+                    } else {
+                        $(this).hide().removeClass('card-fadeIn');
+                    }
+                });
+            }
+
+            // Function to update cards display based on length
+            function updateCardsDisplay(length) {
+                if (length === '-1') {
+                    $('.survey-card').show();
+                } else {
+                    $('.survey-card').each(function(index) {
+                        if (index < parseInt(length)) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                }
+            }
+
+            // Add animation to cards on load
+            $('.survey-card').each(function(index) {
+                $(this).css('animation-delay', (index * 0.1) + 's');
+                $(this).addClass('card-fadeIn');
             });
         });
-
-        $('<style>')
-            .prop('type', 'text/css')
-            .html(`
-                @keyframes fadeInRow {
-                    from {
-                        opacity: 0;
-                        transform: translateX(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateX(0);
-                    }
-                }
-                .fadeInRow {
-                    animation: fadeInRow 0.5s ease-out forwards;
-                }
-            `)
-            .appendTo('head');
     </script>
 </body>
 

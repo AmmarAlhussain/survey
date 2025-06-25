@@ -49,7 +49,6 @@ class ImportEmployees extends Command
                     $firstName    = isset($row[1]) ? trim($row[1]) : null;
                     $lastName     = isset($row[2]) ? trim($row[2]) : null;
                     $arabicName   = isset($row[3]) ? trim($row[3]) : null;
-                    $email        = isset($row[4]) ? trim($row[4]) : null;
                     $headOffice   = isset($row[5]) && strtolower(trim($row[5])) === 'yes';
 
                     // Debug blank codes
@@ -59,12 +58,7 @@ class ImportEmployees extends Command
                         continue;
                     }
 
-                    // Skip if missing email
-                    if (empty($email)) {
-                        $this->warn("Row {$rowNum} skipped: missing email");
-                        $metrics['skipped']++;
-                        continue;
-                    }
+
 
                     // Skip existing
                     if (Employee::where('employee_code', $employeeCode)->exists()) {
@@ -78,7 +72,6 @@ class ImportEmployees extends Command
                         'first_name'     => $firstName,
                         'last_name'      => $lastName,
                         'arabic_name'    => $arabicName,
-                        'email'          => $email,
                         'is_head_office' => $headOffice,
                     ]);
 

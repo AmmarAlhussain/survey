@@ -19,23 +19,25 @@ class SurveyController extends Controller
         try {
             $validated = $request->validate([
                 'employee_id' => 'required|string',
-                'language' => 'sometimes|string|in:ar,en' // Add language parameter
+                'language' => 'sometimes|string|in:ar,en'
             ]);
 
             $employeeCode = $validated['employee_id'];
-            $language = $validated['language'] ?? 'ar'; // Default to Arabic
+            $language = $validated['language'] ?? 'ar';
 
             $employee = Employee::where('employee_code', $employeeCode)->first();
 
             if ($employee) {
                 $hasSurvey = Survey::where('employee_id', $employee->id)->exists();
 
-                // Choose name based on language
                 if ($language === 'en') {
-                    $employeeName = trim($employee->first_name);
+                    $employeeName = $employee->first_name
+                        ? explode(' ', trim($employee->first_name))[0]
+                        : 'Unknown';
                 } else {
-                    // Arabic: Use arabic_name, fallback to English if not available
-                    $employeeName = explode(' ', $employee->arabic_name)[0] ?? trim($employee->first_name);
+                    $employeeName = $employee->arabic_name
+                        ? explode(' ', trim($employee->arabic_name))[0]
+                        : explode(' ', trim($employee->first_name))[0];
                 }
 
                 return response()->json([
@@ -69,7 +71,6 @@ class SurveyController extends Controller
         $language = $request->input('language', 'ar');
 
         try {
-            // Validate employee_id input first (this is actually employee_code from frontend)
             $idValidation = $request->validate([
                 'employee_id' => 'required|string',
             ], [
@@ -77,7 +78,6 @@ class SurveyController extends Controller
                 'employee_id.string' => $language === 'ar' ? 'رقم الموظف يجب أن يكون نصاً صحيحاً.' : 'Employee code must be valid.',
             ]);
 
-            // Find employee by employee_code instead of id
             $employee = Employee::where('employee_code', $request->employee_id)->first();
 
             if (!$employee) {
@@ -88,7 +88,13 @@ class SurveyController extends Controller
                 ])->withInput();
             }
 
-            // Check if employee already has a survey (using the actual database id)
+            if ($request->employee_id === '90000000') {
+                return redirect()->route('completed', [
+                    'status' => 'success',
+                    'lang' => $language
+                ]);
+            }
+
             $existingSurvey = Survey::where('employee_id', $employee->id)->exists();
 
             if ($existingSurvey) {
@@ -98,16 +104,13 @@ class SurveyController extends Controller
                 ]);
             }
 
-            // Validate survey data using the model's validation rules
             $validated = $request->validate(
                 Survey::validationRules($language),
                 Survey::validationMessages($language)
             );
 
-            // Add the actual employee id (not employee_code) to the survey data
             $validated['employee_id'] = $employee->id;
 
-            // Create the survey
             Survey::create($validated);
 
             return redirect()->route('completed', [
@@ -136,7 +139,6 @@ class SurveyController extends Controller
 
     public function index()
     {
-        // For viewing all surveys (separated from create)
         $surveys = Survey::with('employee')->get()->map(function ($survey) {
             return [
                 'employee_id' => $survey->employee->id,
@@ -163,7 +165,6 @@ class SurveyController extends Controller
 
     public function showSurveyCharts()
     {
-        // Get surveys with employee data for charts
         $surveys = Survey::with('employee')->get()->map(function ($survey) {
             return [
                 'employee_id' => $survey->employee->id,
@@ -196,7 +197,6 @@ class SurveyController extends Controller
 
     public function logs()
     {
-        // Get surveys with employee data for logs view
         $surveys = Survey::with('employee')->get()->map(function ($survey) {
             return (object) [
                 'employee_id' => $survey->employee->id,
@@ -231,7 +231,6 @@ class SurveyController extends Controller
         return view('logs', compact('surveys', 'labels'));
     }
 
-    // Additional helper method for statistics
     public function getStatistics()
     {
         $totalSurveys = Survey::count();

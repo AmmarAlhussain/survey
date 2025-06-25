@@ -21,12 +21,10 @@
         body {
             font-family: 'Cairo', Arial, sans-serif;
             background: #03313B;
-            /* Navy blue background to match main page */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             color: #03313B;
-            /* Navy blue text */
             position: relative;
             overflow-x: hidden;
             direction: {{ ($language ?? 'ar') === 'ar' ? 'rtl' : 'ltr' }};
@@ -92,6 +90,34 @@
                 bottom: 130vh;
                 opacity: 0;
                 transform: translateX(50px) rotate(360deg);
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .company-logo {
+                width: 120px;
+                height: 120px;
+                animation: logoFloat 4s ease-in-out infinite, logoPulse 3s ease-in-out infinite alternate;
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                filter: drop-shadow(0 0 15px rgba(3, 49, 59, 0.2));
+                padding: 15px;
+            }
+
+            .logo-container::before {
+                animation: logoBackgroundPulse 6s ease-in-out infinite alternate;
+                width: 130px;
+                height: 130px;
+            }
+
+            .logo-container {
+                margin: 15px 0;
+                padding: 15px;
+            }
+
+            .logo-container::before {
+                animation: logoBackgroundPulse 6s ease-in-out infinite alternate;
+                width: 130px;
+                height: 130px;
             }
         }
 
@@ -259,38 +285,17 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            /* Navy blue border with gradient effect */
             border: 3px solid transparent;
             background-clip: padding-box;
-
-            /* Multiple layered shadows for depth */
-            box-shadow:
-                0 0 0 2px rgba(3, 49, 59, 0.8),
-                /* Navy border */
-                0 0 0 4px rgba(184, 53, 41, 0.3),
-                /* Red accent ring */
-                0 12px 40px rgba(3, 49, 59, 0.4),
-                /* Main shadow */
-                0 6px 20px rgba(0, 0, 0, 0.3),
-                /* Depth shadow */
-                inset 0 2px 8px rgba(255, 255, 255, 0.8),
-                /* Inner highlight */
-                inset 0 -2px 4px rgba(3, 49, 59, 0.1);
-            /* Inner depth */
-
+            box-shadow: 0 0 0 2px rgba(3, 49, 59, 0.8), 0 0 0 4px rgba(184, 53, 41, 0.3), 0 12px 40px rgba(3, 49, 59, 0.4), 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 2px 8px rgba(255, 255, 255, 0.8), inset 0 -2px 4px rgba(3, 49, 59, 0.1);
             padding: 12px;
             animation: logoFloat 4s ease-in-out infinite, logoPulse 3s ease-in-out infinite alternate;
             z-index: 99999;
             position: relative;
-
-            /* Smooth transitions */
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-            /* Subtle glow effect */
             filter: drop-shadow(0 0 20px rgba(3, 49, 59, 0.2));
         }
 
-        /* Enhanced floating animation */
         @keyframes logoFloat {
 
             0%,
@@ -311,39 +316,28 @@
             }
         }
 
-        /* Subtle pulsing glow effect */
         @keyframes logoPulse {
             0% {
-                box-shadow:
-                    0 0 0 2px rgba(3, 49, 59, 0.8),
-                    0 0 0 4px rgba(184, 53, 41, 0.3),
-                    0 12px 40px rgba(3, 49, 59, 0.4),
-                    0 6px 20px rgba(0, 0, 0, 0.3),
-                    inset 0 2px 8px rgba(255, 255, 255, 0.8),
-                    inset 0 -2px 4px rgba(3, 49, 59, 0.1);
+                box-shadow: 0 0 0 2px rgba(3, 49, 59, 0.8), 0 0 0 4px rgba(184, 53, 41, 0.3), 0 12px 40px rgba(3, 49, 59, 0.4), 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 2px 8px rgba(255, 255, 255, 0.8), inset 0 -2px 4px rgba(3, 49, 59, 0.1);
             }
 
             100% {
-                box-shadow:
-                    0 0 0 2px rgba(3, 49, 59, 1),
-                    0 0 0 4px rgba(184, 53, 41, 0.5),
-                    0 15px 50px rgba(3, 49, 59, 0.6),
-                    0 8px 25px rgba(0, 0, 0, 0.4),
-                    inset 0 2px 8px rgba(255, 255, 255, 0.9),
-                    inset 0 -2px 4px rgba(3, 49, 59, 0.15);
+                box-shadow: 0 0 0 2px rgba(3, 49, 59, 1), 0 0 0 4px rgba(184, 53, 41, 0.5), 0 15px 50px rgba(3, 49, 59, 0.6), 0 8px 25px rgba(0, 0, 0, 0.4), inset 0 2px 8px rgba(255, 255, 255, 0.9), inset 0 -2px 4px rgba(3, 49, 59, 0.15);
             }
         }
 
-        /* Optional: Add a subtle background decoration behind the logo */
+        .company-logo:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 0 0 3px rgba(3, 49, 59, 1), 0 0 0 6px rgba(184, 53, 41, 0.6), 0 20px 60px rgba(3, 49, 59, 0.5), 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 3px 12px rgba(255, 255, 255, 0.9), inset 0 -3px 6px rgba(3, 49, 59, 0.2);
+            filter: drop-shadow(0 0 30px rgba(3, 49, 59, 0.4));
+        }
+
         .logo-container::before {
             content: '';
             position: absolute;
             width: 160px;
             height: 160px;
-            background: radial-gradient(circle at center,
-                    rgba(3, 49, 59, 0.05) 0%,
-                    rgba(184, 53, 41, 0.03) 50%,
-                    transparent 70%);
+            background: radial-gradient(circle at center, rgba(3, 49, 59, 0.05) 0%, rgba(184, 53, 41, 0.03) 50%, transparent 70%);
             border-radius: 50%;
             z-index: -1;
             animation: logoBackgroundPulse 6s ease-in-out infinite alternate;
@@ -366,8 +360,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            justify-content: flex-start;
+            padding: 15px;
             text-align: center;
             position: relative;
             z-index: 1;
@@ -375,14 +369,13 @@
 
         .message-box {
             background: linear-gradient(145deg, #ffffff, #f8fbff);
-            /* White background matching main page */
-            padding: 50px 40px;
+            padding: 35px 30px;
             border-radius: 20px;
             box-shadow:
-                0 25px 60px rgba(0, 0, 0, 0.3),
-                0 10px 30px rgba(3, 49, 59, 0.2),
+                0 20px 50px rgba(0, 0, 0, 0.3),
+                0 8px 25px rgba(3, 49, 59, 0.2),
                 0 0 0 1px rgba(255, 255, 255, 0.8);
-            max-width: 650px;
+            max-width: 500px;
             width: 100%;
             position: relative;
             overflow: hidden;
@@ -408,19 +401,18 @@
         }
 
         .icon-container {
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             background: linear-gradient(145deg, #B83529, #d4432f);
-            /* Red gradient matching main page */
             border-radius: 50%;
-            margin: 0 auto 30px;
+            margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             animation: completionPulse 2s ease-in-out infinite alternate;
             box-shadow:
-                0 8px 25px rgba(184, 53, 41, 0.3),
-                0 4px 15px rgba(0, 0, 0, 0.1);
+                0 6px 20px rgba(184, 53, 41, 0.3),
+                0 3px 12px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -428,24 +420,24 @@
         @keyframes completionPulse {
             0% {
                 box-shadow:
-                    0 8px 25px rgba(184, 53, 41, 0.3),
-                    0 4px 15px rgba(0, 0, 0, 0.1),
+                    0 6px 20px rgba(184, 53, 41, 0.3),
+                    0 3px 12px rgba(0, 0, 0, 0.1),
                     0 0 0 0 rgba(184, 53, 41, 0);
                 transform: scale(1);
             }
 
             100% {
                 box-shadow:
-                    0 12px 35px rgba(184, 53, 41, 0.4),
-                    0 6px 20px rgba(0, 0, 0, 0.15),
-                    0 0 0 15px rgba(184, 53, 41, 0.1);
+                    0 8px 25px rgba(184, 53, 41, 0.4),
+                    0 4px 15px rgba(0, 0, 0, 0.15),
+                    0 0 0 12px rgba(184, 53, 41, 0.1);
                 transform: scale(1.05);
             }
         }
 
         .icon-container span {
             color: white;
-            font-size: 50px;
+            font-size: 35px;
             line-height: 1;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             animation: iconFloat 3s ease-in-out infinite;
@@ -465,9 +457,8 @@
 
         .title {
             color: #03313B;
-            /* Navy blue text matching main page */
-            margin-bottom: 20px;
-            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
             font-weight: 700;
             text-shadow: 0 2px 4px rgba(3, 49, 59, 0.1);
             background: linear-gradient(145deg, #03313B, #0a4a5a);
@@ -477,26 +468,23 @@
         }
 
         .message {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: #03313B;
-            /* Navy blue text */
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             line-height: 1.6;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
         .sub-message {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #03313B;
-            /* Navy blue text */
-            margin-bottom: 35px;
+            margin-bottom: 25px;
             line-height: 1.5;
         }
 
-        /* Contact Section */
         .contact-section {
-            margin-top: 30px;
-            padding: 25px;
+            margin-top: 25px;
+            padding: 20px;
             background: linear-gradient(145deg, rgba(3, 49, 59, 0.05), rgba(3, 49, 59, 0.02));
             border-radius: 15px;
             border: 1px solid rgba(3, 49, 59, 0.1);
@@ -504,16 +492,16 @@
 
         .contact-title {
             color: #03313B;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
         }
 
         .contact-items {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
         }
 
@@ -529,7 +517,7 @@
             text-decoration: none;
             color: #03313B;
             border: 1px solid rgba(3, 49, 59, 0.1);
-            min-width: 280px;
+            min-width: 260px;
             cursor: pointer;
         }
 
@@ -560,7 +548,7 @@
         }
 
         .contact-text {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             direction: ltr;
             text-align: left;
@@ -581,73 +569,135 @@
         }
 
         @media (max-width: 768px) {
+            .completion-container {
+                padding: 10px;
+            }
+
             .message-box {
-                padding: 40px 25px;
-                margin: 20px;
+                padding: 25px 20px;
+                margin: 10px;
                 max-width: 95%;
             }
 
             .company-logo {
-                width: 90px;
-                height: 90px;
-                padding: 8px;
+                width: 120px;
+                height: 120px;
+                animation: logoFloat 4s ease-in-out infinite, logoPulse 3s ease-in-out infinite alternate;
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                filter: drop-shadow(0 0 15px rgba(3, 49, 59, 0.2));
+                padding: 15px;
+            }
 
-                box-shadow:
-                    0 0 0 2px rgba(3, 49, 59, 0.8),
-                    0 0 0 3px rgba(184, 53, 41, 0.3),
-                    0 8px 25px rgba(3, 49, 59, 0.4),
-                    0 4px 15px rgba(0, 0, 0, 0.3),
-                    inset 0 2px 6px rgba(255, 255, 255, 0.8),
-                    inset 0 -2px 3px rgba(3, 49, 59, 0.1);
+            .company-logo:hover {
+                transform: translateY(-10px) scale(1.03);
+                filter: drop-shadow(0 0 25px rgba(3, 49, 59, 0.3));
             }
 
             .logo-container {
-                margin: 10px 0;
-                padding: 10px;
+                margin: 15px 0;
+                padding: 15px;
+            }
+
+            .logo-container::before {
+                animation: logoBackgroundPulse 6s ease-in-out infinite alternate;
+                width: 130px;
+                height: 130px;
             }
 
             .title {
-                font-size: 1.8rem;
-                margin-bottom: 15px;
+                font-size: 1.5rem;
+                margin-bottom: 12px;
             }
 
             .message {
-                font-size: 1.1rem;
-                margin-bottom: 20px;
+                font-size: 1rem;
+                margin-bottom: 12px;
             }
 
             .sub-message {
-                font-size: 1rem;
-                margin-bottom: 25px;
+                font-size: 0.9rem;
+                margin-bottom: 20px;
             }
 
             .icon-container {
-                width: 80px;
-                height: 80px;
-                margin-bottom: 25px;
-            }
-
-            .icon-container span {
-                font-size: 40px;
-            }
-
-            .contact-section {
-                margin-top: 25px;
-                padding: 20px;
-            }
-
-            .contact-title {
-                font-size: 1.2rem;
+                width: 60px;
+                height: 60px;
                 margin-bottom: 15px;
             }
 
+            .icon-container span {
+                font-size: 30px;
+            }
+
+            .contact-section {
+                margin-top: 20px;
+                padding: 15px;
+            }
+
+            .contact-title {
+                font-size: 1.1rem;
+                margin-bottom: 12px;
+            }
+
             .contact-item {
-                min-width: 250px;
+                min-width: 220px;
                 padding: 10px 15px;
             }
 
             .contact-text {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .message-box {
+                padding: 20px 15px;
+            }
+
+            .title {
+                font-size: 1.3rem;
+            }
+
+            .message {
+                font-size: 0.95rem;
+            }
+
+            .sub-message {
+                font-size: 0.85rem;
+            }
+
+            .contact-item {
+                min-width: 200px;
+                padding: 8px 12px;
+            }
+
+            .contact-text {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            .company-logo {
+                width: 150px;
+                height: 150px;
+                animation: logoFloat 8s ease-in-out infinite;
+                padding: 15px;
+            }
+
+            .company-logo:hover {
+                transform: translateY(-8px) scale(1.02);
+                transition: all 0.2s ease;
+            }
+
+            .logo-container {
+                margin: 20px 0;
+                padding: 20px;
+            }
+
+            .logo-container::before {
+                animation: logoBackgroundPulse 12s ease-in-out infinite alternate;
+                width: 150px;
+                height: 150px;
             }
         }
     </style>
@@ -706,13 +756,12 @@
                 </p>
             @endif
 
-            <!-- Contact Section -->
             <div class="contact-section">
                 <h3 class="contact-title">
                     {{ ($language ?? 'ar') === 'ar' ? 'للتواصل مع عائلة سيرا' : 'Contact Seera Family' }}
                 </h3>
                 <div class="contact-items">
-                    <div class="contact-item" onclick="openGmail()">
+                    <div class="contact-item" onclick="openEmailClient()">
                         <div class="contact-icon email-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
@@ -735,39 +784,13 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let currentLanguage = "{{ $language ?? 'ar' }}";
-            const status = "{{ $status }}";
-
-            const translations = {
-                ar: {
-                    alreadySubmittedTitle: "شكراً لك",
-                    alreadySubmittedMessage: "لقد قمت بإكمال الاستبيان مسبقاً",
-                    alreadySubmittedSubMessage: "لا يمكنك إرسال الاستبيان أكثر من مرة باستخدام نفس البريد الإلكتروني",
-                    successTitle: "شكراً لك على المشاركة",
-                    successMessage: "تم إرسال إجاباتك بنجاح",
-                    successSubMessage: "نقدر وقتك ومشاركتك في تحسين بيئة العمل",
-                    pageTitle: status === 'already_submitted' ? 'الاستبيان مكتمل مسبقاً' : 'شكراً لك',
-                    contactTitle: "للتواصل مع عائلة سيرا",
-                    whatsappText: "واتساب عائلة سيرا"
-                },
-                en: {
-                    alreadySubmittedTitle: "Thank You",
-                    alreadySubmittedMessage: "You have already completed this survey",
-                    alreadySubmittedSubMessage: "You cannot submit the survey more than once using the same email address",
-                    successTitle: "Thank You for Your Participation",
-                    successMessage: "Your responses have been submitted successfully",
-                    successSubMessage: "We appreciate your time and participation in improving our work environment",
-                    pageTitle: status === 'already_submitted' ? 'Survey Already Completed' : 'Thank You',
-                    contactTitle: "Contact Seera Family",
-                    whatsappText: "Seera Family WhatsApp"
-                }
-            };
+            console.log('Page loaded with language:', currentLanguage);
         });
 
-        function openGmail() {
+        function openEmailClient() {
             const currentLanguage = "{{ $language ?? 'ar' }}";
             const email = 'seera.family@seera.sa';
 
-            // Set subject and body based on language
             const subject = currentLanguage === 'ar' ?
                 'تواصل مع عائلة سيرا - استبيان رأي الموظفين' :
                 'Contact Seera Family - Employee Opinion Survey';
@@ -776,14 +799,26 @@
                 'مرحباً عائلة سيرا،\n\nأود التواصل معكم بخصوص:\n\n\nشكراً لكم،' :
                 'Hello Seera Family,\n\nI would like to contact you regarding:\n\n\nThank you,';
 
-            // Create Gmail compose URL
-            const gmailUrl =
-                `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            // Check if it's a mobile/tablet device
+            function isMobileDevice() {
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                    (navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /MacIntel/.test(navigator.platform));
+            }
 
-            // Open Gmail in a new tab
-            window.open(gmailUrl, '_blank');
+            const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            if (isMobileDevice()) {
+                // For mobile/tablet devices - open native email app
+                window.location.href = mailtoUrl;
+            } else {
+                // For desktop - open Gmail in browser with pre-filled content
+                const gmailUrl =
+                    `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                window.open(gmailUrl, '_blank');
+            }
         }
     </script>
+
 </body>
 
 </html>

@@ -23,7 +23,6 @@ class Employee extends Model
         'first_name',
         'last_name',
         'arabic_name',
-        'email', // Keep for future use, but not used in current logic
         'is_head_office',
     ];
 
