@@ -23,7 +23,6 @@
             height: 100vh;
             color: #03313B;
             direction: rtl;
-            overflow: hidden;
             position: relative;
         }
 
