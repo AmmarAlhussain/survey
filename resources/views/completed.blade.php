@@ -326,11 +326,6 @@
             }
         }
 
-        .company-logo:hover {
-            transform: translateY(-15px) scale(1.05);
-            box-shadow: 0 0 0 3px rgba(3, 49, 59, 1), 0 0 0 6px rgba(184, 53, 41, 0.6), 0 20px 60px rgba(3, 49, 59, 0.5), 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 3px 12px rgba(255, 255, 255, 0.9), inset 0 -3px 6px rgba(3, 49, 59, 0.2);
-            filter: drop-shadow(0 0 30px rgba(3, 49, 59, 0.4));
-        }
 
         .logo-container::before {
             content: '';
@@ -568,6 +563,110 @@
             transform: translateY(0) scale(1);
         }
 
+        /* SPECIAL CSS FOR SMALL LAPTOPS - 1280x585 RESOLUTION */
+        @media screen and (min-width: 1200px) and (max-width: 1366px) and (min-height: 550px) and (max-height: 650px) {
+            body {
+                min-height: 100vh;
+                overflow-y: hidden;
+            }
+
+            .logo-container {
+                margin: 15px 0;
+                padding: 15px;
+            }
+
+            .company-logo {
+                width: 90px;
+                height: 90px;
+                padding: 6px;
+                animation: logoFloat 6s ease-in-out infinite;
+            }
+
+            .logo-container::before {
+                width: 90px;
+                height: 90px;
+                animation: logoBackgroundPulse 8s ease-in-out infinite alternate;
+            }
+
+            .completion-container {
+                padding: 5px;
+                min-height: calc(100vh - 100px);
+            }
+
+            .message-box {
+                padding: 18px 20px;
+                max-width: 420px;
+                border-radius: 14px;
+                margin: 0 auto;
+            }
+
+            .icon-container {
+                width: 40px;
+                height: 40px;
+                margin: 0 auto 10px;
+            }
+
+            .icon-container span {
+                font-size: 20px;
+            }
+
+            .title {
+                font-size: 1.3rem;
+                margin-bottom: 8px;
+            }
+
+            .message {
+                font-size: 0.9rem;
+                margin-bottom: 8px;
+                line-height: 1.4;
+            }
+
+            .sub-message {
+                font-size: 0.8rem;
+                margin-bottom: 12px;
+                line-height: 1.3;
+            }
+
+            .contact-section {
+                margin-top: 12px;
+                padding: 12px;
+                border-radius: 10px;
+            }
+
+            .contact-title {
+                font-size: 1rem;
+                margin-bottom: 8px;
+            }
+
+            .contact-items {
+                gap: 6px;
+            }
+
+            .contact-item {
+                padding: 8px 12px;
+                min-width: 220px;
+                border-radius: 6px;
+            }
+
+            .contact-icon {
+                width: 18px;
+                height: 18px;
+                font-size: 10px;
+            }
+
+            .contact-text {
+                font-size: 0.8rem;
+            }
+
+            .particle {
+                display: none;
+            }
+
+            .floating-particles {
+                display: none;
+            }
+        }
+
         @media (max-width: 768px) {
             .completion-container {
                 padding: 10px;
@@ -586,11 +685,6 @@
                 transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
                 filter: drop-shadow(0 0 15px rgba(3, 49, 59, 0.2));
                 padding: 15px;
-            }
-
-            .company-logo:hover {
-                transform: translateY(-10px) scale(1.03);
-                filter: drop-shadow(0 0 25px rgba(3, 49, 59, 0.3));
             }
 
             .logo-container {
@@ -682,11 +776,6 @@
                 height: 150px;
                 animation: logoFloat 8s ease-in-out infinite;
                 padding: 15px;
-            }
-
-            .company-logo:hover {
-                transform: translateY(-8px) scale(1.02);
-                transition: all 0.2s ease;
             }
 
             .logo-container {

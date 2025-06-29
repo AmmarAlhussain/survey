@@ -1473,11 +1473,6 @@
                 padding: 15px;
             }
 
-            .company-logo:hover {
-                transform: translateY(-8px) scale(1.02);
-                transition: all 0.2s ease;
-            }
-
             .logo-container {
                 margin: 20px 0;
                 padding: 20px;
@@ -1519,6 +1514,29 @@
 
         .card-fadeIn {
             animation: fadeInRow 0.3s ease-out forwards;
+        }
+
+        @media screen and (min-width: 1200px) and (max-width: 1366px) and (min-height: 550px) and (max-height: 650px) {
+
+
+            .logo-container {
+                margin: 15px 0;
+                padding: 15px;
+            }
+
+            .company-logo {
+                width: 90px;
+                height: 90px;
+                padding: 6px;
+                animation: logoFloat 6s ease-in-out infinite;
+            }
+
+            .logo-container::before {
+                width: 90px;
+                height: 90px;
+                animation: logoBackgroundPulse 8s ease-in-out infinite alternate;
+            }
+
         }
     </style>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />

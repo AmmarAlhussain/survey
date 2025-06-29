@@ -1143,12 +1143,6 @@
             }
         }
 
-        .company-logo:hover {
-            transform: translateY(-15px) scale(1.05);
-            box-shadow: 0 0 0 3px rgba(3, 49, 59, 1), 0 0 0 6px rgba(184, 53, 41, 0.6), 0 20px 60px rgba(3, 49, 59, 0.5), 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 3px 12px rgba(255, 255, 255, 0.9), inset 0 -3px 6px rgba(3, 49, 59, 0.2);
-            filter: drop-shadow(0 0 30px rgba(3, 49, 59, 0.4));
-        }
-
         .logo-container::before {
             content: '';
             position: absolute;
@@ -1465,11 +1459,6 @@
                 height: 150px;
                 animation: logoFloat 8s ease-in-out infinite;
                 padding: 15px;
-            }
-
-            .company-logo:hover {
-                transform: translateY(-8px) scale(1.02);
-                transition: all 0.2s ease;
             }
 
             .logo-container {
@@ -1851,11 +1840,6 @@
                 transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
                 filter: drop-shadow(0 0 15px rgba(3, 49, 59, 0.2));
                 padding: 15px;
-            }
-
-            .company-logo:hover {
-                transform: translateY(-10px) scale(1.03);
-                filter: drop-shadow(0 0 25px rgba(3, 49, 59, 0.3));
             }
 
             .logo-container {
@@ -2362,6 +2346,876 @@
                 margin-top: 10px;
             }
         }
+
+        /* LAPTOP RESPONSIVE FIXES - 1280x585 and similar resolutions */
+        @media screen and (min-width: 1200px) and (max-width: 1400px) and (max-height: 650px) {
+
+            /* Compact header and logo */
+            .logo-container {
+                margin: 6px 0;
+                padding: 6px;
+            }
+
+            .company-logo {
+                width: 80px;
+                height: 80px;
+                padding: 6px;
+                animation: logoFloat 6s ease-in-out infinite;
+            }
+
+            .logo-container::before {
+                width: 90px;
+                height: 90px;
+                animation: logoBackgroundPulse 8s ease-in-out infinite alternate;
+            }
+
+            /* Compact progress bar */
+            .progress-container {
+                width: 80%;
+                margin: 1px auto;
+                height: 15px;
+                animation: none;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            }
+
+            .progress-bar {
+                animation: progressGradientFlow 4s ease-in-out infinite;
+                transition: width 0.3s ease;
+                box-shadow: 0 0 6px rgba(184, 53, 41, 0.25), inset 0 1px 3px rgba(255, 255, 255, 0.3) !important;
+            }
+
+            .progress-bar.completed,
+            .progress-bar.updating {
+                animation: progressGradientFlow 4s ease-in-out infinite;
+                box-shadow: 0 0 6px rgba(184, 53, 41, 0.25), inset 0 1px 3px rgba(255, 255, 255, 0.3) !important;
+            }
+
+            /* Optimized particles for laptop */
+            .particle {
+                animation-duration: 10s;
+                width: 3px;
+                height: 3px;
+            }
+
+            .particle:nth-child(n+4) {
+                display: none;
+                /* Show only 3 particles */
+            }
+
+            /* Compact form container */
+            .form-container {
+                padding: 1px;
+                margin-top: 0;
+                height: calc(100vh - 110px);
+            }
+
+            .form-container:has(.intro-box) {
+                align-items: flex-start;
+                padding-top: 20px;
+                justify-content: center;
+                min-height: calc(100vh - 110px);
+            }
+
+            /* Compact intro box */
+            .intro-box {
+                padding: 16px 20px;
+                margin: 0 auto;
+                max-width: 500px;
+                animation: fadeInIntro 0.4s ease;
+            }
+
+            .intro-box h2 {
+                font-size: 1.6rem;
+                margin-bottom: 12px;
+            }
+
+            .intro-box p {
+                font-size: 1rem;
+                margin-bottom: 16px;
+                line-height: 1.4;
+            }
+
+            /* Compact form dimensions */
+            form {
+                height: calc(100vh - 110px);
+                margin-top: 0;
+            }
+
+            .survey-carousel {
+                padding-top: 2px;
+                height: 100%;
+                background: radial-gradient(ellipse at center, rgba(3, 49, 59, 0.05) 0%, transparent 70%);
+            }
+
+            /* Optimized step positioning and sizing - REDUCED WIDTH */
+            .step {
+                width: 55%;
+                /* Reduced from 75% */
+                max-width: 550px;
+                /* Reduced from 720px */
+                min-height: 220px;
+                /* Reduced from 280px */
+                max-height: calc(100vh - 130px);
+                transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+                top: 0.5%;
+                border-radius: 14px;
+            }
+
+            .step.current {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+                filter: blur(0px);
+                z-index: 10;
+                pointer-events: all;
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 6px 15px rgba(3, 49, 59, 0.15);
+                transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+
+            .step.previous {
+                opacity: 0.4;
+                transform: translateX(-130%) scale(0.75);
+                filter: blur(2px) brightness(0.9);
+                z-index: 5;
+                pointer-events: none;
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+
+            .step.next {
+                opacity: 0.4;
+                transform: translateX(30%) scale(0.75);
+                filter: blur(2px) brightness(0.9);
+                z-index: 5;
+                pointer-events: none;
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+
+            .step.hidden {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.5);
+                z-index: 1;
+                pointer-events: none;
+                filter: blur(3px);
+                transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+
+            .step.transitioning-out,
+            .step.transitioning-in {
+                transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+            }
+
+            .step.previous:hover,
+            .step.next:hover {
+                opacity: 0.5;
+                filter: blur(1px) brightness(0.95);
+                transform: translateX(-130%) scale(0.77);
+                transition: all 0.2s ease;
+            }
+
+            .step.next:hover {
+                transform: translateX(30%) scale(0.77);
+            }
+
+            /* Compact card structure - REDUCED PADDING */
+            .card-header {
+                padding: 12px 16px 6px 16px;
+                /* Reduced padding */
+            }
+
+            .card-content {
+                padding: 8px 16px;
+                /* Reduced padding */
+                overflow: visible;
+            }
+
+            .card-footer {
+                padding: 6px 16px 10px 16px;
+                /* Reduced padding */
+            }
+
+            /* Optimized typography - SMALLER SIZES */
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+
+            h3 {
+                font-size: 1rem;
+                /* Reduced from 1.2rem */
+                line-height: 1.2;
+                margin-bottom: 2px;
+            }
+
+            /* Compact radio buttons - SMALLER */
+            .radio-group {
+                gap: 6px;
+                /* Reduced from 10px */
+                margin: 8px 0;
+                /* Reduced from 12px */
+                justify-content: space-between;
+            }
+
+            .radio-container {
+                padding: 10px 8px;
+                /* Reduced padding */
+                transition: all 0.2s ease;
+                font-size: 0.85rem;
+                /* Reduced font size */
+                border-radius: 8px;
+            }
+
+            .radio-container:hover {
+                transform: translateY(-1px);
+                transition: all 0.2s ease;
+            }
+
+            .radio-container input[type="radio"] {
+                width: 16px;
+                /* Reduced from 18px */
+                height: 16px;
+                margin: 0 8px 0 0;
+                /* Reduced margin */
+                transition: all 0.15s ease;
+            }
+
+            .radio-container input[type="radio"]:checked {
+                transform: scale(1.05);
+                transition: all 0.15s ease;
+            }
+
+            .radio-container input[type="radio"]:checked::after {
+                width: 7px;
+                /* Reduced from 8px */
+                height: 7px;
+                animation: radioFillEnhanced 0.2s ease;
+            }
+
+            .radio-label {
+                font-size: 0.9rem;
+                /* Reduced font size */
+                line-height: 1.1;
+                text-align: center;
+            }
+
+            /* Compact navigation buttons - SMALLER */
+            .nav-btn {
+                padding: 8px 16px;
+                /* Reduced padding */
+                font-size: 0.85rem;
+                /* Reduced font size */
+                min-width: 75px;
+                /* Reduced width */
+                transition: all 0.2s ease;
+                border-radius: 8px;
+            }
+
+            .nav-btn:hover:not(:disabled) {
+                transform: translateY(-1px);
+                transition: all 0.2s ease;
+            }
+
+            .nav-btn:active:not(:disabled) {
+                transform: translateY(0);
+                transition: all 0.1s ease;
+            }
+
+            /* Compact inputs and textareas - SMALLER */
+            input[type=email],
+            #welcomeEmployeeId,
+            .suggestion-textarea {
+                padding: 10px 12px;
+                /* Reduced padding */
+                font-size: 0.9rem;
+                /* Reduced font size */
+                transition: all 0.2s ease;
+                border-radius: 8px;
+            }
+
+            input[type=email]:focus,
+            #welcomeEmployeeId:focus,
+            .suggestion-textarea:focus {
+                transform: translateY(-1px);
+                transition: all 0.2s ease;
+            }
+
+            .suggestion-textarea {
+                min-height: 50px;
+                /* Reduced from 70px */
+                max-height: 80px;
+                /* Reduced from 120px */
+            }
+
+            /* Compact error animations */
+            input.error {
+                animation: errorShake 0.2s ease;
+            }
+
+            @keyframes errorShake {
+
+                0%,
+                100% {
+                    transform: translateX(0);
+                }
+
+                25%,
+                75% {
+                    transform: translateX(-1px);
+                }
+
+                50% {
+                    transform: translateX(1px);
+                }
+            }
+
+            .form-error.active {
+                animation: errorSlide 0.2s ease;
+            }
+
+            @keyframes errorSlide {
+                0% {
+                    opacity: 0;
+                    transform: translateY(-5px);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .form-error {
+                font-size: 0.8rem;
+                /* Reduced font size */
+                padding: 4px 8px;
+                /* Reduced padding */
+                margin-top: 4px;
+            }
+
+            #welcome-employee-id-error {
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
+
+            /* Compact language switcher */
+            .language-switcher {
+                top: 8px;
+                left: 8px;
+            }
+
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                min-width: 70px;
+                transition: all 0.2s ease;
+                border-radius: 14px;
+            }
+
+            .lang-btn:hover {
+                transform: translateY(-1px);
+                transition: all 0.2s ease;
+            }
+
+            .lang-btn:active {
+                transform: translateY(0);
+                transition: all 0.1s ease;
+            }
+
+            .lang-btn.switching {
+                animation: languageSwitchingLaptop 0.4s ease;
+            }
+
+            @keyframes languageSwitchingLaptop {
+
+                0%,
+                100% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(0.95);
+                }
+            }
+
+            .lang-btn.switched {
+                animation: languageSwitchedLaptop 0.3s ease;
+            }
+
+            @keyframes languageSwitchedLaptop {
+                0% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(1.05);
+                }
+
+                100% {
+                    transform: scale(1);
+                }
+            }
+
+            /* Compact start button */
+            #startSurveyBtn {
+                padding: 12px 24px;
+                font-size: 1rem;
+                min-width: 150px;
+                margin-top: 14px;
+                transition: all 0.2s ease;
+                border-radius: 10px;
+            }
+
+            #startSurveyBtn:hover {
+                transform: translateY(-1px);
+                transition: all 0.2s ease;
+            }
+
+            #startSurveyBtn:active {
+                transform: translateY(0);
+                transition: all 0.1s ease;
+            }
+
+            /* Compact welcome message */
+            .welcome-msg {
+                min-width: 220px;
+                max-width: 60vw;
+                padding: 14px 18px;
+                font-size: 14px;
+                border-radius: 12px;
+            }
+
+            .welcome-msg .welcome-title {
+                font-size: 16px;
+                margin-bottom: 4px;
+            }
+
+            .welcome-msg .employee-name {
+                font-size: 18px;
+                margin: 4px 0 6px 0;
+            }
+
+            .welcome-msg .starting-message {
+                font-size: 10px;
+                margin-top: 6px;
+            }
+
+            /* Compact loading elements */
+            .loading-indicator {
+                font-size: 0.8rem;
+                margin: 4px 0;
+            }
+
+            .loading-spinner {
+                width: 12px;
+                height: 12px;
+            }
+
+            /* Compact labels */
+            .employee-id-label {
+                font-size: 1rem;
+                margin-bottom: 6px;
+            }
+
+            .suggestion-label {
+                font-size: 0.85rem;
+                /* Reduced font size */
+                margin-bottom: 4px;
+            }
+
+            .suggestions-section {
+                gap: 10px;
+                /* Reduced gap */
+            }
+
+            /* Compact Seera info - SMALLER */
+            #seera_family_info {
+                padding: 10px;
+                /* Reduced padding */
+                margin-top: 10px;
+                /* Reduced margin */
+                max-height: none;
+                overflow-y: visible;
+                border-radius: 8px;
+            }
+
+            #seera_family_title {
+                font-size: 1rem;
+                /* Reduced font size */
+                margin-bottom: 8px;
+            }
+
+            .seera-info-content {
+                font-size: 0.8rem;
+                /* Reduced font size */
+                line-height: 1.3;
+                /* Reduced line height */
+            }
+
+            .seera-info-content p {
+                margin-bottom: 6px;
+                /* Reduced margin */
+            }
+
+            /* Compact suggestion containers */
+            #activities_suggestions_container,
+            #communication_suggestions_container {
+                margin-top: 8px;
+                /* Reduced margin */
+            }
+
+            /* Language transition optimization */
+            .language-transition {
+                transition: all 0.2s ease;
+            }
+
+            /* Intro box animation optimization */
+            @keyframes fadeInIntro {
+                0% {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        /* Additional optimization for very wide but short laptops */
+        @media screen and (min-width: 1200px) and (max-height: 600px) {
+            .step {
+                max-height: calc(100vh - 110px);
+                min-height: 200px;
+                width: 50%;
+                max-width: 500px;
+            }
+
+            .company-logo {
+                width: 90px;
+                height: 90px;
+            }
+
+            .logo-container::before {
+                width: 80px;
+                height: 80px;
+            }
+
+            .intro-box h2 {
+                font-size: 1.4rem;
+                margin-bottom: 8px;
+            }
+
+            .intro-box p {
+                font-size: 0.9rem;
+                margin-bottom: 12px;
+            }
+
+            .card-header {
+                padding: 10px 14px 4px 14px;
+            }
+
+            .card-content {
+                padding: 6px 14px;
+            }
+
+            .card-footer {
+                padding: 4px 14px 8px 14px;
+            }
+
+            h3 {
+                font-size: 0.95rem;
+                line-height: 1.1;
+            }
+
+            .radio-container {
+                padding: 8px 6px;
+                font-size: 0.8rem;
+            }
+
+            .suggestion-textarea {
+                min-height: 40px;
+                max-height: 60px;
+            }
+        }
+
+        /* Specific optimization for exactly 1280x585 resolution */
+        @media screen and (width: 1280px) and (height: 585px) {
+            .form-container {
+                height: calc(100vh - 90px);
+            }
+
+            .form-container:has(.intro-box) {
+                min-height: calc(100vh - 90px);
+                padding-top: 20px;
+            }
+
+            .step {
+                width: 35%;
+                /* Reduced by 30% from 50% */
+                max-width: 350px;
+                /* Reduced by 30% from 500px */
+                max-height: calc(100vh - 110px);
+                min-height: 180px;
+                /* Reduced by 10% from 200px */
+                top: 0.1%;
+            }
+
+            /* BIGGER PROGRESS BAR */
+            .progress-container {
+                margin: 0 auto;
+                height: 15px;
+                /* Made bigger from 5px */
+                width: 85%;
+                /* Made wider */
+            }
+
+            /* BIGGER LOGO */
+            .logo-container {
+                margin: 8px 0;
+                /* Increased margin */
+                padding: 8px;
+                /* Increased padding */
+            }
+
+            .company-logo {
+                width: 90px;
+                /* Made bigger from 60px */
+                height: 90px;
+                /* Made bigger from 60px */
+                padding: 6px;
+                /* Increased padding */
+            }
+
+            .logo-container::before {
+                width: 100px;
+                /* Made bigger from 70px */
+                height: 100px;
+                /* Made bigger from 70px */
+            }
+
+            /* BIGGER INTRO BOX */
+            .intro-box {
+                padding: 18px 24px;
+                /* Made bigger from 10px 14px */
+                max-width: 500px;
+                /* Made bigger from 315px */
+            }
+
+            .intro-box h2 {
+                font-size: 1.6rem;
+                /* Made bigger from 1.2rem */
+                margin-bottom: 12px;
+                /* Increased margin */
+            }
+
+            .intro-box p {
+                font-size: 1.1rem;
+                /* Made bigger from 0.8rem */
+                margin-bottom: 16px;
+                /* Increased margin */
+            }
+
+            #startSurveyBtn {
+                padding: 14px 28px;
+                /* Made bigger from 8px 16px */
+                font-size: 1.1rem;
+                /* Made bigger from 0.85rem */
+                margin-top: 18px;
+                /* Increased margin */
+            }
+
+            /* Keep question boxes compact as requested */
+            .card-header {
+                padding: 6px 10px 3px 10px;
+                /* Keep compact */
+            }
+
+            .card-content {
+                padding: 4px 10px;
+                /* Keep compact */
+            }
+
+            .card-footer {
+                padding: 3px 10px 6px 10px;
+                /* Keep compact */
+            }
+
+            h3 {
+                font-size: 0.8rem;
+                /* Keep compact */
+                line-height: 1.05;
+                margin-bottom: 1px;
+            }
+
+            .radio-group {
+                gap: 4px;
+                /* Keep compact */
+                margin: 6px 0;
+            }
+
+            .radio-container {
+                padding: 6px 4px;
+                /* Keep compact */
+                font-size: 0.7rem;
+            }
+
+            .radio-container input[type="radio"] {
+                width: 14px;
+                /* Keep compact */
+                height: 14px;
+                margin: 0 6px 0 0;
+            }
+
+            .radio-container input[type="radio"]:checked::after {
+                width: 6px;
+                /* Keep compact */
+                height: 6px;
+            }
+
+            .radio-label {
+                font-size: 0.7rem;
+                /* Keep compact */
+                line-height: 1.0;
+            }
+
+            .nav-btn {
+                padding: 4px 8px;
+                /* Keep compact */
+                font-size: 0.7rem;
+                min-width: 55px;
+            }
+
+            input[type=email],
+            #welcomeEmployeeId,
+            .suggestion-textarea {
+                padding: 8px 10px;
+                /* Keep compact */
+                font-size: 0.8rem;
+            }
+
+            .suggestion-textarea {
+                min-height: 35px;
+                /* Keep compact */
+                max-height: 55px;
+            }
+
+            .form-error {
+                font-size: 0.7rem;
+                /* Keep compact */
+                padding: 3px 6px;
+                margin-top: 3px;
+            }
+
+            #welcome-employee-id-error {
+                font-size: 0.7rem;
+                padding: 3px 6px;
+            }
+
+            .suggestion-label {
+                font-size: 0.75rem;
+                /* Keep compact */
+                margin-bottom: 3px;
+            }
+
+            .suggestions-section {
+                gap: 8px;
+                /* Keep compact */
+            }
+
+            #seera_family_info {
+                padding: 6px;
+                /* Keep compact */
+                margin-top: 6px;
+            }
+
+            #seera_family_title {
+                font-size: 0.8rem;
+                /* Keep compact */
+                margin-bottom: 4px;
+            }
+
+            .seera-info-content {
+                font-size: 0.65rem;
+                /* Keep compact */
+                line-height: 1.1;
+            }
+
+            .seera-info-content p {
+                margin-bottom: 3px;
+                /* Keep compact */
+            }
+
+            #activities_suggestions_container,
+            #communication_suggestions_container {
+                margin-top: 6px;
+                /* Keep compact */
+            }
+
+            /* Keep other elements appropriately sized */
+            .loading-indicator {
+                font-size: 0.8rem;
+                /* Slightly bigger for intro */
+                margin: 4px 0;
+            }
+
+            .loading-spinner {
+                width: 12px;
+                /* Slightly bigger for intro */
+                height: 12px;
+            }
+
+            .employee-id-label {
+                font-size: 1rem;
+                /* Made bigger for intro */
+                margin-bottom: 8px;
+            }
+
+            .welcome-msg {
+                min-width: 200px;
+                /* Made bigger */
+                max-width: 50vw;
+                /* Made bigger */
+                padding: 16px 20px;
+                /* Made bigger */
+                font-size: 16px;
+                /* Made bigger */
+            }
+
+            .welcome-msg .welcome-title {
+                font-size: 18px;
+                /* Made bigger */
+                margin-bottom: 6px;
+            }
+
+            .welcome-msg .employee-name {
+                font-size: 20px;
+                /* Made bigger */
+                margin: 6px 0 8px 0;
+            }
+
+            .welcome-msg .starting-message {
+                font-size: 12px;
+                /* Made bigger */
+                margin-top: 8px;
+            }
+
+            .lang-btn {
+                padding: 8px 14px;
+                /* Made bigger */
+                font-size: 0.85rem;
+                /* Made bigger */
+                min-width: 80px;
+                /* Made bigger */
+            }
+
+            .language-switcher {
+                top: 10px;
+                /* Adjusted position */
+                left: 10px;
+            }
+        }
     </style>
 </head>
 
@@ -2410,7 +3264,7 @@
                     <input type="text" id="welcomeEmployeeId" name="employee_id" required
                         placeholder="أدخل رقم الموظف">
                     <div class="loading-indicator" id="loadingIndicator" style="display: none;">
-                        <span>جاري التحقق...</span>
+                        <span id="loadingText">جاري التحقق...</span>
                         <div class="loading-spinner"></div>
                     </div>
                     <div class="form-error" id="welcome-employee-id-error">
@@ -2911,6 +3765,7 @@
                     const employeeIdLabel = document.querySelector(".employee-id-label");
                     const employeeIdInput = document.getElementById("welcomeEmployeeId");
                     const employeeIdError = document.getElementById("welcome-employee-id-error");
+                    const loadingText = document.getElementById("loadingText");
 
                     if (introTitle) {
                         introTitle.textContent = t.introTitle;
@@ -2925,6 +3780,9 @@
                         "رقم الموظف:" : "Employee ID:";
                     if (employeeIdInput) employeeIdInput.placeholder = t.placeholders.employee_id;
                     if (employeeIdError) employeeIdError.textContent = t.errors.employee_id;
+
+                    // Update loading indicator text
+                    if (loadingText) loadingText.textContent = t.messages.checking;
 
                     Object.keys(t.suggestionLabels).forEach((labelKey) => {
                         const labelElement = document.querySelector(`label[for="${labelKey}"]`);
@@ -2967,11 +3825,11 @@
                     if (seeraInfoContent) {
                         const content = t.seeraFamilyInfo.content;
                         seeraInfoContent.innerHTML = `
-                            <p>${content.intro}</p>
-                            <p>${content.first}</p>
-                            <p>${content.second}</p>
-                            <p>${content.third}</p>
-                        `;
+                <p>${content.intro}</p>
+                <p>${content.first}</p>
+                <p>${content.second}</p>
+                <p>${content.third}</p>
+            `;
                     }
 
                     const textElements = document.querySelectorAll(
