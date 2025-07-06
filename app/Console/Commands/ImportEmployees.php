@@ -47,10 +47,7 @@ class ImportEmployees extends Command
                     // Column mapping
                     $employeeCode = isset($row[0]) ? trim($row[0]) : null;
                     $firstName    = isset($row[1]) ? trim($row[1]) : null;
-                    $lastName     = isset($row[2]) ? trim($row[2]) : null;
-                    $arabicName   = isset($row[3]) ? trim($row[3]) : null;
-                    $headOffice   = isset($row[5]) && strtolower(trim($row[5])) === 'yes';
-
+                    $arabicName   = isset($row[2]) ? trim($row[2]) : null;
                     // Debug blank codes
                     if (empty($employeeCode)) {
                         $this->warn("Row {$rowNum} skipped: missing employee_code");
@@ -70,9 +67,7 @@ class ImportEmployees extends Command
                     Employee::create([
                         'employee_code'  => $employeeCode,
                         'first_name'     => $firstName,
-                        'last_name'      => $lastName,
                         'arabic_name'    => $arabicName,
-                        'is_head_office' => $headOffice,
                     ]);
 
                     $metrics['imported']++;

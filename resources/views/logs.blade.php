@@ -15,6 +15,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Cairo', Arial, sans-serif;
         }
 
         body {
@@ -1538,6 +1539,93 @@
             }
 
         }
+
+        body {
+            background: #03313B !important;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', Arial, sans-serif;
+        }
+
+        .centered-form-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #03313B;
+
+        }
+
+        .centered-form-container * {
+            font-family: 'Cairo', Arial, sans-serif !important;
+        }
+
+        .email-form-box {
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(3, 49, 59, 0.18), 0 1.5px 6px rgba(74, 144, 226, 0.08);
+            padding: 38px 32px 32px 32px;
+            max-width: 370px;
+            width: 100%;
+            text-align: center;
+            border: 1.5px solid rgba(74, 144, 226, 0.10);
+        }
+
+        .email-form-box h2 {
+            color: #03313B;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .email-form-box label {
+            color: #03313B;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .email-form-box input[type="email"] {
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1.5px solid #b8b8b8;
+            margin-bottom: 18px;
+            font-size: 1.05em;
+            background: #f8fbff;
+            color: #03313B;
+            transition: border 0.2s;
+        }
+
+        .email-form-box input[type="email"]:focus {
+            border: 1.5px solid #03313B;
+            outline: none;
+        }
+
+        .email-form-box button {
+            padding: 12px 36px;
+            border: none;
+            background: #03313B;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .email-form-box button:hover {
+            background: #02506a;
+        }
+
+        .email-form-box .error-message {
+            color: #f56565;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
     </style>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
@@ -1557,352 +1645,371 @@
         <div class="particle"></div>
     </div>
 
-    <header>
-        <div class="logo-container">
-            <img src="{{ asset('logo.jpg') }}" alt="Company Logo" class="company-logo">
+    @if (isset($showForm) && $showForm)
+        <div class="centered-form-container">
+            <div class="email-form-box">
+                <h2>الرجاء إدخال بريدك الإلكتروني</h2>
+                @if (isset($error))
+                    <div class="error-message">{{ $error }}</div>
+                @endif
+                <form method="POST" action="{{ route('logs.email') }}">
+                    @csrf
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" name="email" id="email" required placeholder="example@domain.com"
+                        autocomplete="off">
+                    <button type="submit">دخول</button>
+                </form>
+            </div>
         </div>
-    </header>
+    @else
+        <header>
+            <div class="logo-container">
+                <img src="{{ asset('logo.jpg') }}" alt="Company Logo" class="company-logo">
+            </div>
+        </header>
+        <div class="dashboard-container">
+            <div class="controls-section">
+                <div class="controls-header">
+                    <div class="controls-title">البحث واستخراج البيانات</div>
+                    <div class="export-section">
+                        <span class="export-label">استخراج البيانات:</span>
+                        <div class="export-buttons" id="export-buttons"></div>
+                    </div>
+                </div>
 
-    <div class="dashboard-container">
-        <div class="controls-section">
-            <div class="controls-header">
-                <div class="controls-title">البحث واستخراج البيانات</div>
-                <div class="export-section">
-                    <span class="export-label">استخراج البيانات:</span>
-                    <div class="export-buttons" id="export-buttons"></div>
+                <div class="search-container">
+                    <label class="search-label">البحث المتقدم:</label>
+                    <div class="search-input-wrapper">
+                        <input type="text" id="custom-search" class="search-input"
+                            placeholder="ابحث في جميع البيانات والحقول...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <div class="length-control">
+                        <label class="length-label">عدد الصفوف:</label>
+                        <select id="length-select" class="length-select">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="75">75</option>
+                            <option value="100">100</option>
+                            <option value="-1">الكل</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div class="search-container">
-                <label class="search-label">البحث المتقدم:</label>
-                <div class="search-input-wrapper">
-                    <input type="text" id="custom-search" class="search-input"
-                        placeholder="ابحث في جميع البيانات والحقول...">
-                    <span class="search-icon">🔍</span>
-                </div>
-                <div class="length-control">
-                    <label class="length-label">عدد الصفوف:</label>
-                    <select id="length-select" class="length-select">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="75">75</option>
-                        <option value="100">100</option>
-                        <option value="-1">الكل</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!-- Desktop Table View -->
-        <div class="main-table-container">
-            <div class="table-wrapper">
-                <table id="surveyTable">
-                    <thead>
-                        <tr>
-                            <th>رقم</th>
-                            <th>رقم الموظف</th>
-                            <th>مدى الرضا عن بيئة العمل</th>
-                            <th>التوازن بين العمل والترفيه</th>
-                            <th>الأنشطة تساعد في كسر الروتين</th>
-                            <th>اقتراحات الأنشطة</th>
-                            <th>مدى الرضا عن تنوع الفعاليات</th>
-                            <th>مدى الرضا عن تجربة الموظف</th>
-                            <th>مدى الرضا عن قنوات التواصل</th>
-                            <th>اقتراحات التواصل</th>
-                            <th>مدى الرضا عن تصميم المحتوى</th>
-                            <th>مدى الرضا عن سرعة الاستجابة</th>
-                            <th>اقتراحات قنوات التواصل</th>
-                            <th>اقتراحات بيئة العمل</th>
-                            <th>اقتراحات الفعاليات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($surveys as $index => $survey)
+            <!-- Desktop Table View -->
+            <div class="main-table-container">
+                <div class="table-wrapper">
+                    <table id="surveyTable">
+                        <thead>
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td><span class="email-cell">{{ $survey->employee_code }}</span></td>
-                                <td>
-                                    @if ($survey->work_environment_satisfaction === 'very_satisfied')
-                                        <span
-                                            class="status-very-satisfied">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
-                                    @elseif ($survey->work_environment_satisfaction === 'satisfied')
-                                        <span
-                                            class="status-satisfied">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
-                                    @elseif ($survey->work_environment_satisfaction === 'neutral')
-                                        <span
-                                            class="status-neutral">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
-                                    @else
-                                        <span
-                                            class="status-unsatisfied">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($survey->work_entertainment_balance === 'yes')
-                                        <span
-                                            class="status-yes">{{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}</span>
-                                    @elseif ($survey->work_entertainment_balance === 'neutral')
-                                        <span
-                                            class="status-neutral">{{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}</span>
-                                    @else
-                                        <span
-                                            class="status-no">{{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($survey->activities_help_routine === 'yes')
-                                        <span
-                                            class="status-yes">{{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}</span>
-                                    @elseif ($survey->activities_help_routine === 'neutral')
-                                        <span
-                                            class="status-neutral">{{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}</span>
-                                    @else
-                                        <span
-                                            class="status-no">{{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <span class="suggestion-text">{{ $survey->activities_suggestions ?? '-' }}</span>
-                                </td>
-                                <td>
-                                    @if ($survey->events_variety_satisfaction === 'satisfied')
-                                        <span
-                                            class="status-satisfied">{{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}</span>
-                                    @elseif ($survey->events_variety_satisfaction === 'neutral')
-                                        <span
-                                            class="status-neutral">{{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}</span>
-                                    @else
-                                        <span
-                                            class="status-unsatisfied">{{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($survey->employee_experience_satisfaction === 'satisfied')
-                                        <span
-                                            class="status-satisfied">{{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}</span>
-                                    @elseif ($survey->employee_experience_satisfaction === 'neutral')
-                                        <span
-                                            class="status-neutral">{{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}</span>
-                                    @else
-                                        <span
-                                            class="status-unsatisfied">{{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($survey->communication_channels_satisfaction === 'satisfied')
-                                        <span
-                                            class="status-satisfied">{{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}</span>
-                                    @elseif ($survey->communication_channels_satisfaction === 'neutral')
-                                        <span
-                                            class="status-neutral">{{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}</span>
-                                    @else
-                                        <span
-                                            class="status-unsatisfied">{{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <span
-                                        class="suggestion-text">{{ $survey->communication_suggestions ?? '-' }}</span>
-                                </td>
-                                <td>
-                                    @if ($survey->content_design_satisfaction === 'satisfied')
-                                        <span
-                                            class="status-satisfied">{{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}</span>
-                                    @elseif ($survey->content_design_satisfaction === 'neutral')
-                                        <span
-                                            class="status-neutral">{{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}</span>
-                                    @else
-                                        <span
-                                            class="status-unsatisfied">{{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($survey->response_time_satisfaction === 'satisfied')
-                                        <span
-                                            class="status-satisfied">{{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}</span>
-                                    @elseif ($survey->response_time_satisfaction === 'neutral')
-                                        <span
-                                            class="status-neutral">{{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}</span>
-                                    @else
-                                        <span
-                                            class="status-unsatisfied">{{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <span
-                                        class="suggestion-text">{{ $survey->communication_improvement_suggestions ?? '-' }}</span>
-                                </td>
-                                <td>
-                                    <span
-                                        class="suggestion-text">{{ $survey->work_environment_improvement_suggestions ?? '-' }}</span>
-                                </td>
-                                <td>
-                                    <span
-                                        class="suggestion-text">{{ $survey->events_improvement_suggestions ?? '-' }}</span>
-                                </td>
+                                <th>رقم</th>
+                                <th>رقم الموظف</th>
+                                <th>مدى الرضا عن بيئة العمل</th>
+                                <th>التوازن بين العمل والترفيه</th>
+                                <th>الأنشطة تساعد في كسر الروتين</th>
+                                <th>اقتراحات الأنشطة</th>
+                                <th>مدى الرضا عن تنوع الفعاليات</th>
+                                <th>مدى الرضا عن تجربة الموظف</th>
+                                <th>مدى الرضا عن قنوات التواصل</th>
+                                <th>اقتراحات التواصل</th>
+                                <th>مدى الرضا عن تصميم المحتوى</th>
+                                <th>مدى الرضا عن سرعة الاستجابة</th>
+                                <th>اقتراحات قنوات التواصل</th>
+                                <th>اقتراحات بيئة العمل</th>
+                                <th>اقتراحات الفعاليات</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($surveys as $index => $survey)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td><span class="email-cell">{{ $survey->employee_code }}</span></td>
+                                    <td>
+                                        @if ($survey->work_environment_satisfaction === 'very_satisfied')
+                                            <span
+                                                class="status-very-satisfied">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
+                                        @elseif ($survey->work_environment_satisfaction === 'satisfied')
+                                            <span
+                                                class="status-satisfied">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
+                                        @elseif ($survey->work_environment_satisfaction === 'neutral')
+                                            <span
+                                                class="status-neutral">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
+                                        @else
+                                            <span
+                                                class="status-unsatisfied">{{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($survey->work_entertainment_balance === 'yes')
+                                            <span
+                                                class="status-yes">{{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}</span>
+                                        @elseif ($survey->work_entertainment_balance === 'neutral')
+                                            <span
+                                                class="status-neutral">{{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}</span>
+                                        @else
+                                            <span
+                                                class="status-no">{{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($survey->activities_help_routine === 'yes')
+                                            <span
+                                                class="status-yes">{{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}</span>
+                                        @elseif ($survey->activities_help_routine === 'neutral')
+                                            <span
+                                                class="status-neutral">{{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}</span>
+                                        @else
+                                            <span
+                                                class="status-no">{{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="suggestion-text">{{ $survey->activities_suggestions ?? '-' }}</span>
+                                    </td>
+                                    <td>
+                                        @if ($survey->events_variety_satisfaction === 'satisfied')
+                                            <span
+                                                class="status-satisfied">{{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}</span>
+                                        @elseif ($survey->events_variety_satisfaction === 'neutral')
+                                            <span
+                                                class="status-neutral">{{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}</span>
+                                        @else
+                                            <span
+                                                class="status-unsatisfied">{{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($survey->employee_experience_satisfaction === 'satisfied')
+                                            <span
+                                                class="status-satisfied">{{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}</span>
+                                        @elseif ($survey->employee_experience_satisfaction === 'neutral')
+                                            <span
+                                                class="status-neutral">{{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}</span>
+                                        @else
+                                            <span
+                                                class="status-unsatisfied">{{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($survey->communication_channels_satisfaction === 'satisfied')
+                                            <span
+                                                class="status-satisfied">{{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}</span>
+                                        @elseif ($survey->communication_channels_satisfaction === 'neutral')
+                                            <span
+                                                class="status-neutral">{{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}</span>
+                                        @else
+                                            <span
+                                                class="status-unsatisfied">{{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="suggestion-text">{{ $survey->communication_suggestions ?? '-' }}</span>
+                                    </td>
+                                    <td>
+                                        @if ($survey->content_design_satisfaction === 'satisfied')
+                                            <span
+                                                class="status-satisfied">{{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}</span>
+                                        @elseif ($survey->content_design_satisfaction === 'neutral')
+                                            <span
+                                                class="status-neutral">{{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}</span>
+                                        @else
+                                            <span
+                                                class="status-unsatisfied">{{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($survey->response_time_satisfaction === 'satisfied')
+                                            <span
+                                                class="status-satisfied">{{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}</span>
+                                        @elseif ($survey->response_time_satisfaction === 'neutral')
+                                            <span
+                                                class="status-neutral">{{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}</span>
+                                        @else
+                                            <span
+                                                class="status-unsatisfied">{{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="suggestion-text">{{ $survey->communication_improvement_suggestions ?? '-' }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="suggestion-text">{{ $survey->work_environment_improvement_suggestions ?? '-' }}</span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="suggestion-text">{{ $survey->events_improvement_suggestions ?? '-' }}</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mobile/Tablet Card View -->
+            <div class="cards-container" id="cardsContainer">
+                @foreach ($surveys as $index => $survey)
+                    <div class="survey-card">
+                        <div class="card-header-info">
+                            <div class="card-number">{{ $index + 1 }}</div>
+                            <div class="card-employee-id">{{ $survey->employee_code }}</div>
+                        </div>
+
+                        <div class="card-content-grid">
+                            <div class="card-field">
+                                <div class="card-field-label">مدى الرضا عن بيئة العمل</div>
+                                <div class="card-field-value">
+                                    <span
+                                        class="card-status 
+                                        @if ($survey->work_environment_satisfaction === 'very_satisfied') status-very-satisfied
+                                        @elseif ($survey->work_environment_satisfaction === 'satisfied') status-satisfied
+                                        @elseif ($survey->work_environment_satisfaction === 'neutral') status-neutral
+                                        @else status-unsatisfied @endif">
+                                        {{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">التوازن بين العمل والترفيه</div>
+                                <div class="card-field-value">
+                                    <span
+                                        class="card-status 
+                                        @if ($survey->work_entertainment_balance === 'yes') status-yes
+                                        @elseif ($survey->work_entertainment_balance === 'neutral') status-neutral
+                                        @else status-no @endif">
+                                        {{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">الأنشطة تساعد في كسر الروتين</div>
+                                <div class="card-field-value">
+                                    <span
+                                        class="card-status 
+                                        @if ($survey->activities_help_routine === 'yes') status-yes
+                                        @elseif ($survey->activities_help_routine === 'neutral') status-neutral
+                                        @else status-no @endif">
+                                        {{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">اقتراحات الأنشطة</div>
+                                <div class="card-field-value">
+                                    <div class="card-suggestion">{{ $survey->activities_suggestions }}</div>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">مدى الرضا عن تنوع الفعاليات</div>
+                                <div class="card-field-value">
+                                    <span
+                                        class="card-status 
+                                        @if ($survey->events_variety_satisfaction === 'satisfied') status-satisfied
+                                        @elseif ($survey->events_variety_satisfaction === 'neutral') status-neutral
+                                        @else status-unsatisfied @endif">
+                                        {{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">مدى الرضا عن تجربة الموظف</div>
+                                <div class="card-field-value">
+                                    <span
+                                        class="card-status 
+                                        @if ($survey->employee_experience_satisfaction === 'satisfied') status-satisfied
+                                        @elseif ($survey->employee_experience_satisfaction === 'neutral') status-neutral
+                                        @else status-unsatisfied @endif">
+                                        {{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">مدى الرضا عن قنوات التواصل</div>
+                                <div class="card-field-value">
+                                    <span
+                                        class="card-status 
+                                        @if ($survey->communication_channels_satisfaction === 'satisfied') status-satisfied
+                                        @elseif ($survey->communication_channels_satisfaction === 'neutral') status-neutral
+                                        @else status-unsatisfied @endif">
+                                        {{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">اقتراحات التواصل</div>
+                                <div class="card-field-value">
+                                    <div class="card-suggestion">{{ $survey->communication_suggestions }}</div>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">مدى الرضا عن تصميم المحتوى</div>
+                                <div class="card-field-value">
+                                    <span
+                                        class="card-status 
+                                        @if ($survey->content_design_satisfaction === 'satisfied') status-satisfied
+                                        @elseif ($survey->content_design_satisfaction === 'neutral') status-neutral
+                                        @else status-unsatisfied @endif">
+                                        {{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">مدى الرضا عن سرعة الاستجابة</div>
+                                <div class="card-field-value">
+                                    <span
+                                        class="card-status 
+                                        @if ($survey->response_time_satisfaction === 'satisfied') status-satisfied
+                                        @elseif ($survey->response_time_satisfaction === 'neutral') status-neutral
+                                        @else status-unsatisfied @endif">
+                                        {{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">اقتراحات قنوات التواصل</div>
+                                <div class="card-field-value">
+                                    <div class="card-suggestion">{{ $survey->communication_improvement_suggestions }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">اقتراحات بيئة العمل</div>
+                                <div class="card-field-value">
+                                    <div class="card-suggestion">
+                                        {{ $survey->work_environment_improvement_suggestions }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-field">
+                                <div class="card-field-label">اقتراحات الفعاليات</div>
+                                <div class="card-field-value">
+                                    <div class="card-suggestion">{{ $survey->events_improvement_suggestions }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
-
-        <!-- Mobile/Tablet Card View -->
-        <div class="cards-container" id="cardsContainer">
-            @foreach ($surveys as $index => $survey)
-                <div class="survey-card">
-                    <div class="card-header-info">
-                        <div class="card-number">{{ $index + 1 }}</div>
-                        <div class="card-employee-id">{{ $survey->employee_code }}</div>
-                    </div>
-
-                    <div class="card-content-grid">
-                        <div class="card-field">
-                            <div class="card-field-label">مدى الرضا عن بيئة العمل</div>
-                            <div class="card-field-value">
-                                <span
-                                    class="card-status 
-                                    @if ($survey->work_environment_satisfaction === 'very_satisfied') status-very-satisfied
-                                    @elseif ($survey->work_environment_satisfaction === 'satisfied') status-satisfied
-                                    @elseif ($survey->work_environment_satisfaction === 'neutral') status-neutral
-                                    @else status-unsatisfied @endif">
-                                    {{ $labels[$survey->work_environment_satisfaction] ?? $survey->work_environment_satisfaction }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">التوازن بين العمل والترفيه</div>
-                            <div class="card-field-value">
-                                <span
-                                    class="card-status 
-                                    @if ($survey->work_entertainment_balance === 'yes') status-yes
-                                    @elseif ($survey->work_entertainment_balance === 'neutral') status-neutral
-                                    @else status-no @endif">
-                                    {{ $labels[$survey->work_entertainment_balance] ?? $survey->work_entertainment_balance }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">الأنشطة تساعد في كسر الروتين</div>
-                            <div class="card-field-value">
-                                <span
-                                    class="card-status 
-                                    @if ($survey->activities_help_routine === 'yes') status-yes
-                                    @elseif ($survey->activities_help_routine === 'neutral') status-neutral
-                                    @else status-no @endif">
-                                    {{ $labels[$survey->activities_help_routine] ?? $survey->activities_help_routine }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">اقتراحات الأنشطة</div>
-                            <div class="card-field-value">
-                                <div class="card-suggestion">{{ $survey->activities_suggestions }}</div>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">مدى الرضا عن تنوع الفعاليات</div>
-                            <div class="card-field-value">
-                                <span
-                                    class="card-status 
-                                    @if ($survey->events_variety_satisfaction === 'satisfied') status-satisfied
-                                    @elseif ($survey->events_variety_satisfaction === 'neutral') status-neutral
-                                    @else status-unsatisfied @endif">
-                                    {{ $labels[$survey->events_variety_satisfaction] ?? $survey->events_variety_satisfaction }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">مدى الرضا عن تجربة الموظف</div>
-                            <div class="card-field-value">
-                                <span
-                                    class="card-status 
-                                    @if ($survey->employee_experience_satisfaction === 'satisfied') status-satisfied
-                                    @elseif ($survey->employee_experience_satisfaction === 'neutral') status-neutral
-                                    @else status-unsatisfied @endif">
-                                    {{ $labels[$survey->employee_experience_satisfaction] ?? $survey->employee_experience_satisfaction }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">مدى الرضا عن قنوات التواصل</div>
-                            <div class="card-field-value">
-                                <span
-                                    class="card-status 
-                                    @if ($survey->communication_channels_satisfaction === 'satisfied') status-satisfied
-                                    @elseif ($survey->communication_channels_satisfaction === 'neutral') status-neutral
-                                    @else status-unsatisfied @endif">
-                                    {{ $labels[$survey->communication_channels_satisfaction] ?? $survey->communication_channels_satisfaction }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">اقتراحات التواصل</div>
-                            <div class="card-field-value">
-                                <div class="card-suggestion">{{ $survey->communication_suggestions }}</div>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">مدى الرضا عن تصميم المحتوى</div>
-                            <div class="card-field-value">
-                                <span
-                                    class="card-status 
-                                    @if ($survey->content_design_satisfaction === 'satisfied') status-satisfied
-                                    @elseif ($survey->content_design_satisfaction === 'neutral') status-neutral
-                                    @else status-unsatisfied @endif">
-                                    {{ $labels[$survey->content_design_satisfaction] ?? $survey->content_design_satisfaction }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">مدى الرضا عن سرعة الاستجابة</div>
-                            <div class="card-field-value">
-                                <span
-                                    class="card-status 
-                                    @if ($survey->response_time_satisfaction === 'satisfied') status-satisfied
-                                    @elseif ($survey->response_time_satisfaction === 'neutral') status-neutral
-                                    @else status-unsatisfied @endif">
-                                    {{ $labels[$survey->response_time_satisfaction] ?? $survey->response_time_satisfaction }}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">اقتراحات قنوات التواصل</div>
-                            <div class="card-field-value">
-                                <div class="card-suggestion">{{ $survey->communication_improvement_suggestions }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">اقتراحات بيئة العمل</div>
-                            <div class="card-field-value">
-                                <div class="card-suggestion">{{ $survey->work_environment_improvement_suggestions }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-field">
-                            <div class="card-field-label">اقتراحات الفعاليات</div>
-                            <div class="card-field-value">
-                                <div class="card-suggestion">{{ $survey->events_improvement_suggestions }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
+    @endif
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -2104,6 +2211,11 @@
             });
         });
     </script>
+</body>
+
+</html>
+
+</script>
 </body>
 
 </html>

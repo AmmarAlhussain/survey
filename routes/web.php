@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SurveyController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,9 @@ Route::post('/survey', [SurveyController::class, 'store'])->name('store');
 Route::get('/completed', [SurveyController::class, 'completed'])->name('completed');
 
 // Additional routes if you have them
-Route::get('/charts', [SurveyController::class, 'showSurveyCharts'])->name('survey.charts');
-Route::get('/logs', [SurveyController::class, 'logs'])->name('survey.logs');
+Route::get('/charts', [SurveyController::class, 'showSurveyCharts'])->name('charts');
+Route::get('/logs', [SurveyController::class, 'logs'])->name('logs');
+Route::post('/charts/email', [SurveyController::class, 'submitChartEmail'])->name('charts.email');
+Route::post('/logs/email', [SurveyController::class, 'submitLogsEmail'])->name('logs.email');
 
 Route::post('/check-employee', [SurveyController::class, 'checkEmployee']);

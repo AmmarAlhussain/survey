@@ -21,21 +21,10 @@ class Employee extends Model
     protected $fillable = [
         'employee_code',
         'first_name',
-        'last_name',
         'arabic_name',
-        'is_head_office',
     ];
 
-    /**
-     * The attributes that should be cast.
-     */
-    protected $casts = [
-        'is_head_office' => 'boolean',
-    ];
 
-    /**
-     * Get the surveys for the employee.
-     */
     // Relationship with surveys
     public function surveys()
     {
@@ -45,7 +34,7 @@ class Employee extends Model
     // Helper method to get full name
     public function getFullNameAttribute()
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name;
     }
 
     // Helper method to get display name (Arabic if available, otherwise English)

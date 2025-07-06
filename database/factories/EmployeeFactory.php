@@ -19,9 +19,7 @@ class EmployeeFactory extends Factory
         return [
             'employee_code' => $this->faker->unique()->numberBetween(10000000, 99999999),
             'first_name' => $this->faker->firstName(),
-            'last_name' => $this->faker->lastName(),
             'arabic_name' => $this->faker->optional(0.7)->name(),
-            'is_head_office' => $this->faker->boolean(60),
         ];
     }
 }

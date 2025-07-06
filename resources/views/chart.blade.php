@@ -835,11 +835,84 @@
                 animation: logoBackgroundPulse 8s ease-in-out infinite alternate;
             }
         }
+
+        body {
+            background: #03313B !important;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', Arial, sans-serif;
+        }
+        .centered-form-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #03313B;
+        }
+        .email-form-box {
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(3,49,59,0.18), 0 1.5px 6px rgba(74,144,226,0.08);
+            padding: 38px 32px 32px 32px;
+            max-width: 370px;
+            width: 100%;
+            text-align: center;
+            border: 1.5px solid rgba(74,144,226,0.10);
+        }
+        .email-form-box h2 {
+            color: #03313B;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+        .email-form-box label {
+            color: #03313B;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .email-form-box input[type="email"] {
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1.5px solid #b8b8b8;
+            margin-bottom: 18px;
+            font-size: 1.05em;
+            background: #f8fbff;
+            color: #03313B;
+            transition: border 0.2s;
+        }
+        .email-form-box input[type="email"]:focus {
+            border: 1.5px solid #03313B;
+            outline: none;
+        }
+        .email-form-box button {
+            padding: 12px 36px;
+            border: none;
+            background: #03313B;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .email-form-box button:hover {
+            background: #02506a;
+        }
+        .email-form-box .error-message {
+            color: #f56565;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
     </style>
 </head>
 
 <body>
-    <div class="floating-particles">
+<div class="floating-particles">
         <div class="particle"></div>
         <div class="particle"></div>
         <div class="particle"></div>
@@ -856,6 +929,26 @@
         <div class="particle"></div>
         <div class="particle"></div>
     </div>
+    
+    @if(isset($showForm) && $showForm)
+    <div class="centered-form-container">
+        <div class="email-form-box">
+            <h2>الرجاء إدخال بريدك الإلكتروني</h2>
+            @if(isset($error))
+                <div class="error-message">{{ $error }}</div>
+            @endif
+            <form method="POST" action="{{ route('charts.email') }}">
+                @csrf
+                <label for="email">البريد الإلكتروني</label>
+                <input type="email" name="email" id="email" required placeholder="example@domain.com" autocomplete="off">
+                <button type="submit">دخول</button>
+            </form>
+        </div>
+    </div>
+    @php exit; @endphp
+    @endif
+
+
 
     <header>
         <div class="logo-container">
@@ -1001,6 +1094,7 @@
         </div>
     </div>
 
+    @if(isset($surveys))
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             function forceNavyBackground() {
@@ -1425,6 +1519,7 @@
             chartCard.appendChild(stats);
         }
     </script>
+    @endif
 </body>
 
 </html>

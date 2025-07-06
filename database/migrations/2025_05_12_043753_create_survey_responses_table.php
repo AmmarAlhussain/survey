@@ -11,10 +11,8 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('employee_code')->unique();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('arabic_name');
-            $table->boolean('is_head_office')->default(true);
+            $table->string('first_name')->nullable();
+            $table->string('arabic_name')->nullable();
         });
 
         Schema::create('surveys', function (Blueprint $table) {

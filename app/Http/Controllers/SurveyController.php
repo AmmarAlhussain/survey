@@ -6,9 +6,23 @@ use App\Models\Survey;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class SurveyController extends Controller
 {
+    /**
+     * Get the list of allowed emails for accessing charts and logs
+     */
+    private function getAllowedEmails()
+    {
+        return array_map('strtolower', [
+            'nourah.albugami@seera.sa',
+            'sarah.fahad@seera.sa',
+            'hamoud.alqhtani@seera.sa',
+            'ammar.alhussain@almosafer.com',
+        ]);
+    }
+
     public function create()
     {
         return view('survey');
@@ -163,13 +177,27 @@ class SurveyController extends Controller
         return view('surveys.index', compact('surveys'));
     }
 
-    public function showSurveyCharts()
+    public function showSurveyCharts(Request $request)
     {
+        $allowedEmails = $this->getAllowedEmails();
+        $sessionEmail = strtolower(Session::get('chart_email', ''));
+
+        // Check if we have an error message from redirect
+        $error = session('error');
+        $showForm = session('showForm', false);
+
+        if (!$sessionEmail || !in_array($sessionEmail, $allowedEmails)) {
+            return view('chart', [
+                'showForm' => true,
+                'error' => $error
+            ]);
+        }
+
         $surveys = Survey::with('employee')->get()->map(function ($survey) {
             return [
                 'employee_id' => $survey->employee->id,
                 'employee_code' => $survey->employee->employee_code,
-                'employee_name' => $survey->employee->arabic_name ?? ($survey->employee->first_name . ' ' . $survey->employee->last_name),
+                'employee_name' => $survey->employee->arabic_name ?? $survey->employee->first_name,
                 'work_environment_satisfaction' => $survey->work_environment_satisfaction,
                 'work_entertainment_balance' => $survey->work_entertainment_balance,
                 'activities_help_routine' => $survey->activities_help_routine,
@@ -192,16 +220,45 @@ class SurveyController extends Controller
             'response_time_satisfaction' => 'الرضا عن سرعة الاستجابة',
         ];
 
-        return view('chart', compact('surveys', 'labels'));
+        return view('chart', compact('surveys', 'labels'))->with('showForm', false);
     }
 
-    public function logs()
+    public function submitChartEmail(Request $request)
     {
+        $allowedEmails = $this->getAllowedEmails();
+        $email = strtolower($request->input('email', ''));
+
+        Log::info('Checking chart email: ' . $email);
+
+        if (in_array($email, $allowedEmails)) {
+            Session::put('chart_email', $email);
+            return redirect()->route('charts');
+        } else {
+            // Store error in session and redirect
+            Session::flash('error', 'البريد الإلكتروني غير مصرح له بالدخول.');
+            Session::flash('showForm', true);
+            return redirect()->route('charts');
+        }
+    }
+
+    public function logs(Request $request)
+    {
+        $allowedEmails = $this->getAllowedEmails();
+        $sessionEmail = strtolower($request->session()->get('logs_email', ''));
+
+        // If no session email or session email is not in allowed emails, show form
+        if (!$sessionEmail || !in_array($sessionEmail, $allowedEmails)) {
+            return view('logs', [
+                'showForm' => true,
+                'error' => session('error') // This will get the flashed error message
+            ]);
+        }
+
         $surveys = Survey::with('employee')->get()->map(function ($survey) {
             return (object) [
                 'employee_id' => $survey->employee->id,
                 'employee_code' => $survey->employee->employee_code,
-                'employee_name' => $survey->employee->arabic_name ?? ($survey->employee->first_name . ' ' . $survey->employee->last_name),
+                'employee_name' => $survey->employee->arabic_name ?? $survey->employee->first_name,
                 'work_environment_satisfaction' => $survey->work_environment_satisfaction,
                 'work_entertainment_balance' => $survey->work_entertainment_balance,
                 'activities_help_routine' => $survey->activities_help_routine,
@@ -228,8 +285,26 @@ class SurveyController extends Controller
             'no' => 'لا',
         ];
 
-        return view('logs', compact('surveys', 'labels'));
+        return view('logs', compact('surveys', 'labels'))->with('showForm', false);
     }
+    public function submitLogsEmail(Request $request)
+    {
+        $allowedEmails = $this->getAllowedEmails();
+        $email = strtolower($request->input('email', ''));
+
+        Log::info('Checking logs email: ' . $email);
+
+        if (in_array($email, $allowedEmails)) {
+            Session::put('logs_email', $email);
+            return redirect()->route('logs');
+        } else {
+            return redirect()->route('logs')->with([
+                'error' => 'البريد الإلكتروني غير مصرح له بالدخول.',
+                'showForm' => true
+            ]);
+        }
+    }
+
 
     public function getStatistics()
     {
