@@ -412,7 +412,7 @@
             left: 50%;
             width: 680px;
             min-height: 300px;
-            max-height: calc(100vh - 220px);
+            max-height: fit-content;
             background: linear-gradient(145deg, #ffffff, #f8f9fa);
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -423,7 +423,6 @@
             z-index: 1;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.8);
             will-change: transform, opacity, filter;
         }
@@ -2455,7 +2454,7 @@
                 /* Reduced from 720px */
                 min-height: 220px;
                 /* Reduced from 280px */
-                max-height: calc(100vh - 130px);
+                max-height: fit-content;
                 transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
                 top: 0.5%;
@@ -2886,7 +2885,7 @@
         /* Additional optimization for very wide but short laptops */
         @media screen and (min-width: 1200px) and (max-height: 600px) {
             .step {
-                max-height: calc(100vh - 110px);
+                max-height: fit-content;
                 min-height: 200px;
                 width: 50%;
                 max-width: 500px;
